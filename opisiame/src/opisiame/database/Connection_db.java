@@ -8,6 +8,8 @@ package opisiame.database;
 import java.sql.*;
 import java.util.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,25 +17,25 @@ import java.io.*;
  */
 public class Connection_db {
 
-    static Connection database = null;
-
     public Connection_db() {
         //chargement du fichier de ressources
+    }
 
+    private static Connection database = null;
+
+    public static Connection getDatabase() {
         if (database == null) {
             try {
                 Properties propriete = new Properties();
-                InputStream prop_file = new FileInputStream("propriete_db.properties");
-
+                InputStream prop_file = Connection_db.class.getClassLoader().getResourceAsStream("opisiame/database/propriete_db.properties");
                 //chargement du fichier de propriété
                 propriete.load(prop_file);
                 String driver = propriete.getProperty("driver");
                 String url = propriete.getProperty("url");
                 String user = propriete.getProperty("user");
                 String password = propriete.getProperty("password");
-
-                //connection
-                database = DriverManager.getConnection(url);
+                Class.forName(driver);
+                database = DriverManager.getConnection(url, user, password);
 
             } catch (FileNotFoundException ex) {
                 System.err.println("erreur de l'ouverture du fichier de propriété de connection");
@@ -42,7 +44,12 @@ public class Connection_db {
             } catch (SQLException ex) {
                 System.err.println("Connection avec la base de données impossible");
                 ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                System.err.println("classe not found");
+                Logger.getLogger(Connection_db.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return database;
     }
+
 }
