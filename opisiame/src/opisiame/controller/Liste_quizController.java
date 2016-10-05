@@ -34,7 +34,7 @@ public class Liste_quizController implements Initializable {
     @FXML
     private TableColumn<Quiz, String> date;
     @FXML
-    private TableColumn<Quiz, String> id;
+    private TableColumn<Quiz, Integer> id;
 
     
 
@@ -69,7 +69,7 @@ public class Liste_quizController implements Initializable {
 
         nom_quiz.setCellValueFactory(new PropertyValueFactory<Quiz, String>("nom"));
         date.setCellValueFactory(new PropertyValueFactory<Quiz, String>("date_creation"));
-        id.setCellValueFactory(new PropertyValueFactory<Quiz, String>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<Quiz, Integer>("id"));
         t_liste_quiz.setItems(getAllquiz());
 
     }

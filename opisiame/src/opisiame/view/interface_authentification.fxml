@@ -31,7 +31,7 @@
                 </TextField>
                 <Label prefHeight="32.0" prefWidth="82.0" text="Identifiant" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <Label prefHeight="32.0" prefWidth="98.0" text="Mot de passe" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                <Polygon fill="#00ff29" rotate="90.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <Polygon fill="#10cc00" rotate="90.0" scaleX="0.38000000405311585" scaleY="0.58" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                   <points>
                     <Double fx:value="-50.0" />
                     <Double fx:value="40.0" />
@@ -46,6 +46,8 @@
                     <Image url="@../../../../../../../../../opi'siame-logo-2.png" />
                   </image>
                 </ImageView>
+                <Button mnemonicParsing="false" opacity="0.34" prefHeight="37.0" prefWidth="134.0" text="" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="32.0" prefWidth="199.0" text="En attente d'authentification" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="113.0" />
