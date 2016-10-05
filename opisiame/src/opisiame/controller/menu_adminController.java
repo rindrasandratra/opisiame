@@ -5,49 +5,60 @@
  */
 package opisiame.controller;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.stage.*;
 
 /**
  *
  * @author Audrey
  */
-public class menu_adminController implements Initializable{
+public class menu_adminController implements Initializable {
 
     @FXML
- private void ClicImageOnOff(ActionEvent event) {
-     // Button was clicked, do something...
+    public void ClicImageOnOff(ActionEvent event) {
+        // Button was clicked, do something...
         System.out.println("clic image on_off");;
- }
- 
- @FXML
- private void ClicBoutonEleves(ActionEvent event) {
-     // Button was clicked, do something...
+    }
+
+    @FXML
+    public void ClicBoutonEleves(ActionEvent event) {
+        // Button was clicked, do something...
         System.out.println("clic bouton eleves");;
- }
- 
- @FXML
- private void ClicBoutonProfs(ActionEvent event) {
-     // Button was clicked, do something...
+    }
+
+    @FXML
+    public void ClicBoutonProfs(ActionEvent event) {
+        // Button was clicked, do something...
         System.out.println("clic bouton profs");;
- }
- 
- @FXML
- private void ClicBoutonQuiz(ActionEvent event) {
-     // Button was clicked, do something...
+    }
+
+    @FXML
+    public void ClicBoutonQuiz(ActionEvent event) throws IOException {
+        // Button was clicked, do something...
         System.out.println("clic bouton quiz");;
- }
-   
-    
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("opisiame.view.liste_quize.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Liste des quiz");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
-    
+
 }
