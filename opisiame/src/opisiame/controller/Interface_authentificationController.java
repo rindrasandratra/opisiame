@@ -42,7 +42,7 @@ public class Interface_authentificationController implements Initializable {
     @FXML
     private void btn_connect() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quize.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_admin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
