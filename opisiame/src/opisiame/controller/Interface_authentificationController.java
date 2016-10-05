@@ -43,9 +43,15 @@ public class Interface_authentificationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+    
+    
+    //lecture de la base administrateur
+    //private 
 
     @FXML
     public void Submit_passwd() throws IOException {
+        
+        //ouverture du menu administrateur
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Interface_authentificationController.class.getResource("/opisiame/view/liste_quize.fxml"));
         Parent root;
