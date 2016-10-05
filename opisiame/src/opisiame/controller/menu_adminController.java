@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
 import javafx.scene.*;
+import javafx.scene.image.Image;
 import javafx.stage.*;
 
 /**
@@ -20,43 +21,42 @@ import javafx.stage.*;
 public class menu_adminController implements Initializable {
 
     @FXML
-    public void ClicImageOnOff(ActionEvent event) {
+    public void ClicImageOnOff() {
         // Button was clicked, do something...
         System.out.println("clic image on_off");;
     }
 
     @FXML
-    public void ClicBoutonEleves(ActionEvent event) {
+    public void ClicBoutonEleves() {
         // Button was clicked, do something...
         System.out.println("clic bouton eleves");;
     }
 
     @FXML
-    public void ClicBoutonProfs(ActionEvent event) {
+    public void ClicBoutonProfs() {
         // Button was clicked, do something...
         System.out.println("clic bouton profs");;
     }
 
     @FXML
-    public void ClicBoutonQuiz(ActionEvent event) throws Exception {
-        // Button was clicked, do something...
-        System.out.println("clic bouton quiz");;
+    public void ClicBoutonQuiz() throws Exception {
         //ouvre la fenêtre liste_quize (admin)
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quize.fxml"));
-            stage.setTitle("OPI'SIAME");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Interface_authentificationController.class.getResource("/opisiame/view/liste_quize.fxml"));
+
+        Parent root;
+        root = (Parent) loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("OPI'SIAME");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }
