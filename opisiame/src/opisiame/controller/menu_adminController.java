@@ -6,7 +6,7 @@
 package opisiame.controller;
 
 import java.awt.event.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
@@ -38,21 +38,19 @@ public class menu_adminController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonQuiz(ActionEvent event) throws IOException {
+    public void ClicBoutonQuiz(ActionEvent event) throws Exception {
         // Button was clicked, do something...
         System.out.println("clic bouton quiz");;
-
+        //ouvre la fenêtre liste_quize (admin)
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("opisiame.view.liste_quize.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Liste des quiz");
-            stage.setScene(new Scene(root1));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quize.fxml"));
+            stage.setTitle("OPI'SIAME");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
-        } catch (IOException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
