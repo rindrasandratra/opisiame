@@ -45,7 +45,7 @@ public class Liste_quizController implements Initializable {
         ObservableList<Quiz> quizs = FXCollections.observableArrayList();
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM QUIZ");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Quiz quiz = new Quiz();

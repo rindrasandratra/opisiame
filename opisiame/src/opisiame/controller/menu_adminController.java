@@ -20,25 +20,25 @@ import javafx.stage.*;
 public class menu_adminController implements Initializable {
 
     @FXML
-    public void ClicImageOnOff(ActionEvent event) {
+    private void ClicImageOnOff(ActionEvent event) {
         // Button was clicked, do something...
         System.out.println("clic image on_off");;
     }
 
     @FXML
-    public void ClicBoutonEleves(ActionEvent event) {
+    private void ClicBoutonEleves(ActionEvent event) {
         // Button was clicked, do something...
         System.out.println("clic bouton eleves");;
     }
 
     @FXML
-    public void ClicBoutonProfs(ActionEvent event) {
+    private void ClicBoutonProfs(ActionEvent event) {
         // Button was clicked, do something...
         System.out.println("clic bouton profs");;
     }
 
     @FXML
-    public void ClicBoutonQuiz(ActionEvent event) throws IOException {
+    private void ClicBoutonQuiz(ActionEvent event) throws IOException {
         // Button was clicked, do something...
         System.out.println("clic bouton quiz");;
 
