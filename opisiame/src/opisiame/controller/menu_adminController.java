@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 
 /**
@@ -20,6 +21,9 @@ import javafx.stage.*;
  */
 public class menu_adminController implements Initializable {
 
+    @FXML 
+    private AnchorPane content;
+    
     @FXML
     public void ClicImageOnOff() {
         // Button was clicked, do something...
@@ -41,16 +45,11 @@ public class menu_adminController implements Initializable {
     @FXML
     public void ClicBoutonQuiz() throws Exception {
         //ouvre la fenêtre liste_quize (admin)
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Interface_authentificationController.class.getResource("/opisiame/view/liste_quize.fxml"));
-
-        Parent root;
-        root = (Parent) loader.load();
-        Stage stage = new Stage();
-        stage.setTitle("OPI'SIAME");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(true);
         stage.show();
     }
 
