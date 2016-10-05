@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" rotate="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="opisiame.controller.Interface_authentificationController">
+<AnchorPane id="AnchorPane" fx:id="content" prefHeight="500.0" prefWidth="600.0" rotate="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.Interface_authentificationController">
   <children>
     <GridPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -31,7 +31,7 @@
                 </TextField>
                 <Label prefHeight="32.0" prefWidth="82.0" text="Identifiant" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <Label prefHeight="32.0" prefWidth="98.0" text="Mot de passe" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                <Polygon fill="#10cc00" rotate="90.0" scaleX="0.38000000405311585" scaleY="0.58" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <Polygon fill="#10cc00" onMouseClicked="#btn_connect" rotate="90.0" scaleX="0.38000000405311585" scaleY="0.58" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                   <points>
                     <Double fx:value="-50.0" />
                     <Double fx:value="40.0" />
