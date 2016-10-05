@@ -41,13 +41,15 @@
                     <Double fx:value="-60.0" />
                   </points>
                 </Polygon>
-                <ImageView fitHeight="120.13000000000001" fitWidth="293.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0">
-                  <image>
-                    <Image url="@../../../../../../../../../opi'siame-logo-2.png" />
-                  </image>
-                </ImageView>
-                <Button mnemonicParsing="false" opacity="0.34" prefHeight="37.0" prefWidth="134.0" text="" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                 <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="32.0" prefWidth="199.0" text="En attente d'authentification" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                <ImageView fitHeight="103.0" fitWidth="251.21951818466187" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.rowSpan="1" GridPane.valignment="CENTER">
+                  <image>
+                    <Image url="@../image/opisiame_logo.png" />
+                  </image>
+                  <GridPane.margin>
+                    <Insets />
+                  </GridPane.margin>
+                </ImageView>
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="113.0" />
