@@ -18,9 +18,27 @@ import javafx.fxml.Initializable;
 public class menu_adminController implements Initializable{
 
     @FXML
+ private void ClicImageOnOff(ActionEvent event) {
+     // Button was clicked, do something...
+        System.out.println("clic image on_off");;
+ }
+ 
+ @FXML
  private void ClicBoutonEleves(ActionEvent event) {
      // Button was clicked, do something...
-        System.out.println("blabla");;
+        System.out.println("clic bouton eleves");;
+ }
+ 
+ @FXML
+ private void ClicBoutonProfs(ActionEvent event) {
+     // Button was clicked, do something...
+        System.out.println("clic bouton profs");;
+ }
+ 
+ @FXML
+ private void ClicBoutonQuiz(ActionEvent event) {
+     // Button was clicked, do something...
+        System.out.println("clic bouton quiz");;
  }
    
     

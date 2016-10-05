@@ -21,14 +21,14 @@
             <Insets fx:id="x2" />
           </GridPane.margin>
         </Button>
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" prefHeight="71.99990000000253" prefWidth="145.0" text="Gestion des professeurs" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" prefHeight="72.00009999999747" prefWidth="145.0" text="Gestion des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonProfs" prefHeight="71.99990000000253" prefWidth="145.0" text="Gestion des professeurs" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonQuiz" prefHeight="72.00009999999747" prefWidth="145.0" text="Gestion des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
         <ImageView fitHeight="101.5" fitWidth="372.3333435058594" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <image>
             <Image url="@../image/opisiame_logo.png" />
           </image>
         </ImageView>
-        <ImageView fitHeight="52.0" fitWidth="53.05050404866536" onMouseClicked="#ClicBoutonEleves" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <ImageView fitHeight="52.0" fitWidth="53.05050404866536" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
           <image>
             <Image url="@../image/on_off.png" />
           </image>
