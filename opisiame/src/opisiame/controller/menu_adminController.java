@@ -31,20 +31,30 @@ public class menu_adminController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonEleves() {
-        // Button was clicked, do something...
-        System.out.println("clic bouton eleves");;
+    public void ClicBoutonEleves() throws IOException{
+        //ouvre la fenêtre liste_eleves_admin
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_eleves_admin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
     }
 
     @FXML
-    public void ClicBoutonProfs() {
-        // Button was clicked, do something...
-        System.out.println("clic bouton profs");;
+    public void ClicBoutonProfs() throws IOException{
+        //ouvre la fenêtre liste_profs_admin
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_profs_admin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
     }
 
     @FXML
-    public void ClicBoutonQuiz() throws Exception {
-        //ouvre la fenêtre liste_quize (admin)
+    public void ClicBoutonQuiz() throws IOException {
+        //ouvre la fenêtre liste_quiz (admin)
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml"));
         Scene scene = new Scene(root);
