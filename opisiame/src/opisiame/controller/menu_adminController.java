@@ -5,13 +5,11 @@
  */
 package opisiame.controller;
 
-import java.awt.event.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
 import javafx.scene.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 
@@ -29,7 +27,7 @@ public class menu_adminController implements Initializable {
         // Button was clicked, do something...
         System.out.println("clic image on_off");;
     }
-
+    
     @FXML
     public void ClicBoutonEleves() throws IOException{
         //ouvre la fenêtre liste_eleves_admin
@@ -56,7 +54,7 @@ public class menu_adminController implements Initializable {
     public void ClicBoutonQuiz() throws IOException {
         //ouvre la fenêtre liste_quiz (admin)
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml")); //à modifier
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
