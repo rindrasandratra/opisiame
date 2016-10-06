@@ -49,11 +49,12 @@ public class Interface_authentificationController implements Initializable {
         // TODO
     }
 
-    private boolean lecture_admin() throws SQLException {
+    private int lecture_admin() throws SQLException {
         final String log = Login_field.getText();
         final String pass = Passwd_field.getText();
-        int count = 0;
-        boolean ok = false;
+        int count1 = 0;
+        int count2 = 0;
+        int ok = 0;
 
         //vérification du login
         //connection avec la base de donnée
@@ -63,22 +64,38 @@ public class Interface_authentificationController implements Initializable {
         pslog.setString(2, pass);
         ResultSet logres = pslog.executeQuery();
         while (logres.next()){
-            count = logres.getInt("total");
+            count1 = logres.getInt("total");
         }
-        if (count == 1){ok = true;}
+        if (count1 == 1){ok = 1;}
+        
+        PreparedStatement pslog2 = database.prepareStatement("SELECT COUNT(*) AS total2 FROM animateur WHERE Anim_login = ? and Anim_mdp = ?");
+        pslog2.setString(1, log);
+        pslog2.setString(2, pass);
+        ResultSet logres2 = pslog2.executeQuery();
+        while (logres2.next()){
+            count2 = logres2.getInt("total2");
+        }
+        if (count2 == 1){ok = 2;}
+        
         
        return ok;
     }
-
-    //lecture de la base administrateur
-    //private 
+      
     @FXML
     public void Submit_passwd() throws IOException, SQLException {
 
-        if (lecture_admin() == true) {
+        if (lecture_admin() == 1) {
 
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_admin.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else if (lecture_admin() == 2) {
+
+            Stage stage = (Stage) content.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
