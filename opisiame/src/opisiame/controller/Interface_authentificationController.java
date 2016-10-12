@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.shape.*;
 import opisiame.database.Connection_db;
+import session.*;
 
 /**
  * FXML Controller class
@@ -85,7 +86,9 @@ public class Interface_authentificationController implements Initializable {
     public void Submit_passwd() throws IOException, SQLException {
 
         if (lecture_admin() == 1) {
-
+            
+            final String log = Login_field.getText();
+            Session login = new Session(log);
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_admin.fxml"));
             Scene scene = new Scene(root);
@@ -93,7 +96,9 @@ public class Interface_authentificationController implements Initializable {
             stage.show();
         }
         else if (lecture_admin() == 2) {
-
+            
+            final String log = Login_field.getText();
+            Session login = new Session(log);
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_anim.fxml"));
             Scene scene = new Scene(root);
