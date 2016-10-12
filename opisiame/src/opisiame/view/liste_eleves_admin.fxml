@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="opisiame.controller.Liste_eleves_adminController">
+<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.Liste_eleves_adminController">
    <children>
-      <Label layoutX="261.0" layoutY="247.0" text="à faire" />
+      <GridPane layoutX="27.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="348.0" minHeight="10.0" prefHeight="312.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pagination prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+            <TableView prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn prefWidth="34.0" />
+                <TableColumn prefWidth="116.0" text="Identifiant" />
+                  <TableColumn prefWidth="166.0" text="Nom" />
+                  <TableColumn prefWidth="155.0" text="Prénom" />
+                  <TableColumn prefWidth="55.0" text="filière" />
+                  <TableColumn prefWidth="56.0" text="année" />
+              </columns>
+            </TableView>
+            <GridPane>
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des quiz" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Gill Sans MT" size="24.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="Home" fitHeight="35.0" fitWidth="37.0" onMouseClicked="#ClicBoutonHome" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../image/on_off.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="Retour" fitHeight="34.0" fitWidth="40.0" onMouseReleased="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/retour.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

@@ -5,9 +5,14 @@
  */
 package opisiame.controller;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.*;
 import javafx.fxml.Initializable;
+import javafx.scene.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.*;
 
 /**
  * FXML Controller class
@@ -16,12 +21,39 @@ import javafx.fxml.Initializable;
  */
 public class Liste_eleves_adminController implements Initializable {
 
+    @FXML
+    private AnchorPane content;
+    
+    @FXML
+    public void ClicBoutonRetour() throws IOException {
+        //Retour sur la fenetre menu
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_admin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+    }
+    
+    @FXML
+    public void ClicBoutonHome() throws IOException {
+        //Retour sur la fenetre d'identification
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/interface_authentification.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+        session.Session.Logout();
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+
+    }
+
 }
