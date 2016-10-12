@@ -26,6 +26,7 @@ public class Menu_animController implements Initializable {
     @FXML
     public void ClicImageOnOff() throws IOException {
         //remise à zéro des variables d'identification (login + mdp)
+        session.Session.Logout();
         //ouvre la fenêtre Interface_authentification
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/interface_authentification.fxml"));
