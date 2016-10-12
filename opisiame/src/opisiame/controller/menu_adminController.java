@@ -46,7 +46,7 @@ public class menu_adminController implements Initializable {
     public void ClicBoutonQuiz() throws Exception {
         //ouvre la fenêtre liste_quize (admin)
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz_anim.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);

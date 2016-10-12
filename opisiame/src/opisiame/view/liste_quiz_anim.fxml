@@ -27,13 +27,13 @@
         </Text>
         <TableView fx:id="t_liste_quiz" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <columns>
+                <TableColumn fx:id="id" editable="false" minWidth="-Infinity" text="ID" />
                 <TableColumn fx:id="nom_quiz" text="Nom du quiz" />
                 <TableColumn fx:id="date" editable="false" text="Date de création" />
-                <TableColumn fx:id="id" editable="false" minWidth="-Infinity" text="ID" />
-            <TableColumn fx:id="action" editable="false" minWidth="-Infinity" text="Action" />
+            <TableColumn fx:id="actionCol" editable="false" minWidth="-Infinity" text="Action" />
             </columns>
 
-               <GridPane.margin>
+                     <GridPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </GridPane.margin>
          <effect>
