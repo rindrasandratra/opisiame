@@ -73,7 +73,7 @@ public class Menu_animController implements Initializable {
     public void ClicBoutonListeQuiz() throws IOException {
         //ouvre la fenêtre liste_quiz (admin)
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz_anim.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_quiz.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
