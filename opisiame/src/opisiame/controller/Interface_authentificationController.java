@@ -14,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.util.ResourceBundle;
+import java.util.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.shape.*;
@@ -100,8 +100,8 @@ public class Interface_authentificationController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-        else Message_field.setText("erreur d'authentification");
+        else {Message_field.setText("erreur d'authentification");
+        Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");}
     }
 }
 
-//coucou
