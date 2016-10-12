@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller;
+package opisiame.controller.gestion_quiz;
 
 import java.io.IOException;
 import java.net.URL;
@@ -171,7 +171,7 @@ public class Liste_quizController implements Initializable {
 
     public void edit_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/edit_quiz.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/edit_quiz.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
@@ -188,7 +188,7 @@ public class Liste_quizController implements Initializable {
 
     public void delete_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/delete_quiz.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmation de suppression");
@@ -206,7 +206,7 @@ public class Liste_quizController implements Initializable {
 
     public void detail_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/detail_quiz.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/detail_quiz.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Détail quiz");

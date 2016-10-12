@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane id="AnchorPane" fx:id="content" prefHeight="500.0" prefWidth="600.0" rotate="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.Interface_authentificationController">
+<AnchorPane id="AnchorPane" fx:id="content" prefHeight="500.0" prefWidth="600.0" rotate="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.utilisateur.Interface_authentificationController">
   <children>
     <GridPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -38,7 +38,7 @@
                 <Label fx:id="Message_field" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="32.0" prefWidth="199.0" text="En attente d'authentification" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                 <ImageView fitHeight="81.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="1" GridPane.valignment="CENTER">
                   <image>
-                    <Image url="@../image/opisiame_logo.png" />
+                    <Image url="@../../image/opisiame_logo.png" />
                   </image>
                   <GridPane.margin>
                     <Insets />
@@ -46,12 +46,12 @@
                 </ImageView>
                         <ImageView fitHeight="79.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../image/Ensiame_Logo_Png.png" />
+                              <Image url="@../../image/Ensiame_Logo_Png.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="86.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../image/uvhc.png" />
+                              <Image url="@../../image/uvhc.png" />
                            </image>
                         </ImageView>
               </children>

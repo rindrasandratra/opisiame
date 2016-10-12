@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller;
+package opisiame.controller.gestion_quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,9 +12,9 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author Audrey
+ * @author Sandratra
  */
-public class ResultatsQuizController implements Initializable {
+public class Edit_quizController implements Initializable {
 
     /**
      * Initializes the controller class.

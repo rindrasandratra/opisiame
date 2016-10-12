@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.ModifParamController">
+<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.utilisateur.ModifParamController">
    <children>
       <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -51,12 +51,12 @@
             <TextField fx:id="AncienMDP" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../image/retour.png" />
+                  <Image url="@../../image/retour.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../image/on_off.png" />
+                  <Image url="@../../image/on_off.png" />
                </image>
             </ImageView>
             <Button mnemonicParsing="false" onMouseClicked="#Modifier_MDP" prefHeight="52.0" prefWidth="99.0" text="Valider" GridPane.columnIndex="5" GridPane.rowIndex="4">

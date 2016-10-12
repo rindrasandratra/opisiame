@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller;
+package opisiame.controller.utilisateur;
 
 import java.io.*;
 import java.net.URL;
@@ -84,7 +84,7 @@ public class ModifParamController implements Initializable {
                 //ouverture de la fenêtre menu_anim
                 Session login = new Session(log, "anim");
                 Stage stage = (Stage) content.getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_anim.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
@@ -104,7 +104,7 @@ public class ModifParamController implements Initializable {
         session.Session.Logout();
         //ouverture fenêtre interface_authentification
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/interface_authentification.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -115,7 +115,7 @@ public class ModifParamController implements Initializable {
     public void ClicBoutonRetour() throws IOException {
         //ouverture fenêtre menu_anim
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_anim.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
