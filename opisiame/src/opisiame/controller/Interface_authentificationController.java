@@ -88,7 +88,7 @@ public class Interface_authentificationController implements Initializable {
         if (lecture_admin() == 1) {
             
             final String log = Login_field.getText();
-            Session login = new Session(log);
+            Session login = new Session(log, "admin");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_admin.fxml"));
             Scene scene = new Scene(root);
@@ -98,7 +98,7 @@ public class Interface_authentificationController implements Initializable {
         else if (lecture_admin() == 2) {
             
             final String log = Login_field.getText();
-            Session login = new Session(log);
+            Session login = new Session(log, "anim");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/menu_anim.fxml"));
             Scene scene = new Scene(root);
