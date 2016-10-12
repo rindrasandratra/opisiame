@@ -38,8 +38,13 @@ public class Menu_animController implements Initializable {
 
     @FXML
     public void ClicBoutonParam() throws IOException {
-        // Button was clicked, do something...
-        System.out.println("clic image Param");;
+        //ouvre la fenêtre ModifParam
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/ModifParam.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML

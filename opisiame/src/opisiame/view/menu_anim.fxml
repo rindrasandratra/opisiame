@@ -21,18 +21,9 @@
           <GridPane.margin>
             <Insets fx:id="x2" />
           </GridPane.margin>
-               <effect>
-                  <ColorAdjust contrast="0.6" hue="-0.81" saturation="0.47" />
-               </effect>
         </Button>
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonRésultatsQuiz" prefHeight="72.0" prefWidth="149.0" text="Résultat quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <effect>
-                  <ColorAdjust contrast="0.6" hue="0.56" saturation="0.47" />
-               </effect></Button>
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" text="Liste des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <effect>
-                  <ColorAdjust contrast="0.6" hue="0.23" saturation="0.47" />
-               </effect></Button>
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonRésultatsQuiz" prefHeight="72.0" prefWidth="149.0" text="Résultat quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" text="Liste des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
         <ImageView fitHeight="101.5" fitWidth="372.3333435058594" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <image>
             <Image url="@../image/opisiame_logo.png" />
@@ -43,7 +34,7 @@
             <Image url="@../image/on_off.png" />
           </image>
         </ImageView>
-            <ImageView fitHeight="42.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#ClicBoutonParam" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../image/param.png" />
                </image>
