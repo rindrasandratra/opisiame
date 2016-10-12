@@ -37,7 +37,7 @@ public class Session {
     }
     
     //fermer une section
-    public void Logout()
+    public static void Logout()
     {
         log = null;
         type = null;
