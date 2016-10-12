@@ -20,26 +20,15 @@ import javafx.stage.*;
  */
 public class Menu_animController implements Initializable {
 
-    @FXML 
+    @FXML
     private AnchorPane content;
-    
-    @FXML
-    public void ClicImageOnOff() {
-        // Button was clicked, do something...
-        System.out.println("clic image on_off");;
-    }
-    
-    @FXML
-    public void ClicBoutonParam() {
-        // Button was clicked, do something...
-        System.out.println("clic image Param");;
-    }
 
     @FXML
-    public void ClicBoutonNouveauQuiz() throws IOException{
-        //ouvre la fenêtre liste_eleves_admin
+    public void ClicImageOnOff() throws IOException {
+        //remise à zéro des variables d'identification (login + mdp)
+        //ouvre la fenêtre Interface_authentification
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_eleves_admin.fxml")); //à modifier
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/interface_authentification.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
@@ -47,10 +36,27 @@ public class Menu_animController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonRésultatsQuiz() throws IOException{
+    public void ClicBoutonParam() throws IOException {
+        // Button was clicked, do something...
+        System.out.println("clic image Param");;
+    }
+
+    @FXML
+    public void ClicBoutonNouveauQuiz() throws IOException {
+        //ouvre la fenêtre liste_eleves_admin
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/NouveauQuiz.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+    }
+
+    @FXML
+    public void ClicBoutonRésultatsQuiz() throws IOException {
         //ouvre la fenêtre liste_profs_admin
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/liste_profs_admin.fxml")); //à modifier
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/ResultatsQuiz.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
@@ -70,7 +76,7 @@ public class Menu_animController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
     }
 
 }

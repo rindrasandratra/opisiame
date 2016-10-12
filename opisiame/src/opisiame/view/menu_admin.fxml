@@ -38,11 +38,16 @@
             <Image url="@../image/opisiame_logo.png" />
           </image>
         </ImageView>
-        <ImageView fitHeight="52.0" fitWidth="53.05050404866536" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <ImageView fitHeight="41.0" fitWidth="45.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
           <image>
             <Image url="@../image/on_off.png" />
           </image>
         </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../image/retour.png" />
+               </image>
+            </ImageView>
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

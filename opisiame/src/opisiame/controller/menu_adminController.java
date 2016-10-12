@@ -23,9 +23,15 @@ public class menu_adminController implements Initializable {
     private AnchorPane content;
     
     @FXML
-    public void ClicImageOnOff() {
-        // Button was clicked, do something...
-        System.out.println("clic image on_off");;
+    public void ClicImageOnOff() throws IOException {
+        //remise à zéro des variables d'identification (login + mdp)
+        //ouvre la fenêtre Interface_authentification
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/interface_authentification.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
     }
     
     @FXML
