@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="content" minHeight="332.0" prefHeight="426.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.menu_adminController">
+  <children>
+    <GridPane alignment="CENTER" gridLinesVisible="false" prefHeight="332.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Button fx:id="Eleves" cancelButton="false" defaultButton="false" mnemonicParsing="false" onMouseClicked="#ClicBoutonEleves" prefHeight="72.0" text="Gestion des élèves" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+          <font>
+            <Font name="System Bold" size="14.0" fx:id="x1" />
+          </font>
+          <GridPane.margin>
+            <Insets fx:id="x2" />
+          </GridPane.margin>
+        </Button>
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonProfs" prefHeight="71.99990000000253" prefWidth="145.0" text="Gestion des professeurs" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonQuiz" prefHeight="72.00009999999747" prefWidth="145.0" text="Gestion des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <ImageView fitHeight="102.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+          <image>
+            <Image url="@../image/opisiame_logo.png" />
+          </image>
+        </ImageView>
+        <ImageView fitHeight="41.0" fitWidth="45.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+          <image>
+            <Image url="@../image/on_off.png" />
+          </image>
+        </ImageView>
+            <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#ClicBoutonParam" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../image/param.png" />
+               </image>
+            </ImageView>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints fillHeight="false" maxHeight="140.0" minHeight="140.0" prefHeight="140.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="137.0" minHeight="92.0" prefHeight="92.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="98.0" minHeight="16.0" prefHeight="46.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="202.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </children>
+</AnchorPane>
