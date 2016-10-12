@@ -12,6 +12,10 @@ package session;
 public class Session {
 
     private static String log = null;
+    
+    public Session (){
+        
+    }
 
     public Session(String LOG) {
         if (log == null) {
