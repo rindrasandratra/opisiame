@@ -24,11 +24,11 @@
             <TableView fx:id="Tableau" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" GridPane.rowIndex="1">
               <columns>
                 <TableColumn prefWidth="34.0" />
-                <TableColumn fx:id="Identifiant" prefWidth="116.0" text="Identifiant" />
+                <TableColumn fx:id="id" prefWidth="116.0" text="Identifiant" />
                   <TableColumn fx:id="Nom" prefWidth="166.0" text="Nom" />
                   <TableColumn fx:id="Prenom" prefWidth="155.0" text="Prénom" />
                   <TableColumn fx:id="Filiere" prefWidth="55.0" text="filière" />
-                  <TableColumn fx:id="Annee" prefWidth="56.0" text="année" />
+                  <TableColumn fx:id="Annee" prefWidth="56.0" text="Année" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
