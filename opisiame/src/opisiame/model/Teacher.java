@@ -24,28 +24,47 @@ public class Teacher {
     }
 
     public Teacher(IntegerProperty ID, StringProperty NOM, StringProperty PRENOM, StringProperty LOGIN, StringProperty PASSWD) {
-        id = ID;
-        nom = NOM;
-        prenom = PRENOM;
-        login = LOGIN;
-        passwd = PASSWD;
+        this.id = ID;
+        this.nom = NOM;
+        this.prenom = PRENOM;
+        this.login = LOGIN;
+        this.passwd = PASSWD;
     }
 
-    //accesseur
+    //accesseurs
     public Integer getId() {
         return id.get();
+    }    
+    public void setId(Integer id) {
+        this.id.set(id);
     }
+    
     public String getNom(){
         return nom.get();
+    }    
+    public void setNom(String nom) {
+        this.nom.set(nom);
     }
+    
     public String getPrenom(){
         return prenom.get();
     }
+    public void setPrenom(String prenom) {
+        this.prenom.set(prenom);
+    }
+    
     public String getlogin(){
         return login.get();
     }
+    public void setLogin(String login) {
+        this.login.set(login);
+    }
+    
     public String getPasswd(){
         return passwd.get();
+    }
+    public void setPasswd(String Passwd) {
+        this.passwd.set(Passwd);
     }
 
 }
