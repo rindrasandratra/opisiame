@@ -7,12 +7,16 @@ package opisiame.controller.gestion_eleve;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
+import javafx.collections.*;
 import javafx.fxml.*;
-import javafx.fxml.Initializable;
 import javafx.scene.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.*;
+import opisiame.database.*;
+import opisiame.model.Eleve;
 
 /**
  * FXML Controller class
@@ -23,7 +27,39 @@ public class Liste_eleves_adminController implements Initializable {
 
     @FXML
     private AnchorPane content;
+    @FXML
+    private TableView<Eleve> Tableau;
+    @FXML
+    private TableColumn<Eleve, Boolean> Action;
+    @FXML
+    private TableColumn<Eleve, Integer> Identifiant;
+    @FXML
+    private TableColumn<Eleve, String> Nom;
+    @FXML
+    private TableColumn<Eleve, String> Prenom;
+    @FXML
+    private TableColumn<Eleve, String> Filiere;
+    @FXML
+    private TableColumn<Eleve, Integer> Annee;
     
+    
+     /*
+    Fonction qui récupère la liste des quizs
+     */
+    public ObservableList<Eleve> getAllEleve() {
+        ObservableList<Eleve> eleves = FXCollections.observableArrayList();
+        Connection connection = Connection_db.getDatabase();
+        Eleve etudiant = new Eleve();
+        
+        
+        
+        return eleves;
+    }
+    
+            
+       
+    
+    //Boutton de retour
     @FXML
     public void ClicBoutonRetour() throws IOException {
         //Retour sur la fenetre menu
