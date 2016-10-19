@@ -35,6 +35,8 @@ public class ModifParamController implements Initializable {
 
     }
 
+    
+    //injection des éléments graphiques
     @FXML
     private AnchorPane content;
     @FXML
