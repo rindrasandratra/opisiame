@@ -27,10 +27,9 @@ public class opisiameFXMain extends Application {
         stage.setTitle("OPI'SIAME");
         stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/opisiame/css/style.css");
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
+       // stage.setResizable(false);
     }
 
     /**

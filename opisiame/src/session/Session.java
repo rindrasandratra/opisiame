@@ -13,6 +13,15 @@ public class Session {
 
     private static String log = null;
     private static String type = null;// admin ou anim
+    private static Integer anim_id = null;// anim
+
+    public static Integer getAnim_id() {
+        return anim_id;
+    }
+
+    public static void setAnim_id(Integer anim_id) {
+        Session.anim_id = anim_id;
+    }
     
     public Session (){
         
