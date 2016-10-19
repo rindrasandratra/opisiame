@@ -126,6 +126,12 @@ public class Liste_quizController implements Initializable {
                 @Override
                 public void handle(ActionEvent t) {
                     edit_quiz();
+                    Button bt = (Button)t.getSource();
+                   // System.out.println(btn_delete.getParent().getParent().toString());
+                    
+                    
+                   // System.out.println("index : "+bt.getParent().getParent().toString());
+                    
                 }
             });
             btn_delete.setOnAction(new EventHandler<ActionEvent>() {
@@ -188,7 +194,11 @@ public class Liste_quizController implements Initializable {
 
     public void delete_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Delete_quizController delete_controller = fxmlLoader.<Delete_quizController>getController();
+            delete_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmation de suppression");
@@ -210,6 +220,24 @@ public class Liste_quizController implements Initializable {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Détail quiz");
+            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    public void ajout_quiz(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/nouveau_quiz.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout quiz");
             stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
             Scene scene = new Scene(root);
             stage.setScene(scene);
