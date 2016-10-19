@@ -16,7 +16,7 @@ public class Prof {
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty nom = new SimpleStringProperty();
     private StringProperty prenom = new SimpleStringProperty();
-    private StringProperty login1;
+    private StringProperty lg = new SimpleStringProperty();
     private StringProperty passwd = new SimpleStringProperty();
 
     //Constructeurs
@@ -27,7 +27,7 @@ public class Prof {
         this.id = ID;
         this.nom = NOM;
         this.prenom = PRENOM;
-        this.login1 = LOGIN;
+        this.lg = LOGIN;
         this.passwd = PASSWD;
     }
 
@@ -53,12 +53,11 @@ public class Prof {
         this.prenom.set(prenom);
     }
     
-    public String getlogin(){
-        return login1.get();
+    public String getLg(){
+        return lg.get();
     }
-    public void setLogin(String login) {
-        login1 = new SimpleStringProperty();
-        this.login1.set(login);
+    public void setLg(String lg) {
+        this.lg.set(lg);
     }
     
     public String getPasswd(){
