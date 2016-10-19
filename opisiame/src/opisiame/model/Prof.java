@@ -11,23 +11,23 @@ import javafx.beans.property.*;
  *
  * @author clement
  */
-public class Teacher {
+public class Prof {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty nom = new SimpleStringProperty();
     private StringProperty prenom = new SimpleStringProperty();
-    private StringProperty login = new SimpleStringProperty();
+    private StringProperty login1;
     private StringProperty passwd = new SimpleStringProperty();
 
     //Constructeurs
-    public Teacher() {
+    public Prof() {
     }
 
-    public Teacher(IntegerProperty ID, StringProperty NOM, StringProperty PRENOM, StringProperty LOGIN, StringProperty PASSWD) {
+    public Prof(IntegerProperty ID, StringProperty NOM, StringProperty PRENOM, StringProperty LOGIN, StringProperty PASSWD) {
         this.id = ID;
         this.nom = NOM;
         this.prenom = PRENOM;
-        this.login = LOGIN;
+        this.login1 = LOGIN;
         this.passwd = PASSWD;
     }
 
@@ -54,10 +54,11 @@ public class Teacher {
     }
     
     public String getlogin(){
-        return login.get();
+        return login1.get();
     }
     public void setLogin(String login) {
-        this.login.set(login);
+        login1 = new SimpleStringProperty();
+        this.login1.set(login);
     }
     
     public String getPasswd(){
