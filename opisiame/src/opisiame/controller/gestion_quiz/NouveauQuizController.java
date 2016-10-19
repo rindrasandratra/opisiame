@@ -42,6 +42,16 @@ public class NouveauQuizController implements Initializable {
 
     @FXML
     private Label label_number_timer_error;
+    
+    private TableView<Quiz> t_liste_quiz;
+
+    public TableView<Quiz> getT_liste_quiz() {
+        return t_liste_quiz;
+    }
+
+    public void setT_liste_quiz(TableView<Quiz> t_liste_quiz) {
+        this.t_liste_quiz = t_liste_quiz;
+    }
 
     @FXML
     public void check_timer() {
@@ -66,6 +76,7 @@ public class NouveauQuizController implements Initializable {
 
     @FXML
     public void btn_valider() {
+        //System.out.println(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
         String nom = nom_quiz.getText();
         String value_timer = timer.getText();
         Boolean champ_ok = true;
@@ -96,9 +107,9 @@ public class NouveauQuizController implements Initializable {
     public void insert_new_quiz(String value_nom, String value_timer) {
         String SQL;
         if (value_timer.compareTo("") != 0) {
-            SQL = "INSERT INTO QUIZ (Quiz_nom,Quiz_timer,Anim_id) VALUES (?,?,?)";
+            SQL = "INSERT INTO quiz (Quiz_nom,Quiz_timer,Anim_id) VALUES (?,?,?)";
         } else {
-            SQL = "INSERT INTO QUIZ (Quiz_nom,Anim_id) VALUES (?,?)";
+            SQL = "INSERT INTO quiz (Quiz_nom,Anim_id) VALUES (?,?)";
         }
         try {
             Connection connection = Connection_db.getDatabase();

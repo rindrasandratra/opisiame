@@ -210,7 +210,7 @@ public class Liste_quizController implements Initializable {
             stage.setResizable(false);
             stage.show();
             
-            stage.setOnHiding(new EventHandler<WindowEvent>() {
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
@@ -261,7 +261,7 @@ public class Liste_quizController implements Initializable {
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.show();
             
-            stage.setOnHiding(new EventHandler<WindowEvent>() {
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
