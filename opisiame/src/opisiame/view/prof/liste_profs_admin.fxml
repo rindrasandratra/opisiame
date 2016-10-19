@@ -18,9 +18,9 @@
          </columnResizePolicy>
          <columns>
             <TableColumn fx:id="c_id_prof" editable="false" minWidth="-Infinity" prefWidth="62.0" text="ID" />
-            <TableColumn fx:id="c_login" editable="false" text="Login" />
             <TableColumn fx:id="c_nom_prof" prefWidth="163.0" text="Nom" />
             <TableColumn fx:id="c_prenom_prof" editable="false" text="Prénom" />
+            <TableColumn fx:id="c_login" editable="false" text="Login" />
             <TableColumn fx:id="c_actions_prof" editable="false" minWidth="-Infinity" text="Actions" />
          </columns>
          <effect>
