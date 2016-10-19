@@ -166,7 +166,7 @@ public class Liste_quizController implements Initializable {
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
                 btn_detail.setGraphic(new ImageView(img_detail));
 
-                box.setPadding(new Insets(5, 0, 5, 0));
+                box.setPadding(new Insets(5, 0, 5, 0));//ajout de marge à l'interieur du bouton
                 // box.setPrefColumns(1);
                 box.getChildren().add(btn_edit);
                 box.getChildren().add(btn_delete);
