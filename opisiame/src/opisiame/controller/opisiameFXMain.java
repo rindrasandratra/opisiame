@@ -23,13 +23,13 @@ public class opisiameFXMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/liste_quiz.fxml"));
         stage.setTitle("OPI'SIAME");
         stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/opisiame/css/style.css");
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
+       // stage.setResizable(false);
     }
 
     /**

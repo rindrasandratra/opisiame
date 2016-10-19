@@ -54,11 +54,9 @@ public class Liste_profs_adminController implements Initializable {
                 prof.setId(rs.getInt(1));
                 prof.setNom(rs.getString(2));
                 prof.setPrenom(rs.getString(3));
-                prof.setLogin(rs.getString(4));
-               // prof.setPasswd(rs.getString(5));
+                prof.setLg(rs.getString(4));
                 profs.add(prof);
             }
-           // System.out.println(profs.get(1).getlogin());
                 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -75,8 +73,7 @@ public class Liste_profs_adminController implements Initializable {
         c_id_prof.setCellValueFactory(new PropertyValueFactory<Prof, Integer>("id"));
         c_nom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("nom"));
         c_prenom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("prenom"));
-        c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("login1"));
-       // c_actions_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("passwd"));
+        c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("lg"));
         t_liste_prof.setItems(getAllProf());
     }
 
