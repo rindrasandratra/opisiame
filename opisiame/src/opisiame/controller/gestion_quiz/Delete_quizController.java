@@ -52,6 +52,8 @@ public class Delete_quizController implements Initializable {
             if (succes == 0) {
                 System.err.println("Erreur lors de la suppression du quiz");
             }
+            Stage stage = (Stage) content.getScene().getWindow();
+            stage.close();
         } catch (SQLException ex) {
             Logger.getLogger(Delete_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }

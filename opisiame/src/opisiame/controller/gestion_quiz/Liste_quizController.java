@@ -30,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import opisiame.database.*;
 import opisiame.model.*;
@@ -208,10 +209,25 @@ public class Liste_quizController implements Initializable {
             stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
             stage.setResizable(false);
             stage.show();
+            
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    update_tableau();
+                }
+            });
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void update_tableau(){
+         //t_liste_quiz.getColumns().get(0).setVisible(false);
+         t_liste_quiz.getItems().clear();
+         t_liste_quiz.setItems(getAllquiz());
+         //t_liste_quiz.getColumns().get(0).setVisible(true);
+         System.out.println("arrrrrrrrrrrrrrgggggggggggg");
     }
 
     public void detail_quiz() {
@@ -241,8 +257,16 @@ public class Liste_quizController implements Initializable {
             stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.show();
+            
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    update_tableau();
+                }
+            });
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);

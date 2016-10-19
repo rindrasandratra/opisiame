@@ -54,11 +54,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField focusTraversable="false" promptText="Cherche un quiz" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#ajout_quiz" prefHeight="25.0" prefWidth="93.0" text="Ajout quiz" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <TextField focusTraversable="false" prefHeight="34.0" prefWidth="217.0" promptText="Cherche un quiz" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#ajout_quiz" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: blue;" text="Ajout quiz" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <padding>

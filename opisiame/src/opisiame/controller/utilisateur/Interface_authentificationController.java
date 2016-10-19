@@ -64,29 +64,32 @@ public class Interface_authentificationController implements Initializable {
         pslog.setString(1, log);
         pslog.setString(2, pass);
         ResultSet logres = pslog.executeQuery();
-        while (logres.next()){
+        while (logres.next()) {
             count1 = logres.getInt("total");
         }
-        if (count1 == 1){ok = 1;}
-        
+        if (count1 == 1) {
+            ok = 1;
+        }
+
         PreparedStatement pslog2 = database.prepareStatement("SELECT COUNT(*) AS total2 FROM animateur WHERE Anim_login = ? and Anim_mdp = ?");
         pslog2.setString(1, log);
         pslog2.setString(2, pass);
         ResultSet logres2 = pslog2.executeQuery();
-        while (logres2.next()){
+        while (logres2.next()) {
             count2 = logres2.getInt("total2");
         }
-        if (count2 == 1){ok = 2;}
-        
-        
-       return ok;
+        if (count2 == 1) {
+            ok = 2;
+        }
+
+        return ok;
     }
-      
+
     @FXML
     public void Submit_passwd() throws IOException, SQLException {
 
         if (lecture_admin() == 1) {
-            
+
             final String log = Login_field.getText();
             Session login = new Session(log, "admin");
             Stage stage = (Stage) content.getScene().getWindow();
@@ -94,19 +97,37 @@ public class Interface_authentificationController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        }
-        else if (lecture_admin() == 2) {
-            
+        } else if (lecture_admin() == 2) {
+
             final String log = Login_field.getText();
             Session login = new Session(log, "anim");
+            Session.setAnim_id(get_anim_id(log));
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+        } else {
+            Message_field.setText("erreur d'authentification");
+            Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");
         }
-        else {Message_field.setText("erreur d'authentification");
-        Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");}
+    }
+
+    Integer get_anim_id(String log) {
+        Integer anim_id = null;
+        Connection connexion = null;
+        PreparedStatement ps;
+        try {
+            Connection connection = Connection_db.getDatabase();
+            ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_login = ?");
+            ps.setString(1, log);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                anim_id = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anim_id;
     }
 }
-
