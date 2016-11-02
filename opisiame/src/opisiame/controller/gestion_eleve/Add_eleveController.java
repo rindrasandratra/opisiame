@@ -35,6 +35,14 @@ public class Add_eleveController implements Initializable {
     private ComboBox Choix_Flilere;
     @FXML
     private ComboBox Choix_annee;
+    @FXML
+    private Label PasOkNom;
+    @FXML
+    private Label PasOkFiliere;
+    @FXML
+    private Label PasOkAnnee;
+    @FXML
+    private Label PasOkPrenom;
 
     private List<String> liste_Filiere = new ArrayList<>();//contient les champs filiere pour les combobox
     private List<Integer> liste_Annee = new ArrayList<>(); //contient les champs Année pour les combobox
@@ -74,8 +82,6 @@ public class Add_eleveController implements Initializable {
 
     }
 
-    
-    
     //remplissage combobox annee
     void remplissage_annee() {
         Connection database = Connection_db.getDatabase();
@@ -100,10 +106,28 @@ public class Add_eleveController implements Initializable {
         }
 
     }
-    
-    
+
     @FXML
-    void Clic_Valider() throws IOException{
-        System.out.println("kcg");
+    void Clic_Valider() throws IOException {
+        int ok = 1;
+        if (Edit_Nom.getText().equals("")) {
+            PasOkNom.setText("*");
+            ok = 0;
+        }
+        
+        if (Choix_Flilere.getSelectionModel().isEmpty()) {
+            PasOkFiliere.setText("*");
+            ok = 0;
+        }
+        if (Choix_annee.getSelectionModel().isEmpty()) {
+            PasOkAnnee.setText("*");
+            ok = 0;
+        }
+        
+        if (Edit_Prenom.getText().equals("")){
+            PasOkPrenom.setText("*");
+            ok = 0;
+        }
+        //System.out.println(Choix_Flilere.getValue().toString());
     }
 }
