@@ -78,6 +78,7 @@ public class Edit_profController implements Initializable {
     public void btn_valider() throws IOException {
 
         try {
+            //met à jour la base de données
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement("UPDATE animateur SET Anim_nom = ?, Anim_prenom = ?, Anim_login = ? WHERE Anim_id = ?");
             ps.setString(1, nom.getText());
@@ -85,7 +86,8 @@ public class Edit_profController implements Initializable {
             ps.setString(3, lg.getText());
             ps.setInt(4, anim_id);
             ps.executeUpdate();
-
+            
+            //ferme la fenêtre
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
             Scene scene = new Scene(root);

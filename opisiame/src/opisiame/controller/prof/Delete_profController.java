@@ -5,10 +5,14 @@
  */
 package opisiame.controller.prof;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,43 +28,48 @@ import opisiame.database.Connection_db;
  * @author Audrey
  */
 public class Delete_profController implements Initializable {
+
 /**
      * Initializes the controller class.
      */
-    private Integer prof_id;
-
     @FXML
     private AnchorPane content;
 
-    public void setProf_id(Integer prof_id) {
-        this.prof_id = prof_id;
+    private List<Integer> liste_supr = new ArrayList<>();
+
+    public void setAnim_id(List liste_id) {
+        this.liste_supr = liste_id;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        // TODO
     }
 
     @FXML
-    public void btn_confirm_action() {
+    public void Confirmer() throws IOException {
+        ListIterator<Integer> i = liste_supr.listIterator();
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM animateur WHERE Anim_id = ?");
-            ps.setInt(1, prof_id);
-            int succes = ps.executeUpdate();
-            if (succes == 0) {
-                System.err.println("Erreur lors de la suppression ddes animateurs");
-            }
-            Stage stage = (Stage) content.getScene().getWindow();
-            stage.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Delete_profController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            while (i.hasNext()) {
+                int supr = i.next();
+                PreparedStatement requette;
 
+                requette = connection.prepareStatement("DELETE FROM animateur WHERE Anim_id = ?");
+                requette.setInt(1, supr);
+                requette.executeUpdate();
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
-    public void btn_cancel_action() {
+    public void Annuler() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
     }

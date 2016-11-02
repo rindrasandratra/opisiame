@@ -25,6 +25,8 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
+import opisiame.controller.gestion_eleve.Delete_eleveController;
+import opisiame.controller.gestion_eleve.Liste_eleves_adminController;
 import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.database.Connection_db;
 import opisiame.model.Prof;
@@ -158,7 +160,7 @@ public class Liste_profs_adminController implements Initializable {
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    
+
                     editer_prof();
                 }
             });
@@ -184,39 +186,35 @@ public class Liste_profs_adminController implements Initializable {
         }
     }
 
-    
-    
     public void editer_prof() {
         try {
-            
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
-            Parent root = (Parent)fxmlLoader.load();        
+            Parent root = (Parent) fxmlLoader.load();
             Edit_profController edit_controller = fxmlLoader.<Edit_profController>getController();
             int animID = t_liste_prof.getSelectionModel().getSelectedItem().getId();
             edit_controller.setAnim_id(animID);
-            
-            
+
             URL url = fxmlLoader.getLocation();
             ResourceBundle rb = fxmlLoader.getResources();
-            edit_controller.initialize(url,rb);
-            
+            edit_controller.initialize(url, rb);
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Modification");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_prof.getScene().getWindow());
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
-            
+
             stage.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
                 }
             });
-            
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,7 +253,42 @@ public class Liste_profs_adminController implements Initializable {
 
     @FXML
     public void ClicBoutonSupprSelec() throws IOException {
-        //ouvrir delete_prof
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/delete_prof.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Delete_profController delete_controller = fxmlLoader.<Delete_profController>getController();
+            delete_controller.setAnim_id(liste_supr);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Confirmation de suppression");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    try {
+                        Stage stage = (Stage) content.getScene().getWindow();
+                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @FXML
