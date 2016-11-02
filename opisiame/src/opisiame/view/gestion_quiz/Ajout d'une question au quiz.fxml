@@ -50,7 +50,7 @@
             <Button alignment="CENTER" centerShape="false" mnemonicParsing="false" style="-fx-background-color: #10cc00;" text="Terminer" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="12" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" text="Ajouter une image" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" text="Ajouter une question" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <TextField alignment="TOP_LEFT" prefHeight="251.0" prefWidth="281.0" promptText="Ennoncé de la question" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="3" />
+            <TextField alignment="TOP_LEFT" prefHeight="251.0" prefWidth="281.0" promptText="Enoncé de la question" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="3" />
             <Label text="Timer" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField alignment="TOP_LEFT" GridPane.columnIndex="11" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <Separator prefHeight="0.0" prefWidth="331.0" style="-fx-background-color: #10cc00;" GridPane.columnIndex="7" GridPane.columnSpan="7" GridPane.rowIndex="1">

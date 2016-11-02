@@ -52,15 +52,15 @@
                   <Image url="@../../image/retour.png" />
                </image>
             </ImageView>
-            <Label text="Date de creation" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+            <Label text="Date de création" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
             <Label text="Timer" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Label text="Numbre de question" GridPane.columnIndex="3" GridPane.columnSpan="5" GridPane.rowIndex="3" />
+            <Label text="Nombre de questions" GridPane.columnIndex="3" GridPane.columnSpan="5" GridPane.rowIndex="3" />
             <TextField GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="2" />
             <TextField GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="3" />
             <ImageView fitHeight="94.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../../../../../../../Desktop/img_quiz.jpg" />
+                  <Image url="@../../image/img_quiz.jpg" />
                </image>
             </ImageView>
             <Separator prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: #10cc00;" GridPane.columnIndex="3" GridPane.columnSpan="5" GridPane.rowIndex="1">

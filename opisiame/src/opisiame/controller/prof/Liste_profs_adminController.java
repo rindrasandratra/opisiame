@@ -25,9 +25,7 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
-import opisiame.controller.gestion_eleve.Delete_eleveController;
-import opisiame.controller.gestion_eleve.Liste_eleves_adminController;
-import opisiame.controller.gestion_quiz.Liste_quizController;
+import opisiame.controller.gestion_eleve.*;
 import opisiame.database.Connection_db;
 import opisiame.model.Prof;
 
@@ -57,6 +55,7 @@ public class Liste_profs_adminController implements Initializable {
     private TableColumn<Prof, Boolean> c_selec;
     @FXML
     private TextField Champ_recherche;
+    
 
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
@@ -145,7 +144,7 @@ public class Liste_profs_adminController implements Initializable {
 
     public void Rechercher() throws IOException {
         Cont_recherche = Champ_recherche.getText();
-        System.out.println(Cont_recherche);
+        //System.out.println(Cont_recherche);
         update_tableau();
 
         //appel de la fonction initialize, permet d'afficher correctement les checkbox/boutons
@@ -325,6 +324,53 @@ public class Liste_profs_adminController implements Initializable {
         }
 
     }
+    
+    
+    
+    
+    
+    @FXML
+    public void ToutSupprimer() throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/delete_all.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Delete_allController delete_controller = fxmlLoader.<Delete_allController>getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Confirmation de suppression");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    try {
+                        Stage stage = (Stage) content.getScene().getWindow();
+                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(true);
+                        stage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+    
+    
 
     @FXML
     public void ClicBoutonAjoutAnim() throws IOException {
