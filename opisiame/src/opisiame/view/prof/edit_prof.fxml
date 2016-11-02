@@ -46,7 +46,7 @@
             </Text>
             <ImageView fitHeight="131.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../../image/edit.png" />
+                  <Image url="@../../image/edit2.png" />
                </image>
             </ImageView>
             <TextField fx:id="nom" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />

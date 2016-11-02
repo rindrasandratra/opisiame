@@ -55,15 +55,35 @@ public class Liste_profs_adminController implements Initializable {
     private TableColumn<Prof, Boolean> c_actions_prof;
     @FXML
     private TableColumn<Prof, Boolean> c_selec;
+    @FXML
+    private TextField Champ_recherche;
 
     private List<Integer> liste_supr = new ArrayList<>();
+    private String Cont_recherche = null;
 
     //récupération de la liste des profs dans la BDD, et affichage
     public ObservableList<Prof> getAllProf() {
+
         ObservableList<Prof> profs = FXCollections.observableArrayList();
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM animateur");
+            liste_supr.clear();
+            PreparedStatement ps;
+
+            if (Cont_recherche != null) {
+                ps = connection.prepareStatement("SELECT * FROM animateur \n"
+                        + "WHERE Anim_id LIKE ?\n"
+                        + "OR Anim_nom LIKE ?\n"
+                        + "OR Anim_prenom LIKE ?\n"
+                        + "OR Anim_login LIKE ?\n");
+                ps.setString(1, "%" + Cont_recherche + "%");
+                ps.setString(2, "%" + Cont_recherche + "%");
+                ps.setString(3, "%" + Cont_recherche + "%");
+                ps.setString(4, "%" + Cont_recherche + "%");
+            } else {
+                ps = connection.prepareStatement("SELECT * FROM animateur");
+            }
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Prof prof = new Prof();
@@ -120,6 +140,20 @@ public class Liste_profs_adminController implements Initializable {
                 return new Liste_profs_adminController.CheckBoxCell();
             }
         });
+
+    }
+
+    public void Rechercher() throws IOException {
+        Cont_recherche = Champ_recherche.getText();
+        System.out.println(Cont_recherche);
+        update_tableau();
+
+        //appel de la fonction initialize, permet d'afficher correctement les checkbox/boutons
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        URL url = fxmlLoader.getLocation();
+        ResourceBundle rb = fxmlLoader.getResources();
+        this.initialize(url, rb);
 
     }
 
@@ -249,6 +283,7 @@ public class Liste_profs_adminController implements Initializable {
     public void update_tableau() {
         t_liste_prof.getItems().clear();
         t_liste_prof.setItems(getAllProf());
+
     }
 
     @FXML
@@ -277,7 +312,7 @@ public class Liste_profs_adminController implements Initializable {
                         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
-                        stage.setResizable(false);
+                        stage.setResizable(true);
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
