@@ -69,7 +69,7 @@
             <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefWidth="134.0" style="-fx-background-color: cc0000;" text="Supprimer la sélection" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#ClicBoutonSupprSelec" prefWidth="134.0" style="-fx-background-color: cc0000;" text="Supprimer la sélection" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Rechercher" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
       <!--         <padding>
                   <Insets right="20.0" />
@@ -93,7 +93,7 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" prefWidth="129.0" style="-fx-background-color: #87CEFA;" text="Importer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" prefWidth="129.0" style="-fx-background-color: #7CFC00;" text="Ajouter un animateur" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button mnemonicParsing="false" onMouseClicked="#ClicBoutonAjoutAnim" prefWidth="129.0" style="-fx-background-color: #7CFC00;" text="Ajouter un animateur" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </children>

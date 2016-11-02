@@ -54,6 +54,8 @@ public class Liste_profs_adminController implements Initializable {
     @FXML
     private TableColumn<Prof, Boolean> c_selec;
 
+    private List<Integer> liste_supr = new ArrayList<>();
+
     //récupération de la liste des profs dans la BDD, et affichage
     public ObservableList<Prof> getAllProf() {
         ObservableList<Prof> profs = FXCollections.observableArrayList();
@@ -109,31 +111,58 @@ public class Liste_profs_adminController implements Initializable {
             }
 
         });
-        
-        
+
+        c_selec.setCellFactory(new Callback<TableColumn<Prof, Boolean>, TableCell<Prof, Boolean>>() {
+            @Override
+            public TableCell<Prof, Boolean> call(TableColumn<Prof, Boolean> param) {
+                return new Liste_profs_adminController.CheckBoxCell();
+            }
+        });
 
     }
+
+    private class CheckBoxCell extends TableCell<Prof, Boolean> {
+
+        final CheckBox check = new CheckBox();
+
+        CheckBoxCell() {
+            check.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (check.isSelected()) {
+                        Integer id = t_liste_prof.getSelectionModel().getSelectedItem().getId();
+                        liste_supr.add(id);
+                    }
+                }
+            });
+        }
+
+        //Affichage des boutons
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                HBox lay = new HBox(1);
+                lay.getChildren().add(check);
+                setGraphic(lay);
+            }
+        }
+    };
 
     //Define the button cell
     private class ButtonCell extends TableCell<Prof, Boolean> {
 
         final Button btn_edit = new Button();
-        final Button btn_delete = new Button();
 
         ButtonCell() {
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    //t_liste_prof.getSelectionModel().select
+                    
                     editer_prof();
                 }
             });
-            btn_delete.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    supprimer_prof();
-                }
-            });
+
         }
 
         //Display button if the row is not empty
@@ -147,49 +176,50 @@ public class Liste_profs_adminController implements Initializable {
                 Image img_edit = new Image(getClass().getResourceAsStream("/opisiame/image/edit.png"), 20, 20, true, true);
                 btn_edit.setGraphic(new ImageView(img_edit));
 
-                Image img_delete = new Image(getClass().getResourceAsStream("/opisiame/image/delete.png"), 20, 20, true, true);
-                btn_delete.setGraphic(new ImageView(img_delete));
-
                 box.setPadding(new Insets(5, 0, 5, 0));
                 // box.setPrefColumns(1);
                 box.getChildren().add(btn_edit);
-                box.getChildren().add(btn_delete);
                 setGraphic(box);
             }
         }
     }
 
+    
+    
     public void editer_prof() {
         try {
-
-            Stage stage = (Stage) content.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void supprimer_prof() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/delete_prof.fxml"));
+            
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
+            Parent root = (Parent)fxmlLoader.load();        
+            Edit_profController edit_controller = fxmlLoader.<Edit_profController>getController();
+            int animID = t_liste_prof.getSelectionModel().getSelectedItem().getId();
+            edit_controller.setAnim_id(animID);
+            
+            
+            URL url = fxmlLoader.getLocation();
+            ResourceBundle rb = fxmlLoader.getResources();
+            edit_controller.initialize(url,rb);
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmation de suppression");
+            stage.setTitle("Modification");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_prof.getScene().getWindow());
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
             stage.setResizable(false);
             stage.show();
+            
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    update_tableau();
+                }
+            });
+            
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -218,20 +248,40 @@ public class Liste_profs_adminController implements Initializable {
         stage.show();
     }
 
+    public void update_tableau() {
+        t_liste_prof.getItems().clear();
+        t_liste_prof.setItems(getAllProf());
+    }
+
     @FXML
     public void ClicBoutonSupprSelec() throws IOException {
-        //cf clément
+        //ouvrir delete_prof
     }
 
     @FXML
     public void ClicBoutonAjoutAnim() throws IOException {
-        //ouverture fenêtre menu_anim
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/ajout_prof.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/ajout_prof.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout animateur");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.show();
+
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    update_tableau();
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

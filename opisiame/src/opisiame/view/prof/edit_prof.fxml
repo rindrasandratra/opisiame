@@ -33,25 +33,25 @@
                </font>
             </Text>
             <TextField fx:id="id" editable="false" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" text="Valider" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <Button fx:id="btn_valider" mnemonicParsing="false" onMouseClicked="#btn_valider" prefHeight="52.0" prefWidth="191.0" text="Valider" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
             </Button>
             <Label fx:id="Msg" prefHeight="23.0" prefWidth="403.0" textFill="RED" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-            <PasswordField fx:id="nom" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <PasswordField fx:id="prenom" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
             </Text>
-            <PasswordField fx:id="lg" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <ImageView fitHeight="131.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../../image/edit.png" />
                </image>
             </ImageView>
+            <TextField fx:id="nom" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <TextField fx:id="prenom" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <TextField fx:id="lg" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="105.0" />
