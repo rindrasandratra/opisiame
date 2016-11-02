@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -99,5 +98,11 @@ public class Add_eleveController implements Initializable {
             Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    
+    
+    void Clic_Valider(){
+        
     }
 }
