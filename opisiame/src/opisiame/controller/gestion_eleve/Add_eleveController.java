@@ -5,6 +5,7 @@
  */
 package opisiame.controller.gestion_eleve;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.*;
@@ -101,8 +102,8 @@ public class Add_eleveController implements Initializable {
     }
     
     
-    
-    void Clic_Valider(){
-        
+    @FXML
+    void Clic_Valider() throws IOException{
+        System.out.println("kcg");
     }
 }
