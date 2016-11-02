@@ -6,8 +6,17 @@
 package opisiame.controller.gestion_eleve;
 
 import java.net.URL;
+import java.sql.*;
+import java.util.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
+import javafx.fxml.*;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import opisiame.database.*;
 
 /**
  * FXML Controller class
@@ -16,12 +25,79 @@ import javafx.fxml.Initializable;
  */
 public class Add_eleveController implements Initializable {
 
+    @FXML
+    private AnchorPane content;
+    @FXML
+    private TextField Edit_Nom;
+    @FXML
+    private TextField Edit_Prenom;
+    @FXML
+    private ComboBox Choix_Flilere;
+    @FXML
+    private ComboBox Choix_annee;
+
+    private List<String> liste_Filiere = new ArrayList<>();//contient les champs filiere pour les combobox
+    private List<Integer> liste_Annee = new ArrayList<>(); //contient les champs Année pour les combobox
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        remplissage_filiere();
+        remplissage_annee();
+
+    }
+
+    //remplissage combobox filiere
+    void remplissage_filiere() {
+        Connection database = Connection_db.getDatabase();
+        PreparedStatement req;
+        try {
+            req = database.prepareStatement("SELECT Filiere From filiere");
+            ResultSet res = req.executeQuery();
+            while (res.next()) {
+                String fil = res.getString(1);
+                liste_Filiere.add(fil);
+                for (int i = 0; i < liste_Filiere.size(); ++i) {
+                    //remplissage du combobox
+                    if (!Choix_Flilere.getItems().contains(liste_Filiere.get(i))) {
+                        Choix_Flilere.getItems().add(liste_Filiere.get(i));
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     
+    
+    //remplissage combobox annee
+    void remplissage_annee() {
+        Connection database = Connection_db.getDatabase();
+        PreparedStatement req;
+        try {
+            req = database.prepareStatement("SELECT Annee From filiere");
+            ResultSet res = req.executeQuery();
+            while (res.next()) {
+                Integer ann = res.getInt(1);
+                liste_Annee.add(ann);
+                for (int i = 0; i < liste_Annee.size(); ++i) {
+                    //remplissage du combobox
+                    if (!Choix_annee.getItems().contains(liste_Annee.get(i))) {
+                        System.out.println(liste_Annee.get(i));
+                        Choix_annee.getItems().add(liste_Annee.get(i));
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

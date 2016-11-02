@@ -101,7 +101,7 @@
                     </rowConstraints>
                      <children>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #87CEFA;" text="Importer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button mnemonicParsing="false" style="-fx-background-color: #7CFC00;" text="Ajouter un élève" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#Clic_ajout_eleve" style="-fx-background-color: #7CFC00;" text="Ajouter un élève" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </children>

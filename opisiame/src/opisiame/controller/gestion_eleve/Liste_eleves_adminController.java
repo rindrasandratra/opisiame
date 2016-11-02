@@ -67,24 +67,25 @@ public class Liste_eleves_adminController implements Initializable {
             Connection connection = Connection_db.getDatabase();
             liste_supr.clear();
             PreparedStatement requette;
-                    
+
             if (Cont_recherche != null) {
-            requette = connection.prepareStatement("SELECT participant.Part_id, participant.Part_nom, participant.Part_prenom, filiere.Filiere, filiere.Annee FROM participant \n"
-                    + "LEFT JOIN filiere \n"
-                    + "ON filiere.Filiere_ID = participant.Filiere_id\n"
-                    + "WHERE participant.Part_id LIKE ?\n"
-                    + "OR participant.Part_nom LIKE ?\n"
-                    + "OR participant.Part_prenom LIKE ?\n"
-                    + "OR filiere.Filiere LIKE ?\n"
-                    + "OR filiere.Annee LIKE ?");
-            requette.setString(1, "%" + Cont_recherche + "%");
-            requette.setString(2, "%" + Cont_recherche + "%");
-            requette.setString(3, "%" + Cont_recherche + "%");
-            requette.setString(4, "%" + Cont_recherche + "%");
-            requette.setString(5, "%" + Cont_recherche + "%");}
-            else {requette = connection.prepareStatement("SELECT participant.Part_id, participant.Part_nom, participant.Part_prenom, filiere.Filiere, filiere.Annee FROM participant \n"
-                    + "LEFT JOIN filiere \n"
-                    + "ON filiere.Filiere_ID = participant.Filiere_id");
+                requette = connection.prepareStatement("SELECT participant.Part_id, participant.Part_nom, participant.Part_prenom, filiere.Filiere, filiere.Annee FROM participant \n"
+                        + "LEFT JOIN filiere \n"
+                        + "ON filiere.Filiere_ID = participant.Filiere_id\n"
+                        + "WHERE participant.Part_id LIKE ?\n"
+                        + "OR participant.Part_nom LIKE ?\n"
+                        + "OR participant.Part_prenom LIKE ?\n"
+                        + "OR filiere.Filiere LIKE ?\n"
+                        + "OR filiere.Annee LIKE ?");
+                requette.setString(1, "%" + Cont_recherche + "%");
+                requette.setString(2, "%" + Cont_recherche + "%");
+                requette.setString(3, "%" + Cont_recherche + "%");
+                requette.setString(4, "%" + Cont_recherche + "%");
+                requette.setString(5, "%" + Cont_recherche + "%");
+            } else {
+                requette = connection.prepareStatement("SELECT participant.Part_id, participant.Part_nom, participant.Part_prenom, filiere.Filiere, filiere.Annee FROM participant \n"
+                        + "LEFT JOIN filiere \n"
+                        + "ON filiere.Filiere_ID = participant.Filiere_id");
             }
             ResultSet res_requette = requette.executeQuery();
             while (res_requette.next()) {
@@ -97,7 +98,6 @@ public class Liste_eleves_adminController implements Initializable {
                 eleves.add(etudiant);
                 //System.out.println(etudiant.getId());
             }
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -161,7 +161,7 @@ public class Liste_eleves_adminController implements Initializable {
                 HBox lay = new HBox(1);
                 lay.getChildren().add(check);
                 setGraphic(lay);
-                System.out.print("J'ai mis les bouttons à jour :)");
+                //System.out.print("J'ai mis les bouttons à jour :)");
             }
         }
     };
@@ -169,7 +169,11 @@ public class Liste_eleves_adminController implements Initializable {
     public void update_tableau() {
         Tableau.getItems().clear();
         eleves.clear();
-        getAllEleve(/*eleves*/);
+        //getAllEleve(/*eleves*/);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/eleve/Liste_eleves_adminController.fxml"));
+        URL url = fxmlLoader.getLocation();
+        ResourceBundle rb = fxmlLoader.getResources();
+        this.initialize(url, rb);
         Tableau.setItems(eleves);
         System.out.println("Le tableau a été mis à jour");
     }
@@ -184,20 +188,20 @@ public class Liste_eleves_adminController implements Initializable {
         System.out.println("appuie bouton supprimer");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/Delete_eleve.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             Delete_eleveController delete_controller = fxmlLoader.<Delete_eleveController>getController();
             delete_controller.setEleve_id(liste_supr);
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmation de suppression");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(Tableau.getScene().getWindow());
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
-            
+
             stage.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
@@ -217,7 +221,7 @@ public class Liste_eleves_adminController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
-  
+
     }
 
     //Boutton de retour
@@ -238,6 +242,18 @@ public class Liste_eleves_adminController implements Initializable {
         //Retour sur la fenetre d'identification
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        session.Session.Logout();
+    }
+
+    @FXML
+    public void Clic_ajout_eleve() throws IOException {
+        //Retour sur la fenetre d'identification
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/Add_eleve.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

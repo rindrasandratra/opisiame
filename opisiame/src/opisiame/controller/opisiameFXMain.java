@@ -23,7 +23,7 @@ public class opisiameFXMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
         stage.setTitle("OPI'SIAME");
         stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
         Scene scene = new Scene(root);
