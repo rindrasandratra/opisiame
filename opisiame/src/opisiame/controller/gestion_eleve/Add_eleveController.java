@@ -16,6 +16,7 @@ import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import opisiame.database.*;
 
 /**
@@ -114,7 +115,7 @@ public class Add_eleveController implements Initializable {
             PasOkNom.setText("*");
             ok = 0;
         }
-        
+
         if (Choix_Flilere.getSelectionModel().isEmpty()) {
             PasOkFiliere.setText("*");
             ok = 0;
@@ -123,10 +124,32 @@ public class Add_eleveController implements Initializable {
             PasOkAnnee.setText("*");
             ok = 0;
         }
-        
-        if (Edit_Prenom.getText().equals("")){
+
+        if (Edit_Prenom.getText().equals("")) {
             PasOkPrenom.setText("*");
             ok = 0;
+        }
+        if (ok == 1) {
+            String NOM = Edit_Nom.getText();
+            String PRENOM = Edit_Prenom.getText();
+            String FILIERE = Choix_Flilere.getValue().toString();
+            Integer ANNEE = Integer.valueOf(Choix_annee.getValue().toString());
+
+            //remplissage de la base de données
+            try {
+                Connection connection = Connection_db.getDatabase();
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO participant (Part_nom, Part_prenom, Filiere_id) "
+                        + "VALUES ( ?, ?, (SELECT Filiere_id FROM filiere Where Filiere = ? AND Annee = ? ) )");
+                ps.setString(1, NOM);
+                ps.setString(2, PRENOM);
+                ps.setString(3, FILIERE);
+                ps.setInt(4, ANNEE);
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            Stage stage = (Stage) content.getScene().getWindow();
+            stage.close();
         }
         //System.out.println(Choix_Flilere.getValue().toString());
     }

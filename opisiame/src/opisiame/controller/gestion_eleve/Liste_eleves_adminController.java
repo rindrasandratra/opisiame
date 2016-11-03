@@ -251,14 +251,35 @@ public class Liste_eleves_adminController implements Initializable {
 
     @FXML
     public void Clic_ajout_eleve() throws IOException {
-        //Retour sur la fenetre d'identification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/Add_eleve.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/Add_eleve.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Add_eleveController add_controller = fxmlLoader.<Add_eleveController>getController();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Ajouter un élève");
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        //stage.initOwner(Tableau.getScene().getWindow());
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         stage.setResizable(false);
         stage.show();
-        session.Session.Logout();
+
+        stage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                try {
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
 }
