@@ -51,7 +51,7 @@ public class Menu_animController implements Initializable {
     public void ClicBoutonNouveauQuiz() throws IOException {
         //ouvre la fenêtre liste_eleves_admin
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/NouveauQuiz.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/nouveau_quiz.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
@@ -62,7 +62,7 @@ public class Menu_animController implements Initializable {
     public void ClicBoutonRésultatsQuiz() throws IOException {
         //ouvre la fenêtre liste_profs_admin
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/ResultatsQuiz.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/Resultats.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
