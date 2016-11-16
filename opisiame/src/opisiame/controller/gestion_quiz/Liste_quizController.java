@@ -41,6 +41,8 @@ public class Liste_quizController implements Initializable {
     Injection des élèments depuis la vue (fichier fxml) dans le code (à partir de fx:id)
      */
     @FXML
+    private GridPane content;
+    @FXML
     private TableView<Quiz> t_liste_quiz; // ex: fx:id de la tableView dans FXML builder est aussi t_liste_quiz (c'est pour les lier)
     @FXML
     private TableColumn<Quiz, String> nom_quiz;
@@ -286,4 +288,34 @@ public class Liste_quizController implements Initializable {
         t_liste_quiz.getItems().clear();
         t_liste_quiz.setItems(quizs);
     }
+    
+    
+        //Clic bouton on/off
+    @FXML
+    public void ClicImageOnOff() throws IOException {
+        //Retour sur la fenetre d'identification
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        session.Session.Logout();
+    }
+    
+    
+    //Clic bouton de retour
+    @FXML
+    public void ClicBoutonRetour() throws IOException {
+        //Retour sur la fenetre menu
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+    }
+    
+    
+    
 }
