@@ -3,51 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller.gestion_quiz;
+package opisiame.controller.prof;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
-import opisiame.dao.*;
+import opisiame.database.Connection_db;
 
 /**
  * FXML Controller class
  *
- * @author Sandratra
+ * @author Audrey
  */
-public class Delete_quizController implements Initializable {
+public class Delete_allController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    private Integer quiz_id;
-
     @FXML
     private AnchorPane content;
 
-    Quiz_dao quiz_dao = new Quiz_dao();
-
-    public void setQuiz_id(Integer quiz_id) {
-        this.quiz_id = quiz_id;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        // TODO
     }
 
     @FXML
-    public void btn_confirm_action() {
-        quiz_dao.delete_quiz(quiz_id);
+    public void Confirmer() throws IOException {
+        try {
+            Connection connection = Connection_db.getDatabase();
+
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM animateur");
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void btn_cancel_action() {
+    public void Annuler() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
     }

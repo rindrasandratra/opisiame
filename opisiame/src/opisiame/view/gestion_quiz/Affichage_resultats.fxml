@@ -20,7 +20,7 @@
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="288.0" valignment="CENTER" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Affichage des réusltats" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Affichage des résultats" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
             <font>
                 <Font name="Gill Sans MT" size="24.0" />
             </font>
@@ -64,7 +64,7 @@
             <Insets right="20.0" />
          </GridPane.margin>
       </Button>
-      <ComboBox prefWidth="150.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+      <ComboBox prefWidth="150.0" promptText="Sélectionner le quiz" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin>

@@ -36,11 +36,6 @@
                   <Font name="Gill Sans MT" size="24.0" />
                </font>
             </Text>
-            <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.columnSpan="2">
-               <image>
-                  <Image url="@../../image/on_off.png" />
-               </image>
-            </ImageView>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#voir_questions" prefHeight="30.0" prefWidth="137.0" style="-fx-background-color: #10cc00;" text="Voir le questionnaire" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="45.0" />
@@ -58,7 +53,9 @@
                </cursor></Button>
             <Label text="Date de creation" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
             <Label text="Timer" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+
             <Label text="Nombre de question" GridPane.columnIndex="3" GridPane.columnSpan="5" GridPane.rowIndex="3" />
+
             <ImageView fitHeight="94.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
                   <Image url="@../../image/img_quiz.jpg" />

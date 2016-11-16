@@ -7,13 +7,11 @@ package opisiame.controller.gestion_quiz;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,19 +20,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
 import javafx.util.Callback;
-import opisiame.database.*;
+import opisiame.dao.Quiz_dao;
 import opisiame.model.*;
 
 /**
@@ -61,29 +54,14 @@ public class Liste_quizController implements Initializable {
     private TableColumn<Quiz, Integer> timer;
     @FXML
     private TextField txt_search;
+    
+    Quiz_dao quiz_dao = new Quiz_dao();
 
     /*
     Fonction qui récupère la liste des quizs
      */
     public ObservableList<Quiz> getAllquiz() {
-        ObservableList<Quiz> quizs = FXCollections.observableArrayList();
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Quiz quiz = new Quiz();
-                quiz.setId(rs.getInt(1));
-                quiz.setNom(rs.getString(2));
-                quiz.setDate_creation(rs.getString(3));
-                quiz.setTimer(rs.getInt(4));
-                quizs.add(quiz);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return quizs;
+        return quiz_dao.getAllquiz();
     }
 
     /*
@@ -303,31 +281,8 @@ public class Liste_quizController implements Initializable {
     @FXML
     public void search_quiz(){
         String str = txt_search.getText();
-        ObservableList<Quiz> quizs = search_quiz_sql(str);
+        ObservableList<Quiz> quizs = quiz_dao.search_quiz_sql(str);
         t_liste_quiz.getItems().clear();
         t_liste_quiz.setItems(quizs);
-    }
-    public ObservableList<Quiz> search_quiz_sql(String str){
-        ObservableList<Quiz> quizs = FXCollections.observableArrayList();
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz WHERE Quiz_id LIKE ? OR Quiz_nom LIKE ? OR Quiz_timer LIKE ? OR CAST(Quiz_date_creation AS CHAR) LIKE ?");
-            ps.setString(1, "%"+str+"%");
-            ps.setString(2, "%"+str+"%");
-            ps.setString(3, "%"+str+"%");
-            ps.setString(4, "%"+str+"%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Quiz quiz = new Quiz();
-                quiz.setId(rs.getInt(1));
-                quiz.setNom(rs.getString(2));
-                quiz.setDate_creation(rs.getString(3));
-                quiz.setTimer(rs.getInt(4));
-                quizs.add(quiz);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return quizs;
     }
 }

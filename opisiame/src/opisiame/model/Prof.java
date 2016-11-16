@@ -18,6 +18,7 @@ public class Prof {
     private StringProperty prenom = new SimpleStringProperty();
     private StringProperty lg = new SimpleStringProperty();
     private StringProperty passwd = new SimpleStringProperty();
+    private BooleanProperty check = new SimpleBooleanProperty();
 
     //Constructeurs
     public Prof() {

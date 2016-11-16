@@ -21,16 +21,16 @@
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Réusltats ET 01" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Résultats ET 01" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
             <font>
                 <Font name="Gill Sans MT" size="24.0" />
             </font>
         </Text>
         <TableView fx:id="t_liste_quiz" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="250.0" prefWidth="560.0" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="id" editable="false" minWidth="-Infinity" text="Identifiant élève" />
-                <TableColumn fx:id="nom_quiz" text="Pourcentage" />
-                <TableColumn fx:id="date" editable="false" text="Note/20" />
+                <TableColumn fx:id="id" editable="false" minWidth="-Infinity" text="Question" />
+                <TableColumn fx:id="nom_quiz" text="Réponse" />
+                <TableColumn fx:id="date" editable="false" text="Bonne réponse" />
             </columns>
 
                      <GridPane.margin>

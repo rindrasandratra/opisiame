@@ -5,29 +5,14 @@
  */
 package opisiame.controller.gestion_quiz;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import opisiame.database.Connection_db;
+import opisiame.dao.Quiz_dao;
 import opisiame.model.Quiz;
-import session.Session;
 
 /**
  * FXML Controller class
@@ -35,7 +20,7 @@ import session.Session;
  * @author Sandratra
  */
 public class Edit_quizController implements Initializable {
-    
+
     private Integer quiz_id;
 
     @FXML
@@ -55,7 +40,9 @@ public class Edit_quizController implements Initializable {
 
     @FXML
     private Label label_number_timer_error;
-    
+
+    Quiz_dao quiz_dao = new Quiz_dao();
+
     private TableView<Quiz> t_liste_quiz;
 
     public TableView<Quiz> getT_liste_quiz() {
@@ -65,34 +52,19 @@ public class Edit_quizController implements Initializable {
     public void setT_liste_quiz(TableView<Quiz> t_liste_quiz) {
         this.t_liste_quiz = t_liste_quiz;
     }
-    
+
     public void setQuiz_id(Integer quiz_id) {
         this.quiz_id = quiz_id;
         get_quiz_by_id();
     }
-    
-    public void get_quiz_by_id(){
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz WHERE Quiz_id = ? ");
-            ps.setInt(1, this.quiz_id);
-            ResultSet rs = ps.executeQuery();
-            Quiz quiz = new Quiz();
-            while (rs.next()) {
-                quiz.setId(rs.getInt(1));
-                quiz.setNom(rs.getString(2));
-                quiz.setDate_creation(rs.getString(3));
-                quiz.setTimer(rs.getInt(4));
-            }
-            nom_quiz.setText(quiz.getNom());
-            if (quiz.getTimer() !=  0)
-            {
-                chkb_timer.setSelected(true);
-                timer.setDisable(false);
-                timer.setText((quiz.getTimer()).toString());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Delete_quizController.class.getName()).log(Level.SEVERE, null, ex);
+
+    public void get_quiz_by_id() {
+        Quiz quiz = quiz_dao.get_quiz_by_id(this.quiz_id);
+        nom_quiz.setText(quiz.getNom());
+        if (quiz.getTimer() != 0) {
+            chkb_timer.setSelected(true);
+            timer.setDisable(false);
+            timer.setText((quiz.getTimer()).toString());
         }
     }
 
@@ -148,30 +120,9 @@ public class Edit_quizController implements Initializable {
     }
 
     public void update_quiz(String value_nom, String value_timer) {
-        String SQL;
-        if (value_timer.compareTo("") != 0) {
-            SQL = "UPDATE quiz SET Quiz_nom = ?, Quiz_timer = ? WHERE Quiz_id = ?";
-        } else {
-            SQL = "UPDATE quiz SET Quiz_nom = ? WHERE Quiz_id = ?";
-        }
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement(SQL);
-            Integer num = 1;
-            ps.setString(num++, value_nom);
-            if (value_timer.compareTo("") != 0) {
-                ps.setInt(num++, Integer.valueOf(value_timer));
-            } 
-            ps.setInt(num,this.quiz_id);
-            int succes = ps.executeUpdate();
-            if (succes == 0) {
-                System.err.println("Échec de la modification du quiz, aucune ligne modifiée dans la table.");
-            }
-            Stage stage = (Stage) nom_quiz.getScene().getWindow();
-            stage.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        quiz_dao.update_quiz(this.quiz_id, value_nom, value_timer);
+        Stage stage = (Stage) nom_quiz.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
