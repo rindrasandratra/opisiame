@@ -6,17 +6,12 @@
 package opisiame.controller.gestion_quiz;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
-import opisiame.database.Connection_db;
+import opisiame.dao.*;
 
 /**
  * FXML Controller class
@@ -33,6 +28,8 @@ public class Delete_quizController implements Initializable {
     @FXML
     private AnchorPane content;
 
+    Quiz_dao quiz_dao = new Quiz_dao();
+
     public void setQuiz_id(Integer quiz_id) {
         this.quiz_id = quiz_id;
     }
@@ -44,20 +41,9 @@ public class Delete_quizController implements Initializable {
 
     @FXML
     public void btn_confirm_action() {
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM quiz WHERE Quiz_id = ?");
-            ps.setInt(1, quiz_id);
-            int succes = ps.executeUpdate();
-            if (succes == 0) {
-                System.err.println("Erreur lors de la suppression du quiz");
-            }
-            Stage stage = (Stage) content.getScene().getWindow();
-            stage.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Delete_quizController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        quiz_dao.delete_quiz(quiz_id);
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

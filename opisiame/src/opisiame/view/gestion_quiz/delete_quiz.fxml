@@ -32,6 +32,9 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#btn_cancel_action" style="-fx-background-color: red;" text="Annuler" textFill="WHITE">
                      <HBox.margin>
@@ -40,6 +43,9 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>

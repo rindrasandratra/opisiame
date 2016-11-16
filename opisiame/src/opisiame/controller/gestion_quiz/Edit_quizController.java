@@ -7,7 +7,12 @@ package opisiame.controller.gestion_quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import opisiame.dao.Quiz_dao;
+import opisiame.model.Quiz;
 
 /**
  * FXML Controller class
@@ -16,12 +21,121 @@ import javafx.fxml.Initializable;
  */
 public class Edit_quizController implements Initializable {
 
+    private Integer quiz_id;
+
+    @FXML
+    private TextField nom_quiz;
+
+    @FXML
+    private TextField timer;
+
+    @FXML
+    private CheckBox chkb_timer;
+
+    @FXML
+    private Label label_error_login;
+
+    @FXML
+    private Label label_error_timer;
+
+    @FXML
+    private Label label_number_timer_error;
+
+    Quiz_dao quiz_dao = new Quiz_dao();
+
+    private TableView<Quiz> t_liste_quiz;
+
+    public TableView<Quiz> getT_liste_quiz() {
+        return t_liste_quiz;
+    }
+
+    public void setT_liste_quiz(TableView<Quiz> t_liste_quiz) {
+        this.t_liste_quiz = t_liste_quiz;
+    }
+
+    public void setQuiz_id(Integer quiz_id) {
+        this.quiz_id = quiz_id;
+        get_quiz_by_id();
+    }
+
+    public void get_quiz_by_id() {
+        Quiz quiz = quiz_dao.get_quiz_by_id(this.quiz_id);
+        nom_quiz.setText(quiz.getNom());
+        if (quiz.getTimer() != 0) {
+            chkb_timer.setSelected(true);
+            timer.setDisable(false);
+            timer.setText((quiz.getTimer()).toString());
+        }
+    }
+
+    @FXML
+    public void check_timer() {
+        if (chkb_timer.isSelected()) {
+            timer.setDisable(false);
+        } else {
+            timer.setDisable(true);
+            label_error_timer.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void nom_set_label_error_not_visible() {
+        label_error_login.setVisible(false);
+    }
+
+    @FXML
+    public void timer_set_label_error_not_visible() {
+        label_error_timer.setVisible(false);
+        label_number_timer_error.setVisible(false);
+    }
+
+    @FXML
+    public void btn_valider() {
+        //System.out.println(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+        String nom = nom_quiz.getText();
+        String value_timer = timer.getText();
+        Boolean champ_ok = true;
+        if (nom.compareTo("") == 0) {
+            label_error_login.setVisible(true);
+            champ_ok = false;
+        }
+        if ((chkb_timer.isSelected()) && (value_timer.compareTo("") == 0)) {
+            label_error_timer.setVisible(true);
+            champ_ok = false;
+        }
+        if (!validate_number(value_timer)) {
+            label_number_timer_error.setVisible(true);
+            champ_ok = false;
+        }
+        if (champ_ok == true) {
+            label_error_login.setVisible(false);
+            label_error_timer.setVisible(false);
+            label_number_timer_error.setVisible(false);
+            update_quiz(nom, value_timer);
+        }
+    }
+
+    private boolean validate_number(String str) {
+        return str.matches("[0-9]*");
+    }
+
+    public void update_quiz(String value_nom, String value_timer) {
+        quiz_dao.update_quiz(this.quiz_id, value_nom, value_timer);
+        Stage stage = (Stage) nom_quiz.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void btn_close() {
+        Stage stage = (Stage) nom_quiz.getScene().getWindow();
+        stage.close();
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
 }

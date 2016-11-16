@@ -7,13 +7,11 @@ package opisiame.controller.gestion_quiz;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,18 +19,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
 import javafx.util.Callback;
-import opisiame.database.*;
+import opisiame.dao.Quiz_dao;
 import opisiame.model.*;
 
 /**
@@ -55,28 +50,18 @@ public class Liste_quizController implements Initializable {
     private TableColumn<Quiz, Integer> id;
     @FXML
     private TableColumn<Quiz, Boolean> actionCol;
+    @FXML
+    private TableColumn<Quiz, Integer> timer;
+    @FXML
+    private TextField txt_search;
+    
+    Quiz_dao quiz_dao = new Quiz_dao();
 
     /*
     Fonction qui récupère la liste des quizs
      */
     public ObservableList<Quiz> getAllquiz() {
-        ObservableList<Quiz> quizs = FXCollections.observableArrayList();
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Quiz quiz = new Quiz();
-                quiz.setId(rs.getInt(1));
-                quiz.setNom(rs.getString(2));
-                quiz.setDate_creation(rs.getString(3));
-                quizs.add(quiz);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return quizs;
+        return quiz_dao.getAllquiz();
     }
 
     /*
@@ -89,11 +74,9 @@ public class Liste_quizController implements Initializable {
         nom_quiz.setCellValueFactory(new PropertyValueFactory<Quiz, String>("nom"));
         date.setCellValueFactory(new PropertyValueFactory<Quiz, String>("date_creation"));
         id.setCellValueFactory(new PropertyValueFactory<Quiz, Integer>("id"));
+        timer.setCellValueFactory(new PropertyValueFactory<Quiz, Integer>("timer"));
         t_liste_quiz.setItems(getAllquiz());
 
-        //Insert Button
-//        TableColumn col_action = new TableColumn<>("Action");
-//        col_action.setSortable(false);
         actionCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Quiz, Boolean>, ObservableValue<Boolean>>() {
 
@@ -123,16 +106,23 @@ public class Liste_quizController implements Initializable {
         final Button btn_detail = new Button();
 
         ButtonCell() {
+            btn_edit.setStyle("-fx-background-color: gray");
+            btn_edit.setCursor(Cursor.HAND);
+            
+            btn_detail.setStyle("-fx-background-color: green");
+            btn_detail.setCursor(Cursor.HAND);
+            
+            btn_delete.setStyle("-fx-background-color: red");
+            btn_delete.setCursor(Cursor.HAND);
+            
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     edit_quiz();
-                    Button bt = (Button)t.getSource();
-                   // System.out.println(btn_delete.getParent().getParent().toString());
-                    
-                    
-                   // System.out.println("index : "+bt.getParent().getParent().toString());
-                    
+                    Button bt = (Button) t.getSource();
+                    // System.out.println(btn_delete.getParent().getParent().toString());
+
+                    // System.out.println("index : "+bt.getParent().getParent().toString());
                 }
             });
             btn_delete.setOnAction(new EventHandler<ActionEvent>() {
@@ -156,6 +146,8 @@ public class Liste_quizController implements Initializable {
             if (!empty) {
 
                 HBox box = new HBox(3);
+                
+                box.setAlignment(Pos.CENTER);
 
                 Image img_edit = new Image(getClass().getResourceAsStream("/opisiame/image/edit.png"), 20, 20, true, true);
                 btn_edit.setGraphic(new ImageView(img_edit));
@@ -168,9 +160,9 @@ public class Liste_quizController implements Initializable {
 
                 box.setPadding(new Insets(5, 0, 5, 0));//ajout de marge à l'interieur du bouton
                 // box.setPrefColumns(1);
+                box.getChildren().add(btn_detail);
                 box.getChildren().add(btn_edit);
                 box.getChildren().add(btn_delete);
-                box.getChildren().add(btn_detail);
                 setGraphic(box);
             }
         }
@@ -178,15 +170,26 @@ public class Liste_quizController implements Initializable {
 
     public void edit_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/edit_quiz.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_quiz.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Edit_quizController edit_controller = fxmlLoader.<Edit_quizController>getController();
+            edit_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setTitle("Modifier quiz");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.show();
+            
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    update_tableau();
+                }
+            });
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,21 +199,21 @@ public class Liste_quizController implements Initializable {
     public void delete_quiz() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             Delete_quizController delete_controller = fxmlLoader.<Delete_quizController>getController();
             delete_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmation de suppression");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
-            
-            stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
@@ -221,22 +224,23 @@ public class Liste_quizController implements Initializable {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void update_tableau(){
-         //t_liste_quiz.getColumns().get(0).setVisible(false);
-         t_liste_quiz.getItems().clear();
-         t_liste_quiz.setItems(getAllquiz());
-         //t_liste_quiz.getColumns().get(0).setVisible(true);
-         System.out.println("arrrrrrrrrrrrrrgggggggggggg");
+
+    public void update_tableau() {
+        t_liste_quiz.getItems().clear();
+        t_liste_quiz.setItems(getAllquiz());
     }
 
     public void detail_quiz() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/detail_quiz.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affichage_quiz.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Affichage_quizController detail_controller = fxmlLoader.<Affichage_quizController>getController();
+            detail_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Détail quiz");
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
@@ -246,22 +250,22 @@ public class Liste_quizController implements Initializable {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
-    public void ajout_quiz(){
+    public void ajout_quiz() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/nouveau_quiz.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Ajout quiz");
-            stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.show();
-            
-            stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
@@ -271,5 +275,14 @@ public class Liste_quizController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+        
+    @FXML
+    public void search_quiz(){
+        String str = txt_search.getText();
+        ObservableList<Quiz> quizs = quiz_dao.search_quiz_sql(str);
+        t_liste_quiz.getItems().clear();
+        t_liste_quiz.setItems(quizs);
     }
 }

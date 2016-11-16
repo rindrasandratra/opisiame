@@ -6,17 +6,13 @@
 package opisiame.controller.gestion_quiz;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import opisiame.database.Connection_db;
+import opisiame.dao.Quiz_dao;
 import opisiame.model.Quiz;
-import session.Session;
 
 /**
  * FXML Controller class
@@ -43,6 +39,18 @@ public class NouveauQuizController implements Initializable {
     @FXML
     private Label label_number_timer_error;
 
+    Quiz_dao quiz_dao = new Quiz_dao();
+
+    private TableView<Quiz> t_liste_quiz;
+
+    public TableView<Quiz> getT_liste_quiz() {
+        return t_liste_quiz;
+    }
+
+    public void setT_liste_quiz(TableView<Quiz> t_liste_quiz) {
+        this.t_liste_quiz = t_liste_quiz;
+    }
+
     @FXML
     public void check_timer() {
         if (chkb_timer.isSelected()) {
@@ -66,6 +74,7 @@ public class NouveauQuizController implements Initializable {
 
     @FXML
     public void btn_valider() {
+        //System.out.println(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
         String nom = nom_quiz.getText();
         String value_timer = timer.getText();
         Boolean champ_ok = true;
@@ -94,35 +103,9 @@ public class NouveauQuizController implements Initializable {
     }
 
     public void insert_new_quiz(String value_nom, String value_timer) {
-        String SQL;
-        if (value_timer.compareTo("") != 0) {
-            SQL = "INSERT INTO QUIZ (Quiz_nom,Quiz_timer,Anim_id) VALUES (?,?,?)";
-        } else {
-            SQL = "INSERT INTO QUIZ (Quiz_nom,Anim_id) VALUES (?,?)";
-        }
-        try {
-            Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement(SQL);
-            Integer num = 1;
-            ps.setString(num++, value_nom);
-            if (value_timer.compareTo("") != 0) {
-                ps.setInt(num++, Integer.valueOf(value_timer));
-            } 
-            // à enlever après test :D
-            if (Session.getAnim_id() == null) {
-                ps.setInt(num, 1);
-            } else {
-                ps.setInt(num, Session.getAnim_id());
-            }
-            int succes = ps.executeUpdate();
-            if (succes == 0) {
-                System.err.println("Échec de la création du quiz, aucune ligne ajoutée dans la table.");
-            }
-            Stage stage = (Stage) nom_quiz.getScene().getWindow();
-            stage.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        quiz_dao.insert_new_quiz(value_nom, value_timer);
+        Stage stage = (Stage) nom_quiz.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
