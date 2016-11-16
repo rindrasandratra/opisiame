@@ -95,7 +95,7 @@ public class Import_eleve_excel {
     
 
     private void ouverture_fichier() throws IOException {
-        InputStream is = new FileInputStream("/home/clement/Lycée/2016_2017/plp/test.xlsx");
+        InputStream is = new FileInputStream("D:\\Projet\\ENSIAME 3A\\OPI'SIAME\\code_opisiame\\opisiame\\test.xlsx");
         OPCPackage opc;
         try {
             opc = OPCPackage.open(is);
