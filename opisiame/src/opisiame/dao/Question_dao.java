@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import opisiame.database.Connection_db;
 import opisiame.model.Question;
@@ -21,14 +22,14 @@ public class Question_dao {
 
     public Question_dao() {
     }
-    
+
     Reponse_dao reponse_dao = new Reponse_dao();
-    
-    public ArrayList<Question> get_questions_by_quiz(Integer quiz_id){
+
+    public ArrayList<Question> get_questions_by_quiz(Integer quiz_id) {
         ArrayList<Question> questions = new ArrayList<>();
-        String SQL = "SELECT question.*, souscompetence.SousCompetence  FROM question"+
-                     " JOIN souscompetence ON souscompetence.SousComp_id = question.SousComp_id "+
-                "WHERE Quiz_id = ?";
+        String SQL = "SELECT question.*, souscompetence.SousCompetence  FROM question"
+                + " JOIN souscompetence ON souscompetence.SousComp_id = question.SousComp_id "
+                + "WHERE Quiz_id = ?";
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
@@ -51,8 +52,8 @@ public class Question_dao {
         }
         return questions;
     }
-    
-    public void update_question(Integer id,String libelle, Integer timer, Integer sous_comp_id, String url_img) {
+
+    public void update_question(Integer id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
         String SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ?, Quest_img = ? WHERE Quest_id = ?";
         try {
             Connection connection = Connection_db.getDatabase();
@@ -70,27 +71,33 @@ public class Question_dao {
             e.printStackTrace();
         }
     }
-    
-    public void insert_new_quiz(Integer quest_id,String libelle, Integer timer, Integer sous_comp_id, String url_img) {
+
+    public Integer insert_new_question(Integer quiz_id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
         String SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id, Quest_img) VALUES (?,?,?,?,?)";
+        Integer insert_id = null;
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement(SQL);
+            PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, libelle);
             ps.setInt(2, timer);
-            ps.setInt(3, quest_id);
+            ps.setInt(3, quiz_id);
             ps.setInt(4, sous_comp_id);
             ps.setString(5, url_img);
             int succes = ps.executeUpdate();
             if (succes == 0) {
                 System.err.println("Échec de la création de la question, aucune ligne ajoutée dans la table.");
             }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                insert_id = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return insert_id;
     }
-    
-    public void delete_question(Integer id){
+
+    public void delete_question(Integer id) {
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM question WHERE Quest_id = ?");

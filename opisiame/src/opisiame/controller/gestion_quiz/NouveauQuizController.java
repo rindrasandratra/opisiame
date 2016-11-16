@@ -5,11 +5,19 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import opisiame.dao.Quiz_dao;
 import opisiame.model.Quiz;
@@ -103,9 +111,32 @@ public class NouveauQuizController implements Initializable {
     }
 
     public void insert_new_quiz(String value_nom, String value_timer) {
-        quiz_dao.insert_new_quiz(value_nom, value_timer);
+        Integer id = quiz_dao.insert_new_quiz(value_nom, value_timer);
         Stage stage = (Stage) nom_quiz.getScene().getWindow();
+        add_quiz_question(id);
         stage.close();
+    }
+
+    public void add_quiz_question(Integer id) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/add_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Add_questionController add_question_controller = fxmlLoader.<Add_questionController>getController();
+            add_question_controller.setQuiz_id(id);
+            
+            
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

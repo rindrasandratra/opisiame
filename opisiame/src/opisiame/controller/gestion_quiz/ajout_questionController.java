@@ -45,9 +45,8 @@ public class ajout_questionController implements Initializable {
     private TextField rep_c;
     @FXML
     private TextField rep_d;
-    @FXML
-    private Label label_nb_carac;
-    
+//    @FXML
+//    private Label label_nb_carac;
 
     private List<String> liste_Competence = new ArrayList<>();//contient les champs "competence" pour le combobox
 
@@ -56,7 +55,7 @@ public class ajout_questionController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        get_competences();
+        //get_competences();
     }
 
     //ajout des competences dans le combobox
@@ -65,7 +64,7 @@ public class ajout_questionController implements Initializable {
         Connection database = Connection_db.getDatabase();
         PreparedStatement req;
         try {
-            req = database.prepareStatement("SELECT Competence From compétences");
+            req = database.prepareStatement("SELECT Competence From competences");
             ResultSet res = req.executeQuery();
             while (res.next()) {
                 String comp = res.getString(1);
@@ -83,64 +82,37 @@ public class ajout_questionController implements Initializable {
         }
     }
 
-    @FXML
-    public void ajout_image() throws IOException {
-
-    }
-
-    @FXML
-    public void creation_question() throws IOException {
-
-    }
-
-    @FXML
-    public void valider_quiz() throws IOException {
-
-    }
+//    @FXML
+//    public void ajout_image() throws IOException {
+//
+//    }
+//
+//    @FXML
+//    public void creation_question() throws IOException {
+//
+//    }
+//
+//    @FXML
+//    public void valider_quiz() throws IOException {
+//
+//    }
 
     
     //affiche le nombre de caractères disponibles pour l'énoncé de la question
-    @FXML
-    public void nb_carac_restant() throws IOException{
-        
-        int nb_carac_dispo = 255-(enonce.getLength());
-        
-        label_nb_carac.setText("( " + nb_carac_dispo + " caractère(s) restant(s) )");
-        
-        if (nb_carac_dispo<=0){
-            label_nb_carac.setTextFill(Color.web("#FF0000"));
-        }
-        else {
-            label_nb_carac.setTextFill(Color.web("#000000"));
-        }
-        
-    }
-    
-    
-    //Clic bouton on/off
-    @FXML
-    public void ClicImageOnOff() throws IOException {
-        //Retour sur la fenetre d'identification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-        session.Session.Logout();
-    }
-    
-    
-    //Clic bouton de retour
-    @FXML
-    public void ClicBoutonRetour() throws IOException {
-        //Retour sur la fenetre menu
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
-    }
+//    @FXML
+//    public void nb_carac_restant() throws IOException{
+//        
+//        int nb_carac_dispo = 255-(enonce.getLength());
+//        
+//        label_nb_carac.setText("( " + nb_carac_dispo + " caractère(s) restant(s) )");
+//        
+//        if (nb_carac_dispo<=0){
+//            label_nb_carac.setTextFill(Color.web("#FF0000"));
+//        }
+//        else {
+//            label_nb_carac.setTextFill(Color.web("#000000"));
+//        }
+//        
+//    }
 
 }
