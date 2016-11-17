@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import opisiame.database.Connection_db;
@@ -143,8 +144,9 @@ public class Quiz_dao {
         }
     }
     
-    public void insert_new_quiz(String value_nom, String value_timer) {
+    public Integer insert_new_quiz(String value_nom, String value_timer) {
         String SQL;
+        Integer insert_id = null;
         if (value_timer.compareTo("") != 0) {
             SQL = "INSERT INTO quiz (Quiz_nom,Quiz_timer,Anim_id) VALUES (?,?,?)";
         } else {
@@ -152,7 +154,7 @@ public class Quiz_dao {
         }
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement(SQL);
+            PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             Integer num = 1;
             ps.setString(num++, value_nom);
             if (value_timer.compareTo("") != 0) {
@@ -168,9 +170,14 @@ public class Quiz_dao {
             if (succes == 0) {
                 System.err.println("Échec de la création du quiz, aucune ligne ajoutée dans la table.");
             }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                insert_id = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return insert_id;
     }
     
 }

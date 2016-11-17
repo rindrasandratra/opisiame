@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -40,7 +41,14 @@ public class Edit_profController implements Initializable {
     private TextField prenom;
     @FXML
     private TextField lg;
-
+    @FXML
+    private Label label_nom;
+    @FXML
+    private Label label_prenom;
+    @FXML
+    private Label label_login;
+    
+    
     //vérifier que le login n'existe pas deja dans la table 
     /**
      * Initializes the controller class.
@@ -78,21 +86,86 @@ public class Edit_profController implements Initializable {
     public void btn_valider() throws IOException {
 
         try {
+            
+            label_nom.setText("");
+            label_prenom.setText("");
+            label_login.setText("");
+
+            String nom = this.nom.getText();
+            String prenom = this.prenom.getText();
+            String lg = this.lg.getText();
+            Boolean champ_ok = true;
+            int c1 = 0;
+            int c2 = 0;
+
+            //verif que le nom est bien rempli
+            if (nom.equals("")) {
+                label_nom.setText("*");
+                champ_ok = false;
+            }
+            
+            
+            //verif que le prenom est bien rempli
+            if (prenom.equals("")) {
+                label_prenom.setText("*");
+                champ_ok = false;
+            }
+            
+
+            //verif que le login est bien rempli
+            if (lg.equals("")) {
+                label_login.setText("*");
+                champ_ok = false;
+            }
+            
+
+            //verif que le login n'est pas deja utilise
+            try {
+                Connection connection = Connection_db.getDatabase();
+
+                PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+                ps1.setString(1, lg);
+                ResultSet rs1 = ps1.executeQuery();
+                while (rs1.next()) {
+                    c1 = rs1.getInt("total");
+                }
+
+                PreparedStatement ps2 = connection.prepareStatement("SELECT COUNT(*) AS total FROM administrateur WHERE Admin_login = ?");
+                ps2.setString(1, lg);
+                ResultSet rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    c2 = rs2.getInt("total");
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            if (c1 != 0 || c2 != 0) {
+                label_login.setText("déjà pris");
+                champ_ok = false;
+            }
+            
+            
+            
+            //si tous les champs sont ok, ajout de l'animateur dans la bdd
+        if (champ_ok == true) {
+            label_nom.setText("");
+            label_prenom.setText("");
+            label_login.setText("");
             //met à jour la base de données
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement("UPDATE animateur SET Anim_nom = ?, Anim_prenom = ?, Anim_login = ? WHERE Anim_id = ?");
-            ps.setString(1, nom.getText());
-            ps.setString(2, prenom.getText());
-            ps.setString(3, lg.getText());
+            ps.setString(1, nom);
+            ps.setString(2, prenom);
+            ps.setString(3, lg);
             ps.setInt(4, anim_id);
             ps.executeUpdate();
-            
+
             //ferme la fenêtre
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.close();
+            stage.close();}
 
         } catch (SQLException ex) {
             ex.printStackTrace();

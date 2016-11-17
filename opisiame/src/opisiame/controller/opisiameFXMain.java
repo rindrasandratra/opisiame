@@ -6,7 +6,6 @@
 package opisiame.controller;
 
 import java.io.*;
-import java.util.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,12 +16,10 @@ import opisiame.model.Import_eleve_excel;
 
 /**
  *
- * @author Sandratra
- * programme principal
+ * @author Sandratra programme principal
  */
 public class opisiameFXMain extends Application {
-    
-    
+
     @Override
     public void start(Stage stage) throws IOException {
         
@@ -32,14 +29,15 @@ public class opisiameFXMain extends Application {
         
         
         
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/liste_quiz.fxml"));
         stage.setTitle("OPI'SIAME");
-        stage.getIcons().add( new Image( getClass().getResourceAsStream( "/opisiame/image/icone.png" )));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        //stage.setResizable(false);
         stage.show();
-       // stage.setResizable(false);
     }
 
     /**
@@ -48,5 +46,5 @@ public class opisiameFXMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

@@ -58,6 +58,11 @@ public class Ajout_profController implements Initializable {
 
     @FXML
     public void btn_valider() {
+
+        label_nom.setText("");
+        label_lg.setText("");
+        label_mdp.setText("");
+
         String nom = this.nom.getText();
         String prenom = this.prenom.getText();
         String lg = this.lg.getText();
@@ -120,7 +125,6 @@ public class Ajout_profController implements Initializable {
             //ouverture fenêtre menu_anim            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
-            
 
         }
 
