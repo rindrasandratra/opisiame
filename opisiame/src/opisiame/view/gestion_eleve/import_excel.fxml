@@ -27,19 +27,20 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez indiquer l'adresse du fichier excel ou glisser le fichier" textAlignment="CENTER" wrappingWidth="99.75830078125" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <TextField fx:id="zone_url" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez indiquer l'adresse du fichier excel ou glisser le fichier" textAlignment="CENTER" wrappingWidth="99.75830078125" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <TextField fx:id="zone_url" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Text fill="#207245" strokeType="OUTSIDE" strokeWidth="0.0" text="Importer des élèves" textAlignment="CENTER" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="27.0" />
                </font>
             </Text>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../../image/graphe.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMousePressed="#Valider" style="-fx-background-color: #207245;" text="Valider" textFill="#fffbfb" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" onMousePressed="#Valider" style="-fx-background-color: #207245;" text="Valider" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#explorateur" prefHeight="79.0" prefWidth="129.0" style="-fx-background-color: #207245;" text="Selectionner un fichier" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
