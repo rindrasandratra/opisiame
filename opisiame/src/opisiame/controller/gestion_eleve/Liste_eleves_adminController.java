@@ -145,8 +145,8 @@ public class Liste_eleves_adminController implements Initializable {
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
                         Integer id = Tableau.getSelectionModel().getSelectedItem().getId();
-                        System.out.println(id);
-                        System.out.println(Tableau.getSelectionModel().getSelectedItem().getPrenom());
+                        //System.out.println(id);
+                        //System.out.println(Tableau.getSelectionModel().getSelectedItem().getPrenom());
                         liste_supr.add(id);
                     }
                 }
@@ -175,17 +175,17 @@ public class Liste_eleves_adminController implements Initializable {
         ResourceBundle rb = fxmlLoader.getResources();
         this.initialize(url, rb);
         Tableau.setItems(eleves);
-        System.out.println("Le tableau a été mis à jour");
+        //System.out.println("Le tableau a été mis à jour");
     }
 
     public void Rechercher() {
         Cont_recherche = Champ_recherche.getText();
-        System.out.println(Cont_recherche);
+        //System.out.println(Cont_recherche);
         update_tableau();
     }
 
     public void delete_eleve() {
-        System.out.println("appuie bouton supprimer");
+        //System.out.println("appuie bouton supprimer");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/Delete_eleve.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -282,4 +282,37 @@ public class Liste_eleves_adminController implements Initializable {
         });
     }
 
+    @FXML
+    public void Import_eleve() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/import_excel.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Import_excelController add_controller = fxmlLoader.<Import_excelController>getController();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Importer des élèves");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        //stage.initOwner(Tableau.getScene().getWindow());
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+        stage.setResizable(false);
+        stage.show();
+
+        stage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                try {
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+    }
 }
