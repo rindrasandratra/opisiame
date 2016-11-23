@@ -17,6 +17,7 @@ import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -132,12 +133,7 @@ public class CompetencesController implements Initializable {
         //System.out.println(Cont_recherche);
         update_tableau();
 
-        //appel de la fonction initialize, permet d'afficher correctement les checkbox/boutons
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/competences.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        URL url = fxmlLoader.getLocation();
-        ResourceBundle rb = fxmlLoader.getResources();
-        this.initialize(url, rb);
+        
 
     }
 
@@ -163,7 +159,11 @@ public class CompetencesController implements Initializable {
             super.updateItem(t, empty);
             if (!empty) {
                 HBox lay = new HBox(1);
+
+                lay.setAlignment(Pos.CENTER);
+
                 lay.getChildren().add(check);
+
                 setGraphic(lay);
             }
         }
@@ -194,6 +194,7 @@ public class CompetencesController implements Initializable {
             btn_detail.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
+
                     detail_competence();
                 }
             });
@@ -206,7 +207,9 @@ public class CompetencesController implements Initializable {
             super.updateItem(t, empty);
             if (!empty) {
 
-                HBox box = new HBox(3);
+                HBox box = new HBox(2);
+
+                box.setAlignment(Pos.CENTER);
 
                 Image img_edit = new Image(getClass().getResourceAsStream("/opisiame/image/edit.png"), 20, 20, true, true);
                 btn_edit.setGraphic(new ImageView(img_edit));
@@ -217,19 +220,23 @@ public class CompetencesController implements Initializable {
                 box.setPadding(new Insets(5, 0, 5, 0));
                 // box.setPrefColumns(1);
                 box.getChildren().add(btn_edit);
+                box.getChildren().add(btn_detail);
                 setGraphic(box);
             }
         }
     }
-    
-    
+
     public void detail_competence() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/affichage_sous_competences.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Affichage_sous_competencesController detail_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
-//            detail_controller.setComp_id(t_liste_competence.getSelectionModel().getSelectedItem().getId());
-            
+            Affichage_sous_competencesController aff_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
+
+            //stock l'id de la compétence sélectionnée
+            int compID = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+            aff_controller.setComp_id(compID);
+            aff_controller.update_tableau();
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Sous compétences");
@@ -238,6 +245,7 @@ public class CompetencesController implements Initializable {
             stage.setScene(scene);
             stage.initOwner(t_liste_competence.getScene().getWindow());
             stage.show();
+            
 
         } catch (IOException ex) {
             Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -282,6 +290,7 @@ public class CompetencesController implements Initializable {
     public void update_tableau() {
         t_liste_competence.getItems().clear();
         t_liste_competence.setItems(getAllComp());
+        t_liste_competence.refresh();
 
     }
 

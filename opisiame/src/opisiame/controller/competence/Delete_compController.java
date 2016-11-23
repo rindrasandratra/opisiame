@@ -50,11 +50,11 @@ public class Delete_compController implements Initializable {
             Connection connection = Connection_db.getDatabase();
             while (i.hasNext()) {
                 int supr = i.next();
-                PreparedStatement requette;
+                PreparedStatement requete;
 
-                requette = connection.prepareStatement("DELETE FROM compétences WHERE Comp_id = ?");
-                requette.setInt(1, supr);
-                requette.executeUpdate();
+                requete = connection.prepareStatement("DELETE FROM compétences WHERE Comp_id = ?");
+                requete.setInt(1, supr);
+                requete.executeUpdate();
 
             }
         } catch (SQLException ex) {
