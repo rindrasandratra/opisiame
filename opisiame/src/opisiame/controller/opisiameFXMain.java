@@ -25,7 +25,7 @@ public class opisiameFXMain extends Application {
         
         
         //pour test
-        Import_eleve_excel coucou = new Import_eleve_excel();
+        //Import_eleve_excel coucou = new Import_eleve_excel();
         
         
         
