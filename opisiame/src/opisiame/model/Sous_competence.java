@@ -42,4 +42,8 @@ public class Sous_competence {
     }
     
     
+    @Override
+    public String toString() {
+        return getLibelle();
+    }
 }

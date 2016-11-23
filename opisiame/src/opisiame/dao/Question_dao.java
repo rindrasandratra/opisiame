@@ -5,11 +5,15 @@
  */
 package opisiame.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import opisiame.database.Connection_db;
 import opisiame.model.Question;
@@ -73,16 +77,36 @@ public class Question_dao {
     }
 
     public Integer insert_new_question(Integer quiz_id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
-        String SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id, Quest_img) VALUES (?,?,?,?,?)";
+        String SQL;
+        FileInputStream fis = null;
+        File file = null;
+        System.out.println("url image : "+ url_img);
+        if (url_img.compareTo("") != 0)
+        {
+            SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id, Quest_img) VALUES (?,?,?,?,?)";
+            file = new File(url_img);
+            try {
+                fis = new FileInputStream(file);
+            } catch (FileNotFoundException ex) {
+                System.err.println("Image not found");
+                ex.printStackTrace();
+            }
+        }
+        else
+            SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id) VALUES (?,?,?,?)";
         Integer insert_id = null;
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, libelle);
-            ps.setInt(2, timer);
+            if (timer == null)
+                ps.setNull(2, Types.INTEGER);
+            else
+                ps.setInt(2, timer);
             ps.setInt(3, quiz_id);
             ps.setInt(4, sous_comp_id);
-            ps.setString(5, url_img);
+            if (fis != null)
+                ps.setBinaryStream(5, fis, (int) file.length());
             int succes = ps.executeUpdate();
             if (succes == 0) {
                 System.err.println("Échec de la création de la question, aucune ligne ajoutée dans la table.");

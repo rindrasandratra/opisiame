@@ -316,6 +316,4 @@ public class Liste_quizController implements Initializable {
         stage.show();
     }
     
-    
-    
 }

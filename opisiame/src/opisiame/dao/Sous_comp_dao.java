@@ -9,7 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import opisiame.database.Connection_db;
+import opisiame.model.Competence;
+import opisiame.model.Sous_competence;
 
 /**
  *
@@ -37,5 +41,26 @@ public class Sous_comp_dao {
             e.printStackTrace();
         }
         return insert_id;
+    }
+    
+    public ObservableList<Sous_competence> get_all_sous_competence(Integer comp_id) {
+        ObservableList<Sous_competence> sous_competences = FXCollections.observableArrayList();
+        String SQL = "SELECT *  FROM souscompetence WHERE Comp_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, comp_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Sous_competence sous_competence = new Sous_competence();
+                sous_competence.setId(rs.getInt(1));
+                sous_competence.setLibelle(rs.getString(2));
+                sous_competence.setComp_id(rs.getInt(3));
+                sous_competences.add(sous_competence);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return sous_competences;
     }
 }

@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +21,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import opisiame.dao.Competence_dao;
+import opisiame.model.Competence;
 
 /**
  *
@@ -34,7 +37,7 @@ public class ajout_questionController implements Initializable {
     @FXML
     private TextField sous_comp;
     @FXML
-    private ComboBox competence;
+    private ComboBox combo_competence;
     @FXML
     private TextField timer;
     @FXML
@@ -47,55 +50,42 @@ public class ajout_questionController implements Initializable {
     private TextField rep_d;
 //    @FXML
 //    private Label label_nb_carac;
+    
+    Competence_dao competence_dao = new Competence_dao();
 
-    private List<String> liste_Competence = new ArrayList<>();//contient les champs "competence" pour le combobox
+    private ObservableList<Competence> liste_Competence;//contient les champs "competence" pour le combobox
 
-    
-    
-    
+       
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //get_competences();
+        set_data_combo_competence();
+    }
+    
+    
+    private void set_data_combo_competence() {
+        liste_Competence = competence_dao.get_all_competence();
+        combo_competence.getItems().addAll(liste_Competence);
     }
 
-    //ajout des competences dans le combobox
     @FXML
-    public void get_competences() {
-        Connection database = Connection_db.getDatabase();
-        PreparedStatement req;
-        try {
-            req = database.prepareStatement("SELECT Competence From competences");
-            ResultSet res = req.executeQuery();
-            while (res.next()) {
-                String comp = res.getString(1);
-                liste_Competence.add(comp);
-                for (int i = 0; i < liste_Competence.size(); ++i) {
-                    //remplissage du combobox si la compétence n'y est pas déjà
-                    if (!competence.getItems().contains(liste_Competence.get(i))) {
-                        competence.getItems().add(liste_Competence.get(i));
-                    }
-                }
-            }
+    public void ajout_image() {
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    }
+    
+    @FXML
+    public void delete_image(){
+        
     }
 
-//    @FXML
-//    public void ajout_image() throws IOException {
-//
-//    }
-//
-//    @FXML
-//    public void creation_question() throws IOException {
-//
-//    }
-//
-//    @FXML
-//    public void valider_quiz() throws IOException {
-//
-//    }
+    @FXML
+    public void ajout_question(){
+        
+    }
+    
+    @FXML
+    public void terminer_quiz(){
+        
+    }
 
     
     //affiche le nombre de caractères disponibles pour l'énoncé de la question
@@ -114,5 +104,6 @@ public class ajout_questionController implements Initializable {
 //        }
 //        
 //    }
+
 
 }

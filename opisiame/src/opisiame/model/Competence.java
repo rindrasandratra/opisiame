@@ -45,4 +45,9 @@ public class Competence {
         this.nom.set(nom);
     }
 
+    @Override
+    public String toString() {
+        return getNom();
+    }
+
 }
