@@ -20,6 +20,9 @@ import javafx.scene.control.*;
 import javafx.scene.shape.*;
 import opisiame.database.Connection_db;
 import session.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * FXML Controller class
@@ -50,9 +53,30 @@ public class Interface_authentificationController implements Initializable {
         // TODO
     }
 
+    public static String md5(String input) {
+
+        String md5 = null;
+
+        if (null == input) {
+            return null;
+        }
+
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+            //Converts message digest value in base 16 (hex) 
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5;
+    }
+
     private int lecture_admin() throws SQLException {
         final String log = Login_field.getText();
-        final String pass = Passwd_field.getText();
+        final String pass = md5(Passwd_field.getText());
         int count1 = 0;
         int count2 = 0;
         int ok = 0;
@@ -92,6 +116,7 @@ public class Interface_authentificationController implements Initializable {
 
             final String log = Login_field.getText();
             Session login = new Session(log, "admin");
+            Session.setType("admin");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
@@ -102,6 +127,7 @@ public class Interface_authentificationController implements Initializable {
             final String log = Login_field.getText();
             Session login = new Session(log, "anim");
             Session.setAnim_id(get_anim_id(log));
+            Session.setType("anim");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);

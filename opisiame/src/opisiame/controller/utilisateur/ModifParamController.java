@@ -6,7 +6,9 @@
 package opisiame.controller.utilisateur;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,11 +49,32 @@ public class ModifParamController implements Initializable {
     private PasswordField ConfirmMDP;
     @FXML
     private Label Msg;
+    
+    public static String md5(String input) {
+
+        String md5 = null;
+
+        if (null == input) {
+            return null;
+        }
+
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+            //Converts message digest value in base 16 (hex) 
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5;
+    }
 
     //verification correspondance AncienMDP / login
     private int lecture_admin() throws SQLException {
         final String log = session.Session.getLog();
-        final String pass = AncienMDP.getText();
+        final String pass = md5(AncienMDP.getText());
         int ok = 0;
 
         //vérification du login
@@ -79,7 +102,7 @@ public class ModifParamController implements Initializable {
                 final String pass = NouveauMDP.getText();
                 Connection database = Connection_db.getDatabase();
                 PreparedStatement pslog = database.prepareStatement("UPDATE animateur SET Anim_mdp = ? WHERE Anim_login = ?;");
-                pslog.setString(1, pass);
+                pslog.setString(1, md5(pass));
                 pslog.setString(2, log);
                 pslog.execute();
 

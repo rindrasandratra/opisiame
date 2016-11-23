@@ -12,9 +12,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="content" minHeight="332.0" prefHeight="386.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.utilisateur.Menu_animController">
   <children>
-    <GridPane alignment="CENTER" gridLinesVisible="false" prefHeight="332.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane alignment="CENTER" gridLinesVisible="false" prefHeight="386.0" prefWidth="659.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Button fx:id="Eleves" cancelButton="false" defaultButton="false" mnemonicParsing="false" onMouseClicked="#ClicBoutonNouveauQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-color: adff2f; -fx-background-radius: 202020;" text="Nouveau quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <Button fx:id="Eleves" cancelButton="false" defaultButton="false" mnemonicParsing="false" onMouseClicked="#ClicBoutonNouveauQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-color: adff2f; -fx-background-radius: 202020;" text="Nouveau quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
           <font>
             <Font name="System Bold" size="14.0" fx:id="x1" />
           </font>
@@ -23,36 +23,35 @@
           </GridPane.margin>
         </Button>
         <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonRésultatsQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ff6347;" text="Résultat quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: #87cefa;" text="Liste des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-        <ImageView fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: #87cefa;" text="Liste des quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <ImageView fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <image>
             <Image url="@../../image/opisiame_logo.png" />
           </image>
         </ImageView>
-        <ImageView fitHeight="41.0" fitWidth="45.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <ImageView fitHeight="41.0" fitWidth="45.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
           <image>
             <Image url="@../../image/on_off.png" />
           </image>
         </ImageView>
-            <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#ClicBoutonParam" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#ClicBoutonParam" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../../image/param.png" />
                </image>
             </ImageView>
+            <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: FFD700;" text="Gestion des compétences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="40.0" prefWidth="142.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="183.0" prefWidth="183.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="183.0" prefWidth="183.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="40.0" prefWidth="142.0" />
       </columnConstraints>
       <rowConstraints>
         <RowConstraints fillHeight="false" maxHeight="140.0" minHeight="140.0" prefHeight="140.0" vgrow="NEVER" />
-        <RowConstraints fillHeight="false" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
-        <RowConstraints fillHeight="false" maxHeight="137.0" minHeight="92.0" prefHeight="92.0" vgrow="NEVER" />
-        <RowConstraints fillHeight="false" maxHeight="98.0" minHeight="16.0" prefHeight="46.0" vgrow="NEVER" />
-        <RowConstraints fillHeight="false" maxHeight="202.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+        <RowConstraints fillHeight="false" maxHeight="96.0" minHeight="96.0" prefHeight="96.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="96.0" minHeight="96.0" prefHeight="96.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="55.0" minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>

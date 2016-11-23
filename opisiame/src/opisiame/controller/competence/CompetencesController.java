@@ -27,6 +27,7 @@ import javafx.stage.*;
 import javafx.util.Callback;
 import opisiame.database.Connection_db;
 import opisiame.model.Competence;
+import session.Session;
 
 /**
  * FXML Controller class
@@ -133,8 +134,6 @@ public class CompetencesController implements Initializable {
         //System.out.println(Cont_recherche);
         update_tableau();
 
-        
-
     }
 
     private class CheckBoxCell extends TableCell<Competence, Boolean> {
@@ -146,7 +145,7 @@ public class CompetencesController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+                        Integer id = t_liste_competence.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
                     }
                 }
@@ -233,7 +232,7 @@ public class CompetencesController implements Initializable {
             Affichage_sous_competencesController aff_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
 
             //stock l'id de la compétence sélectionnée
-            int compID = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+            int compID = t_liste_competence.getFocusModel().getFocusedItem().getId();
             aff_controller.setComp_id(compID);
             aff_controller.update_tableau();
 
@@ -245,7 +244,6 @@ public class CompetencesController implements Initializable {
             stage.setScene(scene);
             stage.initOwner(t_liste_competence.getScene().getWindow());
             stage.show();
-            
 
         } catch (IOException ex) {
             Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,7 +256,7 @@ public class CompetencesController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/editer_competence.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Editer_competenceController edit_controller = fxmlLoader.<Editer_competenceController>getController();
-            int compID = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+            int compID = t_liste_competence.getFocusModel().getFocusedItem().getId();
             edit_controller.setComp_id(compID);
 
             URL url = fxmlLoader.getLocation();
@@ -292,31 +290,6 @@ public class CompetencesController implements Initializable {
         t_liste_competence.setItems(getAllComp());
         t_liste_competence.refresh();
 
-    }
-
-    //Clic bouton on/off
-    @FXML
-    public void ClicImageOnOff() throws IOException {
-        //Retour sur la fenetre d'identification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-        session.Session.Logout();
-    }
-
-    //Clic bouton de retour
-    @FXML
-    public void ClicBoutonRetour() throws IOException {
-        //Retour sur la fenetre menu
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
     }
 
     @FXML
@@ -381,6 +354,42 @@ public class CompetencesController implements Initializable {
 
         } catch (IOException ex) {
             Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    //Clic bouton on/off
+    @FXML
+    public void ClicImageOnOff() throws IOException {
+        //Retour sur la fenetre d'identification
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        session.Session.Logout();
+    }
+
+    //Clic bouton de retour
+    @FXML
+    public void ClicBoutonRetour() throws IOException {
+
+        Stage stage = (Stage) content.getScene().getWindow();
+
+        String type = Session.getType();
+        if (type.equals("anim")) {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        } else {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
         }
 
     }

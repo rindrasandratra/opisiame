@@ -1,12 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="opisiame.controller.gestion_resultat.ResultatsQuizController">
-    
-</AnchorPane>
+<GridPane fx:id="content" alignment="TOP_CENTER" maxHeight="500.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.gestion_resultat.ResultatsQuizController">
+   <children>
+      <TableView fx:id="t_liste_prof" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="219.0" prefWidth="580.0" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn editable="false" minWidth="-Infinity" prefWidth="62.0" text="..." />
+            <TableColumn editable="false" minWidth="-Infinity" prefWidth="62.0" text="a" />
+            <TableColumn prefWidth="163.0" text="b" />
+            <TableColumn editable="false" text="c" />
+            <TableColumn editable="false" text="d" />
+            <TableColumn editable="false" minWidth="-Infinity" text="e" />
+         </columns>
+         <effect>
+            <ColorAdjust />
+         </effect>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+      </TableView>
+      <GridPane alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Résultats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Gill Sans MT" size="24.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#ClicImageOnOff" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../image/on_off.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btn_retour" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../image/retour.png" />
+               </image>
+            </ImageView>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="337.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="102.0" minHeight="3.0" prefHeight="3.0" valignment="CENTER" vgrow="ALWAYS" />
+   </rowConstraints>
+</GridPane>

@@ -15,6 +15,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import opisiame.model.Quiz;
@@ -38,6 +39,9 @@ public class Affichage_quizController implements Initializable {
 
     @FXML
     private Label label_nb_quest;
+    
+    @FXML
+    private Text label_titre;
 
     private Integer quiz_id;
 
@@ -50,6 +54,7 @@ public class Affichage_quizController implements Initializable {
 
     public void get_quiz_by_id() {
         Quiz quiz = quiz_dao.get_quiz_by_id(this.quiz_id);
+        label_titre.setText(quiz.getNom());
         label_date.setText(quiz.getDate_creation());
         label_timer.setText((quiz.getTimer()).toString());
         label_nb_quest.setText(String.valueOf(quiz_dao.count_nb_quest(this.quiz_id)));

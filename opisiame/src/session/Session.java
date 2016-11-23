@@ -12,7 +12,7 @@ package session;
 public class Session {
 
     private static String log = null;
-    private static String type = null;// admin ou anim
+    private static String type = null;// admin ou anim 
     private static Integer anim_id = null;// anim
 
     public static Integer getAnim_id() {
@@ -43,6 +43,11 @@ public class Session {
     public static String getType()
     {
         return type;
+    }
+    
+    public static void setType(String t)
+    {
+        type = t;
     }
     
     //fermer une section

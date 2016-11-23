@@ -161,7 +161,7 @@ public class Affichage_sous_competencesController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_souscompetence.getSelectionModel().getSelectedItem().getId();
+                        Integer id = t_liste_souscompetence.getFocusModel().getFocusedItem().getId();                        
                         liste_supr.add(id);
                     }
                 }
@@ -231,7 +231,7 @@ public class Affichage_sous_competencesController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/editer_sous_competence.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Editer_sous_competenceController edit_controller = fxmlLoader.<Editer_sous_competenceController>getController();
-            int compID = t_liste_souscompetence.getSelectionModel().getSelectedItem().getId();
+            int compID = t_liste_souscompetence.getFocusModel().getFocusedItem().getId();
             edit_controller.setSousComp_id(compID);
 
             URL url = fxmlLoader.getLocation();
