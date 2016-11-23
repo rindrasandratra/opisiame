@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import opisiame.database.Connection_db;
@@ -25,19 +27,20 @@ import opisiame.database.Connection_db;
  *
  * @author Audrey
  */
-public class Delete_compController implements Initializable {
-/**
-     * Initializes the controller class.
-     */
+public class Delete_sous_compController implements Initializable {
+
     @FXML
     private AnchorPane content;
 
     private List<Integer> liste_supr = new ArrayList<>();
 
-    public void setComp_id(List liste_id) {
+    public void setSousComp_id(List liste_id) {
         this.liste_supr = liste_id;
     }
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -52,7 +55,7 @@ public class Delete_compController implements Initializable {
                 int supr = i.next();
                 PreparedStatement requete;
 
-                requete = connection.prepareStatement("DELETE FROM compétences WHERE Comp_id = ?");
+                requete = connection.prepareStatement("DELETE FROM souscompetence WHERE SousComp_id = ?");
                 requete.setInt(1, supr);
                 requete.executeUpdate();
 
@@ -63,6 +66,7 @@ public class Delete_compController implements Initializable {
         }
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
+
     }
 
     @FXML
@@ -70,4 +74,5 @@ public class Delete_compController implements Initializable {
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
     }
+
 }
