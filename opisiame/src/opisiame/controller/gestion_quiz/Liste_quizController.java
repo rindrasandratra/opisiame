@@ -175,7 +175,7 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Edit_quizController edit_controller = fxmlLoader.<Edit_quizController>getController();
-            edit_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            edit_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
             
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
