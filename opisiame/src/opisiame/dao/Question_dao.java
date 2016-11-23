@@ -46,7 +46,7 @@ public class Question_dao {
                 quest.setTimer(rs.getInt(3));
                 quest.setQuiz_id(rs.getInt(4));
                 quest.setSous_comp_id(rs.getInt(5));
-                quest.setUrl_img(rs.getString(6));
+                quest.setImg_blob(rs.getBinaryStream(6)); //resultSet.getBlob(yourBlobColumnIndex);
                 quest.setSous_comp(rs.getString(7));
                 quest.setReponses(reponse_dao.get_reponses_by_quest(quest.getId()));
                 questions.add(quest);

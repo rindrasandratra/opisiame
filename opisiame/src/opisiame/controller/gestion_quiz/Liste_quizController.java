@@ -203,7 +203,7 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Delete_quizController delete_controller = fxmlLoader.<Delete_quizController>getController();
-            delete_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            delete_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -230,6 +230,7 @@ public class Liste_quizController implements Initializable {
     public void update_tableau() {
         t_liste_quiz.getItems().clear();
         t_liste_quiz.setItems(getAllquiz());
+        t_liste_quiz.refresh();
     }
 
     public void detail_quiz() {
@@ -237,7 +238,7 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affichage_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Affichage_quizController detail_controller = fxmlLoader.<Affichage_quizController>getController();
-            detail_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            detail_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
             
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

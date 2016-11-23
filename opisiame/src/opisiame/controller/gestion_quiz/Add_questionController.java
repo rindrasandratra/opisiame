@@ -61,7 +61,7 @@ public class Add_questionController implements Initializable {
 
     @FXML
     private Label label_error;
-    
+
     @FXML
     private Label label_ajout_ok;
 
@@ -98,16 +98,15 @@ public class Add_questionController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         set_data_combo_competence();
     }
-    
-    
-    
-    public void reset_null(){
+
+    public void reset_null() {
         enonce.setText("");
         rep_a.setText("");
         rep_b.setText("");
         rep_c.setText("");
         rep_d.setText("");
         timer.setText("");
+        delete_image();
     }
 
     public Boolean check_form() {
@@ -154,12 +153,10 @@ public class Add_questionController implements Initializable {
     public void ajout_question() {
         if (check_form()) {
             if (check_timer()) {
-                //insert_new_question( quiz_id,String libelle, Integer timer, Integer sous_comp_id, String url_img)
-                this.Quiz_id = 1;
                 Integer sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
                 question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
-                reset_null();
-                label_ajout_ok.setVisible(true);
+                Stage stage = (Stage) combo_sous_comp.getScene().getWindow();
+                stage.close();
             } else {
                 error_label_timer.setVisible(true);
             }
@@ -172,6 +169,14 @@ public class Add_questionController implements Initializable {
     @FXML
     public void terminer_quiz() {
         if (check_form()) {
+            if (check_timer()) {
+                Integer sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
+                question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
+                reset_null();
+                label_ajout_ok.setVisible(true);
+            } else {
+                error_label_timer.setVisible(true);
+            }
 
         } else {
             label_error.setVisible(true);

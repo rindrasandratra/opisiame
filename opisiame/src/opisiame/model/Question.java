@@ -5,6 +5,8 @@
  */
 package opisiame.model;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +22,7 @@ public class Question {
     private String sous_comp;
     private String url_img;
     private ArrayList<Reponse> reponses;
+    private InputStream img_blob;
     
     public Question() {
     }
@@ -87,7 +90,13 @@ public class Question {
     public void setReponses(ArrayList<Reponse> reponses) {
         this.reponses = reponses;
     }
-    
-    
+
+    public InputStream getImg_blob() {
+        return img_blob;
+    }
+
+    public void setImg_blob(InputStream img_blob) {
+        this.img_blob = img_blob;
+    }
     
 }

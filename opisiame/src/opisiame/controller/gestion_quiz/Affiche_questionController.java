@@ -5,21 +5,35 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.imageio.ImageIO;
 import opisiame.model.Question;
 import opisiame.dao.*;
 import opisiame.model.Reponse;
@@ -35,6 +49,9 @@ public class Affiche_questionController implements Initializable {
      * Initializes the controller class.
      */
     private Integer quiz_id;
+
+    @FXML
+    private GridPane gpane;
 
     @FXML
     private Button label_timer;
@@ -64,6 +81,8 @@ public class Affiche_questionController implements Initializable {
     private Label label_question;
 
     private ArrayList<Question> questions;
+    private ImageView img_view;
+    private double ratio;
 
     Question_dao question_dao = new Question_dao();
 
@@ -84,28 +103,48 @@ public class Affiche_questionController implements Initializable {
     }
 
     public void print_question(Integer index) {
-        Question q = questions.get(index);
-        label_timer.setText((q.getTimer()).toString());
-        label_question.setText(q.getLibelle());
-        sous_comp.setText(q.getSous_comp());
-        print_image(q.getUrl_img());
-        print_reponse(q.getReponses());
+        if (questions.size() > 0) {
+            Question q = questions.get(index);
+            label_timer.setText((q.getTimer()).toString());
+            label_question.setText(q.getLibelle());
+            sous_comp.setText(q.getSous_comp());
+            print_image(q.getImg_blob());
+            print_reponse(q.getReponses());
+        }
     }
 
-    public void print_image(String url) {
+    public void print_image(InputStream blob_img) {
         if (vbox_question.getChildren().size() > 1) {
             vbox_question.getChildren().remove(1);
         }
-        if (url != null) {
-            url = "/ressource/images/" + url;
-            BorderPane pane = new BorderPane();
-            ImageView img = new ImageView(url);
-            pane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            pane.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            pane.setCenter(img);
-            vbox_question.getChildren().add(pane);
+        if (blob_img != null) {
+            try {
+                BufferedImage buffered_image = ImageIO.read(blob_img);
+                BorderPane pane = new BorderPane();
+                Image image = SwingFXUtils.toFXImage(buffered_image, null);
+                img_view = new ImageView(image);
+                img_view.setPreserveRatio(true);
+                img_view.setFitHeight(vbox_question.getHeight());
+                ratio = gpane.getHeight() / img_view.getFitHeight();
+                pane.setCenter(img_view);
+                vbox_question.getChildren().add(pane);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
+
+    final ChangeListener<Number> listener = new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if (img_view != null) {
+                img_view.setFitHeight(gpane.getHeight()/ratio);
+                img_view.setPreserveRatio(true);
+                System.out.println("img to " + img_view.getFitWidth() + " " + img_view.getFitHeight());
+            }
+        }
+    };
 
     public void print_reponse(ArrayList<Reponse> reponses) {
         ArrayList<Button> bts = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
@@ -133,6 +172,9 @@ public class Affiche_questionController implements Initializable {
             }
 
         });
+//        img_view = new ImageView();
+//        img_view.setPreserveRatio(true);
+        gpane.heightProperty().addListener(listener);
     }
 
 }
