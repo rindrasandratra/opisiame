@@ -27,8 +27,11 @@ public class Import_excelController implements Initializable {
     private TextField zone_url;
     @FXML
     private AnchorPane content;
+    @FXML
+    private Label text_erreur;
 
     private String adresse;
+    private Import_eleve_excel coucou;
 
     /**
      * Initializes the controller class.
@@ -43,15 +46,22 @@ public class Import_excelController implements Initializable {
     public void Valider() throws IOException {
 
         adresse = zone_url.getText();
-        Import_eleve_excel coucou = new Import_eleve_excel(adresse);
+        coucou = new Import_eleve_excel(adresse);
         fermer();
     }
 
     @FXML
     private void fermer() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
-        stage.close();
-    }
+        if (coucou.getErreur().isEmpty())
+        {stage.close();}
+        else {
+            int nb_erreur = coucou.getErreur().size();
+            text_erreur.setText("Les numéros étudiants des lignes suivantes ne sont pas uniques : ");
+            for (int i = 0; i < nb_erreur; ++i){
+                text_erreur.setText(text_erreur.getText() + coucou.getErreur().get(i) + "    ");          
+        }
+    }}
 
     public void explorateur() {
         final FileChooser dialog = new FileChooser();
