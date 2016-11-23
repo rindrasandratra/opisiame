@@ -144,7 +144,8 @@ public class Liste_eleves_adminController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = Tableau.getSelectionModel().getSelectedItem().getId();
+                        //Integer id = Tableau.getSelectionModel().getSelectedItem().getId();
+                        Integer id = Tableau.getFocusModel().getFocusedItem().getId();
                         //System.out.println(id);
                         //System.out.println(Tableau.getSelectionModel().getSelectedItem().getPrenom());
                         liste_supr.add(id);
