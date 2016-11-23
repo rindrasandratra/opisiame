@@ -165,7 +165,7 @@ public class Liste_profs_adminController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_prof.getSelectionModel().getSelectedItem().getId();
+                        Integer id = t_liste_prof.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
                     }
                 }
@@ -225,7 +225,7 @@ public class Liste_profs_adminController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Edit_profController edit_controller = fxmlLoader.<Edit_profController>getController();
-            int animID = t_liste_prof.getSelectionModel().getSelectedItem().getId();
+            int animID = t_liste_prof.getFocusModel().getFocusedItem().getId();
             edit_controller.setAnim_id(animID);
 
             URL url = fxmlLoader.getLocation();
