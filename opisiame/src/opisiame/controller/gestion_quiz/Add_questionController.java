@@ -8,6 +8,8 @@ package opisiame.controller.gestion_quiz;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,8 +24,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import opisiame.dao.Competence_dao;
 import opisiame.dao.Question_dao;
+import opisiame.dao.Reponse_dao;
 import opisiame.dao.Sous_comp_dao;
 import opisiame.model.Competence;
+import opisiame.model.Reponse;
 import opisiame.model.Sous_competence;
 
 /**
@@ -55,6 +59,18 @@ public class Add_questionController implements Initializable {
 
     @FXML
     private ComboBox combo_sous_comp;
+    
+    @FXML
+    private CheckBox checkbx_a;
+    
+    @FXML
+    private CheckBox checkbx_b;
+    
+    @FXML
+    private CheckBox checkbx_c;
+    
+    @FXML
+    private CheckBox checkbx_d;
 
     @FXML
     private ComboBox combo_competence;
@@ -73,8 +89,11 @@ public class Add_questionController implements Initializable {
 
     private String libelle, rep_1, rep_2, rep_3, rep_4, sous_competence, url_img;
     private Integer timer_value;
+    
+    ArrayList<CheckBox> chkb ;
 
     Competence_dao competence_dao = new Competence_dao();
+    Reponse_dao reponse_dao = new Reponse_dao();
     Sous_comp_dao sous_comp_dao = new Sous_comp_dao();
 
     private ObservableList<Competence> liste_Competence;//contient les champs "competence" pour le combobox
@@ -97,6 +116,7 @@ public class Add_questionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         set_data_combo_competence();
+        chkb = new ArrayList(Arrays.asList(checkbx_a, checkbx_b, checkbx_c, checkbx_d));
     }
 
     public void reset_null() {
@@ -106,6 +126,9 @@ public class Add_questionController implements Initializable {
         rep_c.setText("");
         rep_d.setText("");
         timer.setText("");
+        for (CheckBox checkBox : chkb) {
+            checkBox.setSelected(false);
+        }
         delete_image();
     }
 
@@ -153,10 +176,9 @@ public class Add_questionController implements Initializable {
     public void ajout_question() {
         if (check_form()) {
             if (check_timer()) {
-                Integer sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
-                question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
-                Stage stage = (Stage) combo_sous_comp.getScene().getWindow();
-                stage.close();
+                ajout_quest_rep();
+                reset_null();
+                label_ajout_ok.setVisible(true);
             } else {
                 error_label_timer.setVisible(true);
             }
@@ -166,14 +188,24 @@ public class Add_questionController implements Initializable {
         }
     }
 
+    public void ajout_quest_rep() {
+        Integer sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
+        Integer quest_id = question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
+        ArrayList<String> reponses = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
+        for (int i = 0; i < reponses.size(); i++) {
+            Integer is_true = chkb.get(i).isSelected()? 1 : 0;
+            Reponse rep = new Reponse(reponses.get(i),is_true,quest_id);
+            reponse_dao.insert_new_reponse(rep);
+        }
+    }
+
     @FXML
     public void terminer_quiz() {
         if (check_form()) {
             if (check_timer()) {
-                Integer sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
-                question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
-                reset_null();
-                label_ajout_ok.setVisible(true);
+                ajout_quest_rep();
+                Stage stage = (Stage) combo_sous_comp.getScene().getWindow();
+                stage.close();
             } else {
                 error_label_timer.setVisible(true);
             }
@@ -240,6 +272,33 @@ public class Add_questionController implements Initializable {
     public void delete_image() {
         img_view.setImage(null);
         url_img = "";
+    }
+    
+    public void uncheck_other(CheckBox x){
+        for (CheckBox checkBox : chkb) {
+            if (x != checkBox){
+                checkBox.setSelected(false);
+            }
+        }
+    }
+    @FXML
+    public void checkbx_selected_action_a(){
+        uncheck_other(checkbx_a);
+    }
+    
+    @FXML
+    public void checkbx_selected_action_b(){
+        uncheck_other(checkbx_b);
+    }
+    
+    @FXML
+    public void checkbx_selected_action_c(){
+        uncheck_other(checkbx_c);
+    }
+    
+    @FXML
+    public void checkbx_selected_action_d(){
+        uncheck_other(checkbx_d);
     }
 
     @FXML

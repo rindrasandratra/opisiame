@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import opisiame.database.Connection_db;
-import opisiame.model.Question;
 import opisiame.model.Reponse;
 
 /**
@@ -22,7 +21,23 @@ public class Reponse_dao {
 
     public Reponse_dao() {
     }
-    
+    public void insert_new_reponse(Reponse rep){
+        String SQL = "INSERT INTO reponse (Rep_libelle, Rep_bonne,Quest_id) VALUES (?,?,?)";
+        Integer insert_id = null;
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setString(1, rep.getLibelle());
+            ps.setInt(2, rep.getIs_bonne_reponse());
+            ps.setInt(3, rep.getQuest_id());
+            int succes = ps.executeUpdate();
+            if (succes == 0) {
+                System.err.println("Échec de la création de la réponse, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Reponse> get_reponses_by_quest(Integer quest_id){
         ArrayList<Reponse> reponses = new ArrayList<>();
         String SQL = "SELECT *  FROM reponse WHERE Quest_id = ?";
@@ -35,7 +50,7 @@ public class Reponse_dao {
                 Reponse rep = new Reponse();
                 rep.setId(rs.getInt(1));
                 rep.setLibelle(rs.getString(2));
-                rep.setIs_bonne_reponse(rs.getBoolean(3));
+                rep.setIs_bonne_reponse(rs.getInt(3));
                 rep.setQuest_id(rs.getInt(4));
                 reponses.add(rep);
             }

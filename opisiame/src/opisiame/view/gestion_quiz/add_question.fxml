@@ -61,45 +61,49 @@
                </GridPane.margin>
             </TextField>
             <TextArea fx:id="enonce" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <GridPane GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="92.0" minWidth="10.0" prefWidth="29.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="167.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Réponse A" GridPane.valignment="BASELINE">
+                  <Label text="Réponse A" GridPane.columnIndex="1" GridPane.valignment="BASELINE">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextArea fx:id="rep_a" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Label text="(255 caractères restants)" GridPane.rowIndex="1">
+                  <TextArea fx:id="rep_a" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label prefHeight="15.0" prefWidth="199.0" text="(255 caractères restants)" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="checkbx_a" alignment="CENTER" mnemonicParsing="false" onAction="#checkbx_selected_action_a" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <GridPane GridPane.columnIndex="6" GridPane.rowIndex="3">
+            <GridPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Label text="Réponse B" GridPane.valignment="BASELINE">
+                  <Label text="Réponse B" GridPane.columnIndex="1" GridPane.valignment="BASELINE">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextArea fx:id="rep_b" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Label text="(255 caractères restants)" GridPane.rowIndex="1">
+                  <TextArea fx:id="rep_b" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label prefHeight="15.0" prefWidth="190.0" text="(255 caractères restants)" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="checkbx_b" alignment="CENTER" mnemonicParsing="false" onAction="#checkbx_selected_action_b" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="90.0" minWidth="10.0" prefWidth="31.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="159.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -107,22 +111,24 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <GridPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Label text="Réponse C" GridPane.valignment="BASELINE">
+                  <Label text="Réponse C" GridPane.columnIndex="1" GridPane.valignment="BASELINE">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextArea fx:id="rep_c" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Label text="(255 caractères restants)" GridPane.rowIndex="1">
+                  <TextArea fx:id="rep_c" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label prefHeight="15.0" prefWidth="196.0" text="(255 caractères restants)" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="checkbx_c" alignment="CENTER" mnemonicParsing="false" onAction="#checkbx_selected_action_c" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="93.0" minWidth="10.0" prefWidth="31.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="165.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -130,22 +136,24 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane GridPane.columnIndex="6" GridPane.rowIndex="5">
+            <GridPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Label text="(255 caractères restants)" GridPane.rowIndex="1">
+                  <Label prefHeight="15.0" prefWidth="189.0" text="(255 caractères restants)" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label text="Réponse D" GridPane.valignment="BASELINE">
+                  <Label text="Réponse D" GridPane.columnIndex="1" GridPane.valignment="BASELINE">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextArea fx:id="rep_d" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <TextArea fx:id="rep_d" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <CheckBox fx:id="checkbx_d" alignment="CENTER" mnemonicParsing="false" onAction="#checkbx_selected_action_d" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="90.0" minWidth="10.0" prefWidth="32.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="158.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
