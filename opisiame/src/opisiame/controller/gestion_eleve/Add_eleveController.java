@@ -37,6 +37,8 @@ public class Add_eleveController implements Initializable {
     @FXML
     private ComboBox Choix_annee;
     @FXML
+    private TextField Edit_Id;
+    @FXML
     private Label PasOkNom;
     @FXML
     private Label PasOkFiliere;
@@ -44,6 +46,10 @@ public class Add_eleveController implements Initializable {
     private Label PasOkAnnee;
     @FXML
     private Label PasOkPrenom;
+    @FXML
+    private Label PasokId;
+    @FXML
+    private Label cle_multiple;
 
     private List<String> liste_Filiere = new ArrayList<>();//contient les champs filiere pour les combobox
     private List<Integer> liste_Annee = new ArrayList<>(); //contient les champs Année pour les combobox
@@ -110,7 +116,38 @@ public class Add_eleveController implements Initializable {
 
     @FXML
     void Clic_Valider() throws IOException {
+        PasokId.setText("");
+        cle_multiple.setText("");
+        PasOkNom.setText("");
+        PasOkFiliere.setText("");
+        PasOkAnnee.setText("");
+        PasOkPrenom.setText("");
+        
         int ok = 1;
+        Integer ID = 0;
+        if (Edit_Id.getText().equals("")){
+            PasokId.setText("*");
+            ok = 0;
+        }
+        else {
+            try {
+                int count = 0;
+                Connection database = Connection_db.getDatabase();
+                PreparedStatement req;
+                ID =Integer.valueOf(Edit_Id.getText());
+                PreparedStatement pslog = database.prepareStatement("SELECT COUNT(*) AS total FROM participant WHERE Part_id = ?");
+                pslog.setInt(1, ID);
+                ResultSet logres = pslog.executeQuery();
+                while (logres.next()) {
+                    count = logres.getInt("total");
+                }
+                if (count != 0) {
+                    ok = 0;
+                    cle_multiple.setText("Le n° éudiant n'est pas unique");
+                }   } catch (SQLException ex) {
+                Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (Edit_Nom.getText().equals("")) {
             PasOkNom.setText("*");
             ok = 0;
@@ -130,6 +167,7 @@ public class Add_eleveController implements Initializable {
             ok = 0;
         }
         if (ok == 1) {
+            //Integer ID =Integer.valueOf(Edit_Id.getText());
             String NOM = Edit_Nom.getText();
             String PRENOM = Edit_Prenom.getText();
             String FILIERE = Choix_Flilere.getValue().toString();
@@ -138,12 +176,13 @@ public class Add_eleveController implements Initializable {
             //remplissage de la base de données
             try {
                 Connection connection = Connection_db.getDatabase();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO participant (Part_nom, Part_prenom, Filiere_id) "
-                        + "VALUES ( ?, ?, (SELECT Filiere_id FROM filiere Where Filiere = ? AND Annee = ? ) )");
-                ps.setString(1, NOM);
-                ps.setString(2, PRENOM);
-                ps.setString(3, FILIERE);
-                ps.setInt(4, ANNEE);
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO participant (Part_id, Part_nom, Part_prenom, Filiere_id) "
+                        + "VALUES (?, ?, ?, (SELECT Filiere_id FROM filiere Where Filiere = ? AND Annee = ? ) )");
+                ps.setInt(1, ID);
+                ps.setString(2, NOM);
+                ps.setString(3, PRENOM);
+                ps.setString(4, FILIERE);
+                ps.setInt(5, ANNEE);
                 ps.executeUpdate();
             } catch (SQLException ex) {
                 ex.printStackTrace();
