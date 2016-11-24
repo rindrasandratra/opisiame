@@ -53,7 +53,7 @@ public class Editer_competenceController implements Initializable {
 
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM compétences WHERE Comp_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM competences WHERE Comp_id = ?");
             ps.setInt(1, comp_id);
             ResultSet rs = ps.executeQuery();
 
@@ -87,7 +87,7 @@ public class Editer_competenceController implements Initializable {
         try {
             Connection connection = Connection_db.getDatabase();
 
-            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM compétences WHERE Competence = ?");
+            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM competences WHERE Competence = ?");
             ps1.setString(1, nom);
             ResultSet rs1 = ps1.executeQuery();
             while (rs1.next()) {
@@ -109,7 +109,7 @@ public class Editer_competenceController implements Initializable {
             try {
                 //met à jour la base de données
                 Connection connection = Connection_db.getDatabase();
-                PreparedStatement ps = connection.prepareStatement("UPDATE compétences SET Competence = ? WHERE Comp_id = ?");
+                PreparedStatement ps = connection.prepareStatement("UPDATE competences SET Competence = ? WHERE Comp_id = ?");
                 ps.setString(1, nom);
                 ps.setInt(2, comp_id);
                 ps.executeUpdate();

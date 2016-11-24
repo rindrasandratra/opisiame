@@ -64,7 +64,7 @@ public class Edit_profController implements Initializable {
 
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM enseignant WHERE Ens_id = ?");
             ps.setInt(1, anim_id);
             ResultSet rs = ps.executeQuery();
 
@@ -123,7 +123,7 @@ public class Edit_profController implements Initializable {
             try {
                 Connection connection = Connection_db.getDatabase();
 
-                PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+                PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM enseignant WHERE Ens_login = ?");
                 ps1.setString(1, lg);
                 ResultSet rs1 = ps1.executeQuery();
                 while (rs1.next()) {
@@ -153,7 +153,7 @@ public class Edit_profController implements Initializable {
             label_login.setText("");
             //met à jour la base de données
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("UPDATE animateur SET Anim_nom = ?, Anim_prenom = ?, Anim_login = ? WHERE Anim_id = ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE enseignant SET Ens_nom = ?, Ens_prenom = ?, Ens_login = ? WHERE Ens_id = ?");
             ps.setString(1, nom);
             ps.setString(2, prenom);
             ps.setString(3, lg);

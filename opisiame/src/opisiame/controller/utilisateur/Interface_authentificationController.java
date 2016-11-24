@@ -79,6 +79,7 @@ public class Interface_authentificationController implements Initializable {
         final String pass = md5(Passwd_field.getText());
         int count1 = 0;
         int count2 = 0;
+        int count3 = 0;
         int ok = 0;
 
         //vérification du login
@@ -95,7 +96,7 @@ public class Interface_authentificationController implements Initializable {
             ok = 1;
         }
 
-        PreparedStatement pslog2 = database.prepareStatement("SELECT COUNT(*) AS total2 FROM animateur WHERE Anim_login = ? and Anim_mdp = ?");
+        PreparedStatement pslog2 = database.prepareStatement("SELECT COUNT(*) AS total2 FROM enseignant WHERE Ens_login = ? and Ens_mdp = ?");
         pslog2.setString(1, log);
         pslog2.setString(2, pass);
         ResultSet logres2 = pslog2.executeQuery();
@@ -104,6 +105,17 @@ public class Interface_authentificationController implements Initializable {
         }
         if (count2 == 1) {
             ok = 2;
+        }
+
+        PreparedStatement pslog3 = database.prepareStatement("SELECT COUNT(*) AS total3 FROM animateur WHERE Anim_login = ? and Anim_mdp = ?");
+        pslog3.setString(1, log);
+        pslog3.setString(2, pass);
+        ResultSet logres3 = pslog3.executeQuery();
+        while (logres3.next()) {
+            count3 = logres3.getInt("total3");
+        }
+        if (count3 == 1) {
+            ok = 3;
         }
 
         return ok;
@@ -125,27 +137,39 @@ public class Interface_authentificationController implements Initializable {
         } else if (lecture_admin() == 2) {
 
             final String log = Login_field.getText();
+            Session login = new Session(log, "ens");
+            Session.setUser_id(get_utilisateur_id(log));
+            Session.setType("ens");
+            Stage stage = (Stage) content.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (lecture_admin() == 3) {
+
+            final String log = Login_field.getText();
             Session login = new Session(log, "anim");
-            Session.setUser_id(get_anim_id(log));
+            Session.setUser_id(get_utilisateur_id(log));
             Session.setType("anim");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
         } else {
             Message_field.setText("erreur d'authentification");
             Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");
         }
     }
 
-    Integer get_anim_id(String log) {
+    Integer get_utilisateur_id(String log) {
         Integer anim_id = null;
         Connection connexion = null;
         PreparedStatement ps;
         try {
             Connection connection = Connection_db.getDatabase();
-            ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_login = ?");
+            ps = connection.prepareStatement("SELECT * FROM enseignant WHERE Ens_login = ?");
             ps.setString(1, log);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

@@ -40,7 +40,7 @@ public class Delete_allController implements Initializable {
         try {
             Connection connection = Connection_db.getDatabase();
 
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM animateur");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM enseignant");
             ps.executeUpdate();
 
         } catch (SQLException ex) {

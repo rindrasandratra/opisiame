@@ -67,13 +67,13 @@ public class CompetencesController implements Initializable {
             PreparedStatement ps;
 
             if (Cont_recherche != null) {
-                ps = connection.prepareStatement("SELECT * FROM compétences \n"
+                ps = connection.prepareStatement("SELECT * FROM competences \n"
                         + "WHERE Comp_id LIKE ?\n"
                         + "OR Competence LIKE ?\n");
                 ps.setString(1, "%" + Cont_recherche + "%");
                 ps.setString(2, "%" + Cont_recherche + "%");
             } else {
-                ps = connection.prepareStatement("SELECT * FROM compétences");
+                ps = connection.prepareStatement("SELECT * FROM competences");
             }
 
             ResultSet rs = ps.executeQuery();
@@ -379,7 +379,7 @@ public class CompetencesController implements Initializable {
 
         String type = Session.getType();
         if (type.equals("anim")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);

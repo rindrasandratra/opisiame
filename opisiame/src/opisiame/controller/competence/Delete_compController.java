@@ -52,7 +52,7 @@ public class Delete_compController implements Initializable {
                 int supr = i.next();
                 PreparedStatement requete;
 
-                requete = connection.prepareStatement("DELETE FROM compétences WHERE Comp_id = ?");
+                requete = connection.prepareStatement("DELETE FROM competences WHERE Comp_id = ?");
                 requete.setInt(1, supr);
                 requete.executeUpdate();
 

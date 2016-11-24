@@ -5,14 +5,9 @@
  */
 package opisiame.controller.utilisateur;
 
-import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.*;
+import javafx.fxml.Initializable;
 
 /**
  * FXML Controller class
@@ -21,95 +16,12 @@ import javafx.stage.*;
  */
 public class Menu_animController implements Initializable {
 
-    @FXML
-    private AnchorPane content;
-
-    @FXML
-    public void ClicImageOnOff() throws IOException {
-        //remise à zéro des variables d'identification (login + mdp)
-        session.Session.Logout();
-        //ouvre la fenêtre Interface_authentification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
-    }
-
-    @FXML
-    public void ClicBoutonParam() throws IOException {
-        //ouvre la fenêtre ModifParam
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/ModifParam.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
-    public void ClicBoutonNouveauQuiz() throws IOException {
-        //ouvre la fenêtre liste_eleves_admin
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/nouveau_quiz.fxml"));
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Ajout quiz");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.initOwner(content.getScene().getWindow());
-        stage.show();
-    }
-
-    @FXML
-    public void ClicBoutonRésultatsQuiz() throws IOException {
-        //ouvre la fenêtre liste_profs_admin
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/ResultatsQuiz.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
-    }
-
-    @FXML
-    public void ClicBoutonListeQuiz() throws IOException {
-        //ouvre la fenêtre liste_quiz (admin)
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/liste_quiz.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
-    }
-    
-    @FXML
-    public void ClicBoutonCompetences() throws IOException {
-        //ouvre la fenêtre liste_quiz (admin)
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
-    }
-
-//    @FXML
-//    public void ClicBoutonCompetences() throws IOException {
-//        //ouvre la fenêtre liste_quiz (admin)
-//        Stage stage = (Stage) content.getScene().getWindow();
-//        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.setResizable(true);
-//        stage.show();
-//    }
-
+    /**
+     * Initializes the controller class.
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
 }

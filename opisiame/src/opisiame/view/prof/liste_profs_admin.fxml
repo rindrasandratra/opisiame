@@ -41,7 +41,7 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des animateurs" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des enseignants" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                <font>
                   <Font name="Gill Sans MT" size="24.0" />
                </font>
@@ -92,7 +92,7 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" prefWidth="134.0" style="-fx-background-color: #87CEFA;" text="Importer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" onMouseClicked="#ClicBoutonAjoutAnim" prefWidth="129.0" style="-fx-background-color: #7CFC00;" text="Ajouter un animateur" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button mnemonicParsing="false" onMouseClicked="#ClicBoutonAjoutAnim" prefHeight="25.0" prefWidth="134.0" style="-fx-background-color: #7CFC00;" text="Ajouter un enseignant" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <GridPane prefHeight="39.0" prefWidth="309.0" GridPane.columnIndex="1">

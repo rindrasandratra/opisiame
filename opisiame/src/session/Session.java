@@ -12,7 +12,7 @@ package session;
 public class Session {
 
     private static String log = null;
-    private static String type = null;// admin ou anim 
+    private static String type = null;// admin ou anim ou ens
     private static Integer user_id = null;// anim
 
     public static Integer getUser_id() {

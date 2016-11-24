@@ -52,7 +52,7 @@ public class Ajout_sous_compController implements Initializable {
     public void set_competence_name(){
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT Competence FROM compétences WHERE Comp_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT Competence FROM competences WHERE Comp_id = ?");
             ps.setInt(1, id_comp);
             ResultSet rs = ps.executeQuery();
 
@@ -118,7 +118,7 @@ public class Ajout_sous_compController implements Initializable {
             insert_new_sous_comp(nom);
 
             //ou ouvre la fenêtre liste_profs_admin
-            //ouverture fenêtre menu_anim            
+            //ouverture fenêtre menu_ens            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
 

@@ -87,7 +87,7 @@ public class Ajout_profController implements Initializable {
         try {
             Connection connection = Connection_db.getDatabase();
 
-            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM enseignant WHERE Ens_login = ?");
             ps1.setString(1, lg);
             ResultSet rs1 = ps1.executeQuery();
             while (rs1.next()) {
@@ -122,7 +122,7 @@ public class Ajout_profController implements Initializable {
             insert_new_anim(nom, prenom, lg, mdp);
 
             //ou ouvre la fenêtre liste_profs_admin
-            //ouverture fenêtre menu_anim            
+            //ouverture fenêtre menu_ens            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
 
@@ -133,7 +133,7 @@ public class Ajout_profController implements Initializable {
     public void insert_new_anim(String nom, String prenom, String lg, String mdp) {
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO animateur (Anim_nom,Anim_prenom, Anim_login, Anim_mdp) VALUES (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO enseignant (Ens_nom,Ens_prenom, Ens_login, Ens_mdp) VALUES (?,?,?,?)");
             ps.setString(1, nom);
             ps.setString(2, prenom);
             ps.setString(3, lg);

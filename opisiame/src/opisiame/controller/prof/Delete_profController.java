@@ -55,7 +55,7 @@ public class Delete_profController implements Initializable {
                 int supr = i.next();
                 PreparedStatement requette;
 
-                requette = connection.prepareStatement("DELETE FROM animateur WHERE Anim_id = ?");
+                requette = connection.prepareStatement("DELETE FROM enseignant WHERE Ens_id = ?");
                 requette.setInt(1, supr);
                 requette.executeUpdate();
 

@@ -26,7 +26,7 @@ public class Competence_dao {
 
     public ArrayList<Competence> get_competence_by_id(Integer Comp_id) {
         ArrayList<Competence> competences = new ArrayList<>();
-        String SQL = "SELECT *  FROM compétences WHERE Comp_id = ?";
+        String SQL = "SELECT *  FROM competences WHERE Comp_id = ?";
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
@@ -46,7 +46,7 @@ public class Competence_dao {
 
     public ObservableList<Competence> get_all_competence() {
         ObservableList<Competence> competences = FXCollections.observableArrayList();
-        String SQL = "SELECT *  FROM compétences";
+        String SQL = "SELECT *  FROM competences";
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
