@@ -115,6 +115,7 @@ public class Affiche_questionController implements Initializable {
                 if (buffered_image != null) {
                     BorderPane pane = new BorderPane();
                     Image image = SwingFXUtils.toFXImage(buffered_image, null);
+                    blob_img.close();
                     System.out.println("image size" + image.getWidth() + " * " + image.getHeight());
                     
                     img_view = new ImageView(image);
