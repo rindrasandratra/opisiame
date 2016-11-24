@@ -115,7 +115,6 @@ public class Affiche_questionController implements Initializable {
                 if (buffered_image != null) {
                     BorderPane pane = new BorderPane();
                     Image image = SwingFXUtils.toFXImage(buffered_image, null);
-                    blob_img.close();
                     System.out.println("image size" + image.getWidth() + " * " + image.getHeight());
                     
                     img_view = new ImageView(image);
@@ -124,6 +123,8 @@ public class Affiche_questionController implements Initializable {
                     //img_view.setPreserveRatio(true);
 
                     pane.resize(5, 5);
+                    buffered_image.flush();
+                    blob_img.close();
 //                    if (image.getWidth() > image.getHeight()) {
 //                        //img_view.setFitWidth(vbox_question.getWidth());
 //                        ratio = gpane.getWidth() / img_view.getFitWidth();

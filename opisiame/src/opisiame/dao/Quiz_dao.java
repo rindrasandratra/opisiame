@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import opisiame.database.Connection_db;
@@ -161,10 +162,10 @@ public class Quiz_dao {
                 ps.setInt(num++, Integer.valueOf(value_timer));
             } 
             // à enlever après test :D
-            if (Session.getAnim_id() == null) {
-                ps.setInt(num, 1);
+            if (Session.getUser_id() == null) {
+               ps.setNull(num, Types.INTEGER);
             } else {
-                ps.setInt(num, Session.getAnim_id());
+                ps.setInt(num, Session.getUser_id());
             }
             int succes = ps.executeUpdate();
             if (succes == 0) {
