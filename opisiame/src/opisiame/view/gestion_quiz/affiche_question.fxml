@@ -102,7 +102,7 @@
                   </Button>
                </children>
             </GridPane>
-            <VBox fx:id="vbox_question" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: gray; -fx-border-width: 3; -fx-border-radius: 5; -fx-border-insets: 10;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <VBox fx:id="vbox_question" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: gray; -fx-border-width: 3; -fx-border-radius: 5; -fx-border-insets: 10;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <children>
                   <Label fx:id="label_question" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="278.0" prefWidth="335.0" text="Label" VBox.vgrow="ALWAYS">
                      <VBox.margin>
