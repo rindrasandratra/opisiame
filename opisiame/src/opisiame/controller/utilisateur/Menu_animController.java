@@ -84,7 +84,7 @@ public class Menu_animController implements Initializable {
         stage.setResizable(true);
         stage.show();
     }
-
+    
     @FXML
     public void ClicBoutonCompetences() throws IOException {
         //ouvre la fenêtre liste_quiz (admin)
@@ -95,6 +95,17 @@ public class Menu_animController implements Initializable {
         stage.setResizable(true);
         stage.show();
     }
+
+//    @FXML
+//    public void ClicBoutonCompetences() throws IOException {
+//        //ouvre la fenêtre liste_quiz (admin)
+//        Stage stage = (Stage) content.getScene().getWindow();
+//        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.setResizable(true);
+//        stage.show();
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
