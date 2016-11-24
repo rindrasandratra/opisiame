@@ -275,12 +275,43 @@ public class Liste_quizController implements Initializable {
         t_liste_quiz.refresh();
     }
 
+//    final ChangeListener<Number> listener_modif = new ChangeListener<Number>() {
+//        @Override
+//        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//            System.out.println(".changed()");
+//        }
+//    };
+    private void handleButtonAction(ActionEvent event) {
+        // Button was clicked, do something...
+        System.out.println("opisiame.controller.gestion_quiz.Liste_quizController.handleButtonAction()");
+    }
+
     public void detail_quiz() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affichage_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Affichage_quizController detail_controller = fxmlLoader.<Affichage_quizController>getController();
             detail_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
+
+            detail_controller.getBtn_modif().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    edit_quiz();
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
+                }
+            });
+
+            detail_controller.getBtn_delete().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    delete_quiz();
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
+                }
+            });
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

@@ -42,6 +42,21 @@ public class Affichage_quizController implements Initializable {
     
     @FXML
     private Text label_titre;
+    
+    @FXML
+    private Button btn_modif;
+    
+    @FXML
+    private Button btn_delete;
+
+    public Button getBtn_delete() {
+        return btn_delete;
+    }
+    
+
+    public Button getBtn_modif() {
+        return btn_modif;
+    }
 
     private Integer quiz_id;
 
@@ -86,17 +101,4 @@ public class Affichage_quizController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
-//    @FXML
-//    public void ClicImageOnOff() throws IOException {
-//        //remise à zéro des variables d'identification (login + mdp)
-//        session.Session.Logout();
-//        //ouvre la fenêtre Interface_authentification
-//        Stage stage = (Stage) content.getScene().getWindow();
-//        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.setResizable(true);
-//        stage.show();
-//    }
 }
