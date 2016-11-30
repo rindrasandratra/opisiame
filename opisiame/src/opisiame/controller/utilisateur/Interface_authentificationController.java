@@ -80,6 +80,9 @@ public class Interface_authentificationController implements Initializable {
         int count1 = 0;
         int count2 = 0;
         int count3 = 0;
+        int ok1 = 0;
+        int ok2 = 0;
+        int ok3 = 0;
         int ok = 0;
 
         //vérification du login
@@ -93,7 +96,7 @@ public class Interface_authentificationController implements Initializable {
             count1 = logres.getInt("total");
         }
         if (count1 == 1) {
-            ok = 1;
+            ok1 = 1;
         }
 
         PreparedStatement pslog2 = database.prepareStatement("SELECT COUNT(*) AS total2 FROM enseignant WHERE Ens_login = ? and Ens_mdp = ?");
@@ -104,7 +107,7 @@ public class Interface_authentificationController implements Initializable {
             count2 = logres2.getInt("total2");
         }
         if (count2 == 1) {
-            ok = 2;
+            ok2 = 2;
         }
 
         PreparedStatement pslog3 = database.prepareStatement("SELECT COUNT(*) AS total3 FROM animateur WHERE Anim_login = ? and Anim_mdp = ?");
@@ -115,14 +118,19 @@ public class Interface_authentificationController implements Initializable {
             count3 = logres3.getInt("total3");
         }
         if (count3 == 1) {
-            ok = 3;
+            ok3 = 3;
         }
+        
+        if ((ok1 !=0 && ok2!= 0) || (ok1 !=0 && ok3!= 0) || (ok2 !=0 && ok3!= 0)) ok = 0;
+        else ok = ok1 + ok2 + ok3;
 
         return ok;
     }
 
     @FXML
     public void Submit_passwd() throws IOException, SQLException {
+        
+        
 
         if (lecture_admin() == 1) {
 
