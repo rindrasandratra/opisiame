@@ -26,12 +26,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -139,6 +141,18 @@ public class Liste_animController implements Initializable {
             @Override
             public TableCell<Animateur, Boolean> call(TableColumn<Animateur, Boolean> param) {
                 return new Liste_animController.CheckBoxCell();
+            }
+        });
+        
+        t_liste.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste.getSelectionModel().select(row.getIndex());
+                }
             }
         });
 

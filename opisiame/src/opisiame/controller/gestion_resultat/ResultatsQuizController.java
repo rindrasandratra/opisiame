@@ -22,12 +22,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -84,6 +86,18 @@ public class ResultatsQuizController implements Initializable {
                 return new ButtonCell();
             }
 
+        });
+        
+        Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    Tableau.getSelectionModel().select(row.getIndex());
+                }
+            }
         });
     }
 
