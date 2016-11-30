@@ -26,6 +26,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -107,6 +109,35 @@ public class Liste_quizController implements Initializable {
             @Override
             public TableCell<Quiz, Boolean> call(TableColumn<Quiz, Boolean> p) {
                 return new CheckBoxCell();
+            }
+        });
+
+        t_liste_quiz.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste_quiz.getSelectionModel().select(row.getIndex());
+                }
+            }
+        });
+
+        t_liste_quiz.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    Node node = ((Node) event.getTarget()).getParent();
+                    TableRow row;
+                    if (node instanceof TableRow) {
+                        row = (TableRow) node;
+                    } else {
+                        // clicking on text part
+                        row = (TableRow) node.getParent();
+                    }
+                    System.out.println("curent : " + row.getItem());
+                }
             }
         });
 

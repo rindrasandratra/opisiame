@@ -122,8 +122,8 @@ public class NouveauQuizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/add_question.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Add_questionController add_question_controller = fxmlLoader.<Add_questionController>getController();
+            System.out.println("id dans addquiz:"+id);
             add_question_controller.setQuiz_id(id);
-            
             
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

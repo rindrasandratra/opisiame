@@ -149,9 +149,9 @@ public class Quiz_dao {
         String SQL;
         Integer insert_id = null;
         if (value_timer.compareTo("") != 0) {
-            SQL = "INSERT INTO quiz (Quiz_nom,Quiz_timer,Anim_id) VALUES (?,?,?)";
+            SQL = "INSERT INTO quiz (Quiz_nom,Quiz_timer,Ens_id) VALUES (?,?,?)";
         } else {
-            SQL = "INSERT INTO quiz (Quiz_nom,Anim_id) VALUES (?,?)";
+            SQL = "INSERT INTO quiz (Quiz_nom,Ens_id) VALUES (?,?)";
         }
         try {
             Connection connection = Connection_db.getDatabase();
