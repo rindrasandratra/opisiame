@@ -9,24 +9,22 @@ import javafx.beans.property.*;
 
 /**
  *
- * @author clement
+ * @author Audrey
  */
-public class Prof {
-
+public class Animateur {
+    
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty nom = new SimpleStringProperty();
-    private StringProperty prenom = new SimpleStringProperty();
     private StringProperty lg = new SimpleStringProperty();
     private StringProperty passwd = new SimpleStringProperty();
 
     //Constructeurs
-    public Prof() {
+    public Animateur() {
     }
 
-    public Prof(IntegerProperty ID, StringProperty NOM, StringProperty PRENOM, StringProperty LOGIN, StringProperty PASSWD) {
+    public Animateur(IntegerProperty ID, StringProperty NOM, StringProperty LOGIN, StringProperty PASSWD) {
         this.id = ID;
         this.nom = NOM;
-        this.prenom = PRENOM;
         this.lg = LOGIN;
         this.passwd = PASSWD;
     }
@@ -46,13 +44,6 @@ public class Prof {
         this.nom.set(nom);
     }
     
-    public String getPrenom(){
-        return prenom.get();
-    }
-    public void setPrenom(String prenom) {
-        this.prenom.set(prenom);
-    }
-    
     public String getLg(){
         return lg.get();
     }
@@ -67,4 +58,6 @@ public class Prof {
         this.passwd.set(Passwd);
     }
 
+    
+    
 }

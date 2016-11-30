@@ -3,140 +3,142 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller.prof;
+package opisiame.controller.animateur;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.*;
-import javafx.event.*;
-import javafx.fxml.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
-import opisiame.controller.gestion_eleve.*;
 import opisiame.database.Connection_db;
-import opisiame.model.Prof;
+import opisiame.model.Animateur;
 
 /**
  * FXML Controller class
  *
  * @author Audrey
  */
-public class Liste_profs_adminController implements Initializable {
+public class Liste_animController implements Initializable {
 
     //injection des éléments graphiques
     @FXML
     private GridPane content;
     @FXML
-    private TableView<Prof> t_liste_prof;
+    private TableView<Animateur> t_liste;
     @FXML
-    private TableColumn<Prof, Integer> c_id_prof;
+    private TableColumn<Animateur, Integer> c_id;
     @FXML
-    private TableColumn<Prof, String> c_nom_prof;
+    private TableColumn<Animateur, String> c_nom;
     @FXML
-    private TableColumn<Prof, String> c_prenom_prof;
+    private TableColumn<Animateur, String> c_login;
     @FXML
-    private TableColumn<Prof, String> c_login;
+    private TableColumn<Animateur, Boolean> c_actions;
     @FXML
-    private TableColumn<Prof, Boolean> c_actions_prof;
-    @FXML
-    private TableColumn<Prof, Boolean> c_selec;
+    private TableColumn<Animateur, Boolean> c_selec;
     @FXML
     private TextField Champ_recherche;
 
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
 
-    //récupération de la liste des profs dans la BDD, et affichage
-    public ObservableList<Prof> getAllProf() {
+    //récupération de la liste des Animateurs dans la BDD, et affichage
+    public ObservableList<Animateur> getAllAnimateur() {
 
-        ObservableList<Prof> profs = FXCollections.observableArrayList();
+        ObservableList<Animateur> anims = FXCollections.observableArrayList();
         try {
             Connection connection = Connection_db.getDatabase();
             liste_supr.clear();
             PreparedStatement ps;
 
             if (Cont_recherche != null) {
-                ps = connection.prepareStatement("SELECT * FROM enseignant \n"
-                        + "WHERE Ens_id LIKE ?\n"
-                        + "OR Ens_nom LIKE ?\n"
-                        + "OR Ens_prenom LIKE ?\n"
-                        + "OR Ens_login LIKE ?\n");
+                ps = connection.prepareStatement("SELECT * FROM animateur \n"
+                        + "WHERE Anim_id LIKE ?\n"
+                        + "OR Anim_nom LIKE ?\n"
+                        + "OR Anim_login LIKE ?\n");
                 ps.setString(1, "%" + Cont_recherche + "%");
                 ps.setString(2, "%" + Cont_recherche + "%");
                 ps.setString(3, "%" + Cont_recherche + "%");
-                ps.setString(4, "%" + Cont_recherche + "%");
             } else {
-                ps = connection.prepareStatement("SELECT * FROM enseignant");
+                ps = connection.prepareStatement("SELECT * FROM animateur");
             }
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Prof prof = new Prof();
-                prof.setId(rs.getInt(1));
-                prof.setNom(rs.getString(2));
-                prof.setPrenom(rs.getString(3));
-                prof.setLg(rs.getString(4));
-                profs.add(prof);
+                Animateur anim = new Animateur();
+                anim.setId(rs.getInt(1));
+                anim.setNom(rs.getString(2));
+                anim.setLg(rs.getString(3));
+                anims.add(anim);
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return profs;
+        return anims;
     }
 
     /**
-     * GESTION DE LA TABLE
-     *
-     * @param url
+     * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         //remplissage de la table
-        c_id_prof.setCellValueFactory(new PropertyValueFactory<Prof, Integer>("id"));
-        c_nom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("nom"));
-        c_prenom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("prenom"));
-        c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("lg"));
- 
-        t_liste_prof.setItems(getAllProf());
+        c_id.setCellValueFactory(new PropertyValueFactory<Animateur, Integer>("id"));
+        c_nom.setCellValueFactory(new PropertyValueFactory<Animateur, String>("nom"));
+        c_login.setCellValueFactory(new PropertyValueFactory<Animateur, String>("lg"));
+        t_liste.setItems(getAllAnimateur());
 
         //Insert Button
-        c_actions_prof.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Prof, Boolean>, ObservableValue<Boolean>>() {
+        c_actions.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Animateur, Boolean>, ObservableValue<Boolean>>() {
 
             @Override
-            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Prof, Boolean> p) {
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Animateur, Boolean> p) {
                 return new SimpleBooleanProperty(p.getValue() != null);
             }
         });
 
-        c_actions_prof.setCellFactory(new Callback<TableColumn<Prof, Boolean>, TableCell<Prof, Boolean>>() {
+        c_actions.setCellFactory(new Callback<TableColumn<Animateur, Boolean>, TableCell<Animateur, Boolean>>() {
 
             @Override
-            public TableCell<Prof, Boolean> call(TableColumn<Prof, Boolean> p) {
-                return new Liste_profs_adminController.ButtonCell();
+            public TableCell<Animateur, Boolean> call(TableColumn<Animateur, Boolean> p) {
+                return new Liste_animController.ButtonCell();
             }
 
         });
 
-        c_selec.setCellFactory(new Callback<TableColumn<Prof, Boolean>, TableCell<Prof, Boolean>>() {
+        c_selec.setCellFactory(new Callback<TableColumn<Animateur, Boolean>, TableCell<Animateur, Boolean>>() {
             @Override
-            public TableCell<Prof, Boolean> call(TableColumn<Prof, Boolean> param) {
-                return new Liste_profs_adminController.CheckBoxCell();
+            public TableCell<Animateur, Boolean> call(TableColumn<Animateur, Boolean> param) {
+                return new Liste_animController.CheckBoxCell();
             }
         });
 
@@ -144,11 +146,10 @@ public class Liste_profs_adminController implements Initializable {
 
     public void Rechercher() throws IOException {
         Cont_recherche = Champ_recherche.getText();
-        //System.out.println(Cont_recherche);
         update_tableau();
 
         //appel de la fonction initialize, permet d'afficher correctement les checkbox/boutons
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/animateur/liste_anim.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         URL url = fxmlLoader.getLocation();
         ResourceBundle rb = fxmlLoader.getResources();
@@ -156,7 +157,7 @@ public class Liste_profs_adminController implements Initializable {
 
     }
 
-    private class CheckBoxCell extends TableCell<Prof, Boolean> {
+    private class CheckBoxCell extends TableCell<Animateur, Boolean> {
 
         final CheckBox check = new CheckBox();
 
@@ -165,10 +166,8 @@ public class Liste_profs_adminController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_prof.getFocusModel().getFocusedItem().getId();
-                        //Integer id = t_liste_prof.;
+                        Integer id = t_liste.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
-                        System.out.println(id);
                     }
                 }
             });
@@ -187,7 +186,7 @@ public class Liste_profs_adminController implements Initializable {
     };
 
     //Define the button cell
-    private class ButtonCell extends TableCell<Prof, Boolean> {
+    private class ButtonCell extends TableCell<Animateur, Boolean> {
 
         final Button btn_edit = new Button();
 
@@ -224,10 +223,10 @@ public class Liste_profs_adminController implements Initializable {
     public void editer_prof() {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/animateur/edit_anim.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Edit_profController edit_controller = fxmlLoader.<Edit_profController>getController();
-            int animID = t_liste_prof.getFocusModel().getFocusedItem().getId();
+            Edit_animController edit_controller = fxmlLoader.<Edit_animController>getController();
+            int animID = t_liste.getFocusModel().getFocusedItem().getId();
             edit_controller.setAnim_id(animID);
 
             URL url = fxmlLoader.getLocation();
@@ -239,7 +238,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.setTitle("Modification");
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
@@ -252,7 +251,7 @@ public class Liste_profs_adminController implements Initializable {
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -282,18 +281,18 @@ public class Liste_profs_adminController implements Initializable {
     }
 
     public void update_tableau() {
-        t_liste_prof.getItems().clear();
-        t_liste_prof.setItems(getAllProf());
-        t_liste_prof.refresh();
+        t_liste.getItems().clear();
+        t_liste.setItems(getAllAnimateur());
+        t_liste.refresh();
 
     }
 
     @FXML
     public void ClicBoutonSupprSelec() throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/delete_prof.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/animateur/del_anim.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Delete_profController delete_controller = fxmlLoader.<Delete_profController>getController();
+            Del_animController delete_controller = fxmlLoader.<Del_animController>getController();
             delete_controller.setAnim_id(liste_supr);
 
             Stage stage = new Stage();
@@ -301,7 +300,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.setTitle("Confirmation de suppression");
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
@@ -311,19 +310,19 @@ public class Liste_profs_adminController implements Initializable {
                 public void handle(WindowEvent t) {
                     try {
                         Stage stage = (Stage) content.getScene().getWindow();
-                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/liste_anim.fxml"));
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
                         stage.show();
                     } catch (IOException ex) {
-                        Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -331,16 +330,16 @@ public class Liste_profs_adminController implements Initializable {
     @FXML
     public void ToutSupprimer() throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/delete_all.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/animateur/del_all_anim.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Delete_allController delete_controller = fxmlLoader.<Delete_allController>getController();
+            Del_all_animController delete_controller = fxmlLoader.<Del_all_animController>getController();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmation de suppression");
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.show();
@@ -350,19 +349,19 @@ public class Liste_profs_adminController implements Initializable {
                 public void handle(WindowEvent t) {
                     try {
                         Stage stage = (Stage) content.getScene().getWindow();
-                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/liste_anim.fxml"));
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
                         stage.show();
                     } catch (IOException ex) {
-                        Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -370,15 +369,15 @@ public class Liste_profs_adminController implements Initializable {
     @FXML
     public void ClicBoutonAjoutAnim() throws IOException {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/ajout_prof.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/ajout_anim.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajout enseignant");
+            stage.setTitle("Ajout animateur");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.initOwner(t_liste.getScene().getWindow());
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -389,13 +388,8 @@ public class Liste_profs_adminController implements Initializable {
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    public void ClicBoutonImport() throws IOException {
-
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package opisiame.controller.competence;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,10 +72,7 @@ public class Ajout_sous_compController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        //System.out.println(id_comp);
 
-        //affiche le nom de la compétence concernée dans le textfield
         
     }
 
@@ -137,6 +135,13 @@ public class Ajout_sous_compController implements Initializable {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 
 }
