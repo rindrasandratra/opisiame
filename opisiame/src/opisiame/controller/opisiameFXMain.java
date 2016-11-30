@@ -31,6 +31,7 @@ public class opisiameFXMain extends Application {
         
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+
         stage.setTitle("OPI'SIAME");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         Scene scene = new Scene(root);
