@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller.prof;
+package opisiame.controller.animateur;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import opisiame.database.Connection_db;
-import opisiame.model.Prof;
+import opisiame.model.Animateur;
 import session.Session;
 
 /**
@@ -30,7 +30,7 @@ import session.Session;
  *
  * @author Audrey
  */
-public class Edit_profController implements Initializable {
+public class Edit_animController implements Initializable {
 
     @FXML
     private AnchorPane content;
@@ -39,33 +39,27 @@ public class Edit_profController implements Initializable {
     @FXML
     private TextField nom;
     @FXML
-    private TextField prenom;
-    @FXML
     private TextField lg;
     @FXML
     private Label label_nom;
     @FXML
-    private Label label_prenom;
-    @FXML
     private Label label_login;
+
     
-    
-    //vérifier que le login n'existe pas deja dans la table 
-    /**
-     * Initializes the controller class.
-     */
     private int anim_id;
 
     public void setAnim_id(int animID) {
         this.anim_id = animID;
     }
-
+    
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM enseignant WHERE Ens_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_id = ?");
             ps.setInt(1, anim_id);
             ResultSet rs = ps.executeQuery();
 
@@ -74,26 +68,24 @@ public class Edit_profController implements Initializable {
                 id.setText(String.valueOf(rs.getInt(1)));
                 System.out.println(id);
                 nom.setText(rs.getString(2));
-                prenom.setText(rs.getString(3));
-                lg.setText(rs.getString(4));
+                lg.setText(rs.getString(3));
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
+    
+    
     @FXML
     public void btn_valider() throws IOException {
 
         try {
             
             label_nom.setText("");
-            label_prenom.setText("");
             label_login.setText("");
 
             String nom = this.nom.getText();
-            String prenom = this.prenom.getText();
             String lg = this.lg.getText();
             Boolean champ_ok = true;
             int c1 = 0;
@@ -103,13 +95,6 @@ public class Edit_profController implements Initializable {
             //verif que le nom est bien rempli
             if (nom.equals("")) {
                 label_nom.setText("*");
-                champ_ok = false;
-            }
-            
-            
-            //verif que le prenom est bien rempli
-            if (prenom.equals("")) {
-                label_prenom.setText("*");
                 champ_ok = false;
             }
             
@@ -158,20 +143,18 @@ public class Edit_profController implements Initializable {
             //si tous les champs sont ok, ajout de l'animateur dans la bdd
         if (champ_ok == true) {
             label_nom.setText("");
-            label_prenom.setText("");
             label_login.setText("");
             //met à jour la base de données
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("UPDATE enseignant SET Ens_nom = ?, Ens_prenom = ?, Ens_login = ? WHERE Ens_id = ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE animateur SET Anim_nom = ?, Anim_login = ? WHERE Anim_id = ?");
             ps.setString(1, nom);
-            ps.setString(2, prenom);
-            ps.setString(3, lg);
-            ps.setInt(4, anim_id);
+            ps.setString(2, lg);
+            ps.setInt(3, anim_id);
             ps.executeUpdate();
 
             //ferme la fenêtre
             Stage stage = (Stage) content.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/edit_prof.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/edit_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.close();}
@@ -188,4 +171,5 @@ public class Edit_profController implements Initializable {
         stage.close();
        
     }
+
 }
