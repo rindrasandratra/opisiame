@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller.prof;
+package opisiame.controller.animateur;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -30,15 +30,13 @@ import opisiame.database.Connection_db;
  *
  * @author Audrey
  */
-public class Ajout_profController implements Initializable {
+public class Ajout_animController implements Initializable {
 
     //injection des elements graphiques
     @FXML
     private AnchorPane content;
     @FXML
     private TextField nom;
-    @FXML
-    private TextField prenom;
     @FXML
     private TextField lg;
     @FXML
@@ -50,11 +48,7 @@ public class Ajout_profController implements Initializable {
     @FXML
     private Label label_mdp;
 
-    /**
-     * Initializes the controller class.
-     */
-    
-    public static String md5(String input) {
+   public static String md5(String input) {
 
         String md5 = null;
 
@@ -75,8 +69,7 @@ public class Ajout_profController implements Initializable {
         return md5;
     }
     
-    
-    @Override
+     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
@@ -89,7 +82,6 @@ public class Ajout_profController implements Initializable {
         label_mdp.setText("");
 
         String nom = this.nom.getText();
-        String prenom = this.prenom.getText();
         String lg = this.lg.getText();
         String mdp = this.mdp.getText();
         Boolean champ_ok = true;
@@ -152,7 +144,7 @@ public class Ajout_profController implements Initializable {
             label_nom.setText("");
             label_lg.setText("");
             label_mdp.setText("");
-            insert_new_anim(nom, prenom, lg, mdp);
+            insert_new_anim(nom, lg, mdp);
 
             //ou ouvre la fenêtre liste_profs_admin
             //ouverture fenêtre menu_ens            
@@ -163,14 +155,13 @@ public class Ajout_profController implements Initializable {
 
     }
 
-    public void insert_new_anim(String nom, String prenom, String lg, String mdp) {
+    public void insert_new_anim(String nom, String lg, String mdp) {
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO enseignant (Ens_nom,Ens_prenom, Ens_login, Ens_mdp) VALUES (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO animateur (Anim_nom,Anim_login, Anim_mdp) VALUES (?,?,?)");
             ps.setString(1, nom);
-            ps.setString(2, prenom);
-            ps.setString(3, lg);
-            ps.setString(4, md5(mdp));
+            ps.setString(2, lg);
+            ps.setString(3, md5(mdp));
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

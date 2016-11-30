@@ -58,10 +58,10 @@ public class menu_adminController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonProfs() throws IOException {
+    public void ClicBoutonAnimateurs() throws IOException {
         //ouvre la fenêtre liste_profs_admin
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/liste_anim.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
