@@ -32,7 +32,7 @@ public class Question_dao {
     public ArrayList<Question> get_questions_by_quiz(Integer quiz_id) {
         ArrayList<Question> questions = new ArrayList<>();
         String SQL = "SELECT question.*, souscompetence.SousCompetence  FROM question"
-                + " JOIN souscompetence ON souscompetence.SousComp_id = question.SousComp_id "
+                + " LEFT JOIN souscompetence ON souscompetence.SousComp_id = question.SousComp_id "
                 + "WHERE Quiz_id = ?";
         try {
             Connection connection = Connection_db.getDatabase();
@@ -58,15 +58,36 @@ public class Question_dao {
     }
 
     public void update_question(Integer id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
-        String SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ?, Quest_img = ? WHERE Quest_id = ?";
+        String SQL;
+        if (url_img == null) {
+            SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ? WHERE Quest_id = ?";
+        } else {
+            SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ?, Quest_img = ? WHERE Quest_id = ?";
+        }
+
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setString(1, libelle);
             ps.setInt(2, timer);
             ps.setInt(3, sous_comp_id);
-            ps.setString(4, url_img);
-            ps.setInt(5, id);
+            if (url_img != null) {
+                if (url_img.compareTo("") != 0) {
+                    ps.setNull(4, java.sql.Types.BLOB);
+                } else {
+                    File file = new File(url_img);
+                    try {
+                        FileInputStream fis = new FileInputStream(file);
+                        ps.setBinaryStream(4, fis, (int) file.length());
+                    } catch (FileNotFoundException ex) {
+                        System.err.println("Image not found");
+                        ex.printStackTrace();
+                    }
+                }
+                ps.setInt(5, id);
+            }
+            else
+                ps.setInt(4, id);
             int succes = ps.executeUpdate();
             if (succes == 0) {
                 System.err.println("Échec de la modification de la question, aucune ligne modifiée dans la table.");
@@ -80,9 +101,8 @@ public class Question_dao {
         String SQL;
         FileInputStream fis = null;
         File file = null;
-        System.out.println("url image : "+ url_img);
-        if (url_img.compareTo("") != 0)
-        {
+        System.out.println("url image : " + url_img);
+        if (url_img.compareTo("") != 0) {
             SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id, Quest_img) VALUES (?,?,?,?,?)";
             file = new File(url_img);
             try {
@@ -91,22 +111,28 @@ public class Question_dao {
                 System.err.println("Image not found");
                 ex.printStackTrace();
             }
-        }
-        else
+        } else {
             SQL = "INSERT INTO question (Quest_libelle, Quest_timer, Quiz_id, SousComp_id) VALUES (?,?,?,?)";
+        }
         Integer insert_id = null;
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, libelle);
-            if (timer == null)
+            if (timer == null) {
                 ps.setNull(2, Types.INTEGER);
-            else
+            } else {
                 ps.setInt(2, timer);
+            }
             ps.setInt(3, quiz_id);
-            ps.setInt(4, sous_comp_id);
-            if (fis != null)
+            if (sous_comp_id == null) {
+                ps.setNull(4, Types.INTEGER);
+            } else {
+                ps.setInt(4, sous_comp_id);
+            }
+            if (fis != null) {
                 ps.setBinaryStream(5, fis, (int) file.length());
+            }
             int succes = ps.executeUpdate();
             if (succes == 0) {
                 System.err.println("Échec de la création de la question, aucune ligne ajoutée dans la table.");

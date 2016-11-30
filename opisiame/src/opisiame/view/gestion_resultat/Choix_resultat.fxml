@@ -8,7 +8,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="content" prefHeight="167.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.gestion_resultat.Choix_resultatController">
+
+<AnchorPane id="AnchorPane" prefHeight="167.0" prefWidth="416.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="opisiame.controller.gestion_resultat.Choix_resultatController">
    <children>
       <GridPane layoutX="150.0" layoutY="110.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -30,12 +31,12 @@
                   <Font size="29.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onMouseReleased="#par_eleve" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation par élève" textAlignment="CENTER" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation par élève" textAlignment="CENTER" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseReleased="#par_quiz" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation par Quiz" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation par Quiz" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>

@@ -38,6 +38,41 @@ public class Reponse_dao {
             e.printStackTrace();
         }
     }
+    
+    public void update_reponse(Reponse rep) {
+        String SQL = "UPDATE reponse SET Rep_libelle = ?, Rep_bonne = ? WHERE Rep_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setString(1, rep.getLibelle());
+            ps.setInt(2, rep.getIs_bonne_reponse());
+            ps.setInt(3, rep.getId());
+            int succes = ps.executeUpdate();
+            if (succes == 0) {
+                System.err.println("Échec de la modification de la réponse, aucune ligne modifiée dans la table.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public ArrayList<Integer> get_id_rep_for_quest(Integer quest_id){
+        ArrayList<Integer> reponses = new ArrayList<>();
+        String SQL = "SELECT Rep_id  FROM reponse WHERE Quest_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, quest_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                reponses.add(rs.getInt(1));
+                System.out.println("id : "+rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return reponses;
+    }
     public ArrayList<Reponse> get_reponses_by_quest(Integer quest_id){
         ArrayList<Reponse> reponses = new ArrayList<>();
         String SQL = "SELECT *  FROM reponse WHERE Quest_id = ?";

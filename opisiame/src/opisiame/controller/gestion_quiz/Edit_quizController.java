@@ -5,11 +5,19 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import opisiame.dao.Quiz_dao;
 import opisiame.model.Quiz;
@@ -115,6 +123,27 @@ public class Edit_quizController implements Initializable {
         }
     }
 
+    @FXML
+    public void btn_modif_question(){
+        btn_valider();
+        try{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Edit_questionController edit_question_controller = fxmlLoader.<Edit_questionController>getController();
+            edit_question_controller.setQuiz_id(quiz_id);
+            
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Modifier question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        }catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private boolean validate_number(String str) {
         return str.matches("[0-9]*");
     }

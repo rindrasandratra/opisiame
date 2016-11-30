@@ -55,7 +55,6 @@ public class Liste_profs_adminController implements Initializable {
     private TableColumn<Prof, Boolean> c_selec;
     @FXML
     private TextField Champ_recherche;
-    
 
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
@@ -112,6 +111,7 @@ public class Liste_profs_adminController implements Initializable {
         c_nom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("nom"));
         c_prenom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("prenom"));
         c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("lg"));
+ 
         t_liste_prof.setItems(getAllProf());
 
         //Insert Button
@@ -166,6 +166,7 @@ public class Liste_profs_adminController implements Initializable {
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
                         Integer id = t_liste_prof.getFocusModel().getFocusedItem().getId();
+                        //Integer id = t_liste_prof.;
                         liste_supr.add(id);
                         System.out.println(id);
                     }
@@ -283,6 +284,7 @@ public class Liste_profs_adminController implements Initializable {
     public void update_tableau() {
         t_liste_prof.getItems().clear();
         t_liste_prof.setItems(getAllProf());
+        t_liste_prof.refresh();
 
     }
 
@@ -325,11 +327,7 @@ public class Liste_profs_adminController implements Initializable {
         }
 
     }
-    
-    
-    
-    
-    
+
     @FXML
     public void ToutSupprimer() throws IOException {
         try {
@@ -368,10 +366,6 @@ public class Liste_profs_adminController implements Initializable {
         }
 
     }
-    
-    
-    
-    
 
     @FXML
     public void ClicBoutonAjoutAnim() throws IOException {

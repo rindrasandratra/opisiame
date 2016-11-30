@@ -72,10 +72,7 @@ public class Ajout_sous_compController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        //System.out.println(id_comp);
 
-        //affiche le nom de la compétence concernée dans le textfield
         
     }
 

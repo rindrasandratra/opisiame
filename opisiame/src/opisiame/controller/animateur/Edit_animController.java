@@ -66,7 +66,6 @@ public class Edit_animController implements Initializable {
             //affichage des parametres de l'anim dans les textfield
             while (rs.next()) {
                 id.setText(String.valueOf(rs.getInt(1)));
-                System.out.println(id);
                 nom.setText(rs.getString(2));
                 lg.setText(rs.getString(3));
             }

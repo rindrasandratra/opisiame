@@ -24,6 +24,13 @@ public class Reponse {
         this.quest_id = quest_id;
     }
 
+    public Reponse(Integer id, String libelle, Integer is_bonne_reponse, Integer quest_id) {
+        this.id = id;
+        this.libelle = libelle;
+        this.is_bonne_reponse = is_bonne_reponse;
+        this.quest_id = quest_id;
+    }
+
     public Integer getId() {
         return id;
     }

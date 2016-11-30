@@ -146,7 +146,6 @@ public class Liste_animController implements Initializable {
 
     public void Rechercher() throws IOException {
         Cont_recherche = Champ_recherche.getText();
-        //System.out.println(Cont_recherche);
         update_tableau();
 
         //appel de la fonction initialize, permet d'afficher correctement les checkbox/boutons
@@ -169,7 +168,6 @@ public class Liste_animController implements Initializable {
                     if (check.isSelected()) {
                         Integer id = t_liste.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
-                        System.out.println(id);
                     }
                 }
             });
@@ -285,6 +283,7 @@ public class Liste_animController implements Initializable {
     public void update_tableau() {
         t_liste.getItems().clear();
         t_liste.setItems(getAllAnimateur());
+        t_liste.refresh();
 
     }
 

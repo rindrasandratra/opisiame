@@ -189,7 +189,6 @@ public class Add_eleveController implements Initializable {
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
         }
-        //System.out.println(Choix_Flilere.getValue().toString());
     }
 
     @FXML
