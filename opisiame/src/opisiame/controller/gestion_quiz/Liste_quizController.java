@@ -124,23 +124,6 @@ public class Liste_quizController implements Initializable {
             }
         });
 
-        t_liste_quiz.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    Node node = ((Node) event.getTarget()).getParent();
-                    TableRow row;
-                    if (node instanceof TableRow) {
-                        row = (TableRow) node;
-                    } else {
-                        // clicking on text part
-                        row = (TableRow) node.getParent();
-                    }
-                    System.out.println("curent : " + row.getItem());
-                }
-            }
-        });
-
     }
 
     private class CheckBoxCell extends TableCell<Quiz, Boolean> {
