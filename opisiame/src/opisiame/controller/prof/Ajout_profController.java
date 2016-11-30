@@ -6,7 +6,9 @@
 package opisiame.controller.prof;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,6 +53,29 @@ public class Ajout_profController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    public static String md5(String input) {
+
+        String md5 = null;
+
+        if (null == input) {
+            return null;
+        }
+
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+            //Converts message digest value in base 16 (hex) 
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5;
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -137,7 +162,7 @@ public class Ajout_profController implements Initializable {
             ps.setString(1, nom);
             ps.setString(2, prenom);
             ps.setString(3, lg);
-            ps.setString(4, mdp);
+            ps.setString(4, md5(mdp));
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
