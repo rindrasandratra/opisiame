@@ -22,7 +22,7 @@
             <Insets fx:id="x2" />
           </GridPane.margin>
         </Button>
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="145.0" style="-fx-background-color: ff978c; -fx-background-radius: 202020;" text="competences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="145.0" style="-fx-background-color: ff978c; -fx-background-radius: 202020;" text="Compétences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
         <ImageView fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <image>
             <Image url="@../../image/opisiame_logo.png" />

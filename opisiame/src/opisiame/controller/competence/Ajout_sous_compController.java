@@ -5,6 +5,7 @@
  */
 package opisiame.controller.competence;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -137,6 +138,13 @@ public class Ajout_sous_compController implements Initializable {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 
 }

@@ -78,5 +78,12 @@ public class Import_excelController implements Initializable {
         }
 
     }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
+    }
 
 }

@@ -110,7 +110,6 @@ public class Affichage_sous_competencesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("opisiame.controller.competence.Affichage_sous_competencesController.initialize()");
         //remplissage de la table
         id.setCellValueFactory(new PropertyValueFactory<Sous_competence, Integer>("id"));
         nom_souscompetence.setCellValueFactory(new PropertyValueFactory<Sous_competence, String>("libelle"));
@@ -146,7 +145,6 @@ public class Affichage_sous_competencesController implements Initializable {
 
     public void Rechercher() throws IOException {
         Cont_recherche = txt_search.getText();
-        //System.out.println(Cont_recherche);
         update_tableau();
 
        
@@ -297,8 +295,6 @@ public class Affichage_sous_competencesController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Ajout_sous_compController ajout_sous_comp_controller = fxmlLoader.<Ajout_sous_compController>getController();
 
-            System.out.println("affiche id : " + compid);
-            System.out.println(ajout_sous_comp_controller);
             ajout_sous_comp_controller.setId_comp(compid);
 
             Stage stage = new Stage();
@@ -345,7 +341,6 @@ public class Affichage_sous_competencesController implements Initializable {
             stage.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    System.out.println(".handle()");
                     update_tableau();
                     
                 }

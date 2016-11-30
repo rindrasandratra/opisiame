@@ -23,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import opisiame.database.Connection_db;
 import opisiame.model.Prof;
+import session.Session;
 
 /**
  * FXML Controller class
@@ -171,5 +172,12 @@ public class Edit_profController implements Initializable {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 }

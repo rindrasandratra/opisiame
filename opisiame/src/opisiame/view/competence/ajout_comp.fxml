@@ -37,9 +37,9 @@
                   <Insets right="40.0" />
                </GridPane.margin>
             </TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#btn_valider" prefHeight="52.0" prefWidth="103.0" text="Valider" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#btn_valider" prefHeight="52.0" prefWidth="103.0" style="-fx-background-color: adff2f;" text="Valider" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Gill Sans MT" size="18.0" />
                </font>
             </Button>
             <Label fx:id="label_nom" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -50,6 +50,11 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Button mnemonicParsing="false" onMouseClicked="#Annuler" prefHeight="52.0" prefWidth="103.0" style="-fx-background-color: DCDCDC;" text="Annuler" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Button>
          </children>
       </GridPane>
    </children>

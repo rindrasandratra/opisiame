@@ -131,7 +131,6 @@ public class CompetencesController implements Initializable {
 
     public void Rechercher() throws IOException {
         Cont_recherche = txt_search.getText();
-        //System.out.println(Cont_recherche);
         update_tableau();
 
     }
