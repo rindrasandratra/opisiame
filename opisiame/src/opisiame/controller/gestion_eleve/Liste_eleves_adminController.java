@@ -59,7 +59,7 @@ public class Liste_eleves_adminController implements Initializable {
     private String Cont_recherche = null;
 
     /*
-    Fonction qui récupère la liste des quizs
+    Fonction qui récupère la liste des élèves
      */
     public void getAllEleve(/*ObservableList<Eleve> eleves*/) {
         try {
