@@ -202,6 +202,7 @@ public class Edit_questionController implements Initializable {
                     img_view.setCache(true);
                     img_view.setPreserveRatio(true);
                     buffered_image.flush();
+                    blob_img.reset();
                     blob_img.close();
                 }
             } catch (IOException ex) {
@@ -320,6 +321,7 @@ public class Edit_questionController implements Initializable {
         if (combo_sous_comp.getSelectionModel().getSelectedItem() != null) {
             sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
         }
+        System.out.println("url img : "+url_img);
         question_dao.update_question(current_question.getId(), libelle, timer_value, sous_comp_id, url_img);
         ArrayList<String> reponses = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
         ArrayList<Integer> rep_id = reponse_dao.get_id_rep_for_quest(current_question.getId());
