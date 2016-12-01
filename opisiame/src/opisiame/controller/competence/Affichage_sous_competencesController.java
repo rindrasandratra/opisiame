@@ -26,6 +26,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -139,6 +140,18 @@ public class Affichage_sous_competencesController implements Initializable {
             @Override
             public TableCell<Sous_competence, Boolean> call(TableColumn<Sous_competence, Boolean> param) {
                 return new Affichage_sous_competencesController.CheckBoxCell();
+            }
+        });
+        
+        t_liste_souscompetence.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste_souscompetence.getSelectionModel().select(row.getIndex());
+                }
             }
         });
     }

@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -137,6 +138,18 @@ public class Liste_profs_adminController implements Initializable {
             @Override
             public TableCell<Prof, Boolean> call(TableColumn<Prof, Boolean> param) {
                 return new Liste_profs_adminController.CheckBoxCell();
+            }
+        });
+        
+        t_liste_prof.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste_prof.getSelectionModel().select(row.getIndex());
+                }
             }
         });
 

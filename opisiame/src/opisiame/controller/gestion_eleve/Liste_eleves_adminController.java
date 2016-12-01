@@ -21,6 +21,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -129,6 +130,18 @@ public class Liste_eleves_adminController implements Initializable {
             @Override
             public TableCell<Eleve, Boolean> call(TableColumn<Eleve, Boolean> param) {
                 return new CheckBoxCell();
+            }
+        });
+        
+        Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    Tableau.getSelectionModel().select(row.getIndex());
+                }
             }
         });
 
