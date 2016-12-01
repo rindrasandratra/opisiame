@@ -62,7 +62,7 @@ public class Choix_resultatController implements Initializable {
             stage.setScene(scene);
             //stage.initOwner(content.getParent().getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            stage.setResizable(false);
+            stage.setResizable(true);
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
@@ -95,7 +95,7 @@ public class Choix_resultatController implements Initializable {
             stage.setScene(scene);
             //stage.initOwner(content.getParent().getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            stage.setResizable(false);
+            stage.setResizable(true);
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
