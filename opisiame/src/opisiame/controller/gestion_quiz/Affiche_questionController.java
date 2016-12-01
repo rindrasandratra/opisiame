@@ -93,38 +93,6 @@ public class Affiche_questionController implements Initializable {
             print_question(0);
             pagination_quest.setPageCount(questions.size());
             pagination_quest.setCurrentPageIndex(0);
-        } else {
-            System.out.println("opisiame.controller.gestion_quiz.Affiche_questionController.setQuiz_id()");
-            pagination_quest.setPageCount(1);
-            label_question.setText("Aucune question enregistrée pour ce quiz");
-            open_modal_new_question();
-            
-                Stage st = (Stage) pagination_quest.getScene().getWindow();
-                st.close();
-
-        }
-    }
-
-    public void open_modal_new_question() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/popup_no_question.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Popup_no_questionController popup_controller = fxmlLoader.<Popup_no_questionController>getController();
-            popup_controller.setQuiz_id(this.quiz_id);
-
-            Stage stage = new Stage();
-            //stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initModality(Modality.NONE);
-            // stage.initOwner(Platform.);
-            stage.setTitle("Ajout question");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(true);
-            stage.showAndWait();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

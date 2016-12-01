@@ -8,6 +8,8 @@ package opisiame.controller.gestion_quiz;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,20 +41,19 @@ public class Affichage_quizController implements Initializable {
 
     @FXML
     private Label label_nb_quest;
-    
+
     @FXML
     private Text label_titre;
-    
+
     @FXML
     private Button btn_modif;
-    
+
     @FXML
     private Button btn_delete;
 
     public Button getBtn_delete() {
         return btn_delete;
     }
-    
 
     public Button getBtn_modif() {
         return btn_modif;
@@ -78,20 +79,55 @@ public class Affichage_quizController implements Initializable {
     @FXML
     public void voir_questions() throws IOException {
         Stage stage = (Stage) label_nb_quest.getScene().getWindow();
+        if (Integer.valueOf(label_nb_quest.getText()) != 0) {
+            open_question_detail(stage);
+        } else {
+            open_modal_new_question();
+        }
         stage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affiche_question.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        Affiche_questionController question_controller = fxmlLoader.<Affiche_questionController>getController();
-        question_controller.setQuiz_id(this.quiz_id);
 
-        Stage stage_affiche = new Stage();
-        stage_affiche.initModality(Modality.APPLICATION_MODAL);
-        stage_affiche.setTitle("Détail quiz");
-        stage_affiche.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-        Scene scene = new Scene(root);
-        stage_affiche.setScene(scene);
-        stage_affiche.initOwner(stage.getOwner());
-        stage_affiche.show();
+    }
+
+    public void open_question_detail(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affiche_question.fxml"));
+        Parent root;
+        try {
+            root = (Parent) fxmlLoader.load();
+            Affiche_questionController question_controller = fxmlLoader.<Affiche_questionController>getController();
+            question_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage_affiche = new Stage();
+            stage_affiche.initModality(Modality.APPLICATION_MODAL);
+            stage_affiche.setTitle("Détail quiz");
+            stage_affiche.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage_affiche.setScene(scene);
+            stage_affiche.initOwner(stage.getOwner());
+            stage_affiche.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Affichage_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void open_modal_new_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/popup_no_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Popup_no_questionController popup_controller = fxmlLoader.<Popup_no_questionController>getController();
+            popup_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

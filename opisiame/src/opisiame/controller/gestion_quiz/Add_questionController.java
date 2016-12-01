@@ -85,6 +85,18 @@ public class Add_questionController implements Initializable {
 
     @FXML
     private ImageView img_view;
+    
+    @FXML
+    private Label nb_carac_restant_a;
+    
+    @FXML
+    private Label nb_carac_restant_b;
+    
+    @FXML
+    private Label nb_carac_restant_c;
+    
+    @FXML
+    private Label nb_carac_restant_d;
 
     private String libelle, rep_1, rep_2, rep_3, rep_4, sous_competence, url_img;
     private Integer timer_value;
@@ -97,6 +109,7 @@ public class Add_questionController implements Initializable {
 
     private ObservableList<Competence> liste_Competence;//contient les champs "competence" pour le combobox
     private ObservableList<Sous_competence> list_sous_comp;
+    Integer res_carac = 255;
 
     public Add_questionController() {
         url_img = "";
@@ -298,6 +311,27 @@ public class Add_questionController implements Initializable {
     @FXML
     public void checkbx_selected_action_c(){
         uncheck_other(checkbx_c);
+    }
+    
+    @FXML
+    public void rep_text_change_a(){
+        int nb_c = res_carac - rep_a.getText().length();
+        nb_carac_restant_a.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_b(){
+        int nb_c = res_carac - rep_b.getText().length();
+        nb_carac_restant_b.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_c(){
+        int nb_c = res_carac - rep_c.getText().length();
+        nb_carac_restant_c.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_d(){
+        int nb_d = res_carac - rep_d.getText().length();
+        nb_carac_restant_d.setText("("+nb_d+" caractères restants)");
     }
     
     @FXML

@@ -124,14 +124,23 @@ public class Edit_quizController implements Initializable {
     }
 
     @FXML
-    public void btn_modif_question(){
+    public void btn_modif_question() {
         btn_valider();
-        try{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_question.fxml"));
+        Integer nb_quest = quiz_dao.count_nb_quest(this.quiz_id);
+        if (nb_quest != 0) {
+            affiche_modif_question();
+        } else {
+            open_modal_new_question();
+        }
+    }
+
+    public void affiche_modif_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_question.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Edit_questionController edit_question_controller = fxmlLoader.<Edit_questionController>getController();
             edit_question_controller.setQuiz_id(quiz_id);
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Modifier question");
@@ -140,10 +149,32 @@ public class Edit_quizController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(true);
             stage.show();
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void open_modal_new_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/popup_no_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Popup_no_questionController popup_controller = fxmlLoader.<Popup_no_questionController>getController();
+            popup_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private boolean validate_number(String str) {
         return str.matches("[0-9]*");
     }
