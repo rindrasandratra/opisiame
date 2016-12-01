@@ -19,9 +19,16 @@ public class Resultat_par_quizController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    int quiz_id;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
+    public void setId(int id){
+        quiz_id = id;
+    }
 }
