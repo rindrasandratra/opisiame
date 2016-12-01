@@ -63,6 +63,14 @@
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
             </Button>
+            <Label fx:id="text_erreur" textFill="RED" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

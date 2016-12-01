@@ -7,7 +7,10 @@ package opisiame.controller.gestion_resultat;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -20,6 +23,9 @@ public class Resultat_par_quizController implements Initializable {
      * Initializes the controller class.
      */
     
+    @FXML
+    private AnchorPane content;
+    
     int quiz_id;
     
     
@@ -30,5 +36,10 @@ public class Resultat_par_quizController implements Initializable {
     
     public void setId(int id){
         quiz_id = id;
+    }
+    
+    public void Retour(){
+        Stage stage = (Stage)content.getScene().getWindow();
+        stage.close();
     }
 }
