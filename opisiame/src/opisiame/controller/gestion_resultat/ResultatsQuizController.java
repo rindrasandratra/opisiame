@@ -56,9 +56,12 @@ public class ResultatsQuizController implements Initializable {
     private TableColumn c_selection;
     @FXML
     private TextField Champs_recherche;
+    @FXML
+    private TableColumn c_date;
 
     private String Cont_recherche = null;
     private ObservableList<Quiz> quiz = FXCollections.observableArrayList();
+    private Date date_part;
 
     /**
      * Initializes the controller class.
@@ -66,11 +69,12 @@ public class ResultatsQuizController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         c_quiz.setCellValueFactory(new PropertyValueFactory<Quiz, String>("nom"));
+        c_date.setCellValueFactory(new PropertyValueFactory<Quiz, String>("date_participation"));
         getAllQuiz();
         Tableau.setItems(quiz);
-        
+
         //Insert Button    
-      c_selection.setCellValueFactory(
+        c_selection.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Quiz, Boolean>, ObservableValue<Boolean>>() {
 
             @Override
@@ -87,7 +91,7 @@ public class ResultatsQuizController implements Initializable {
             }
 
         });
-        
+
         Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -101,14 +105,13 @@ public class ResultatsQuizController implements Initializable {
         });
     }
 
-     private class ButtonCell extends TableCell<Quiz, Boolean> {
+    private class ButtonCell extends TableCell<Quiz, Boolean> {
 
         final Button btn_info = new Button();
 
         ButtonCell() {
             btn_info.setStyle("-fx-background-color: gray");
             btn_info.setCursor(Cursor.HAND);
-
 
             btn_info.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -140,6 +143,7 @@ public class ResultatsQuizController implements Initializable {
             }
         }
     }
+
     @FXML
     public void ClicImageOnOff() throws IOException {
         //remise à zéro des variables d'identification (login + mdp)
@@ -152,8 +156,8 @@ public class ResultatsQuizController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
-    
-    public void info_evaluation(){
+
+    public void info_evaluation() {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Choix_resultat.fxml"));
@@ -161,7 +165,10 @@ public class ResultatsQuizController implements Initializable {
             Choix_resultatController edit_controller = fxmlLoader.<Choix_resultatController>getController();
             Quiz s = (Quiz) Tableau.getFocusModel().getFocusedItem();
             int a = s.getId();
+            Date d = s.getDate_participation();
             edit_controller.setId(a);
+            edit_controller.setDate(d);
+            
 
             URL url = fxmlLoader.getLocation();
             ResourceBundle rb = fxmlLoader.getResources();
@@ -188,7 +195,7 @@ public class ResultatsQuizController implements Initializable {
             Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void update_tableau() {
         Tableau.getItems().clear();
         quiz.clear();
@@ -199,7 +206,7 @@ public class ResultatsQuizController implements Initializable {
         this.initialize(url, rb);
         Tableau.setItems(quiz);
     }
-    
+
     public void Rechercher() {
         Cont_recherche = Champs_recherche.getText();
         //System.out.println(Cont_recherche);
@@ -223,21 +230,27 @@ public class ResultatsQuizController implements Initializable {
             PreparedStatement requette;
 
             if (Cont_recherche != null) {
-                requette = connection.prepareStatement("SELECT Quiz_id, Quiz_nom FROM quiz WHERE quiz.Quiz_nom LIKE ?");
+                requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id, quiz.Quiz_nom, participant_quiz.Date_participation "
+                        + "FROM quiz, participant_quiz "
+                        + "WHERE quiz.Ens_id = 1 AND quiz.Quiz_nom LIKE ?");
                 requette.setString(1, "%" + Cont_recherche + "%");
             } else {
-                requette = connection.prepareStatement("SELECT Quiz_id, Quiz_nom FROM quiz");
+                requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id, quiz.Quiz_nom, participant_quiz.Date_participation "
+                        + "FROM quiz, participant_quiz "
+                        + "WHERE quiz.Ens_id = 1");
             }
             ResultSet res_requette = requette.executeQuery();
             while (res_requette.next()) {
                 Quiz curent_quiz = new Quiz();
                 curent_quiz.setId(res_requette.getInt(1));
                 curent_quiz.setNom(res_requette.getString(2));
+                curent_quiz.setDate_participation(res_requette.getDate(3));
                 quiz.add(curent_quiz);
-                System.out.print("quiz ajouter à la liste " + curent_quiz.getNom() + "\n");
-                System.out.print("quiz dans la liste " + quiz.get(quiz.size() - 1).getNom() + "\n");
-            }
-            System.out.println("taille : "+quiz.size());
+                }
+                //System.out.print("quiz ajouter à la liste " + curent_quiz.getNom() + "\n");
+                //System.out.print("quiz dans la liste " + quiz.get(quiz.size() - 1).getNom() + "\n");
+            
+            //System.out.println("taille : "+quiz.size());
 
             //System.out.println(etudiant.getId());
         } catch (SQLException ex) {
@@ -245,4 +258,6 @@ public class ResultatsQuizController implements Initializable {
         }
 
     }
+    
+   
 }

@@ -6,6 +6,7 @@
 package opisiame.controller.gestion_resultat;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ public class Resultat_par_quizController implements Initializable {
     private AnchorPane content;
     
     int quiz_id;
+    Date date_part;
     
     
     @Override
@@ -41,5 +43,8 @@ public class Resultat_par_quizController implements Initializable {
     public void Retour(){
         Stage stage = (Stage)content.getScene().getWindow();
         stage.close();
+    }
+     public void setDate(Date d){
+        date_part = d;
     }
 }

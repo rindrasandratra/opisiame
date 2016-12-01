@@ -33,6 +33,9 @@
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#Annuler" onMouseClicked="#Annuler" style="-fx-background-color: red;" text="Annuler" textFill="WHITE">
                      <font>
@@ -41,6 +44,9 @@
                      <HBox.margin>
                         <Insets bottom="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>

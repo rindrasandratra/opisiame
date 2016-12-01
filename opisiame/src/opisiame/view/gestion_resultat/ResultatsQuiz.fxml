@@ -18,6 +18,7 @@
          </columnResizePolicy>
          <columns>
             <TableColumn fx:id="c_quiz" editable="false" minWidth="-Infinity" prefWidth="62.0" text="Quiz" />
+            <TableColumn fx:id="c_date" prefWidth="75.0" text="Date de création" />
             <TableColumn fx:id="c_selection" editable="false" minWidth="-Infinity" text="Selection" />
          </columns>
          <effect>

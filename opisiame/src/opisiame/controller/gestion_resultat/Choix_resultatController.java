@@ -7,6 +7,7 @@ package opisiame.controller.gestion_resultat;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ public class Choix_resultatController implements Initializable {
     private AnchorPane content;
 
     private int quiz_id;
+    private Date date_part;
 
     /**
      * Initializes the controller class.
@@ -49,6 +51,8 @@ public class Choix_resultatController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Resultat_par_eleveController controller = fxmlLoader.<Resultat_par_eleveController>getController();
             int a = quiz_id;
+            Date d = date_part;
+            controller.setDate();
             controller.setId(a);
 
             URL url = fxmlLoader.getLocation();
@@ -82,6 +86,8 @@ public class Choix_resultatController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Resultat_par_quizController controller = fxmlLoader.<Resultat_par_quizController>getController();
             int a = quiz_id;
+            Date d = date_part;
+            controller.setDate(d);
             controller.setId(a);
 
             URL url = fxmlLoader.getLocation();
@@ -108,5 +114,8 @@ public class Choix_resultatController implements Initializable {
 
     public void setId(int id) {
         quiz_id = id;
+    }
+    public void setDate(Date date) {
+        date_part = date;
     }
 }

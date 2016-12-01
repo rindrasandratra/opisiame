@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,7 +24,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -35,7 +32,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -109,6 +105,20 @@ public class Edit_questionController implements Initializable {
 
     @FXML
     private Pagination pagination_quest;
+    
+    @FXML
+    private Label nb_carac_restant_a;
+    
+    @FXML
+    private Label nb_carac_restant_b;
+    
+    @FXML
+    private Label nb_carac_restant_c;
+    
+    @FXML
+    private Label nb_carac_restant_d;
+    
+    Integer res_carac = 255;
 
     private String libelle, rep_1, rep_2, rep_3, rep_4, sous_competence, url_img;
     private Integer timer_value;
@@ -165,6 +175,10 @@ public class Edit_questionController implements Initializable {
         for (int i = 0; i < reponses.size(); i++) {
             affiche_rep(reponses.get(i), chkb.get(i), t_areas.get(i));
         }
+        rep_text_change_a();
+        rep_text_change_b();
+        rep_text_change_c();
+        rep_text_change_d();
     }
 
     public void affiche_rep(Reponse rep, CheckBox b, TextArea t) {
@@ -188,6 +202,7 @@ public class Edit_questionController implements Initializable {
                     img_view.setCache(true);
                     img_view.setPreserveRatio(true);
                     buffered_image.flush();
+                    blob_img.reset();
                     blob_img.close();
                 }
             } catch (IOException ex) {
@@ -306,6 +321,7 @@ public class Edit_questionController implements Initializable {
         if (combo_sous_comp.getSelectionModel().getSelectedItem() != null) {
             sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
         }
+        System.out.println("url img : "+url_img);
         question_dao.update_question(current_question.getId(), libelle, timer_value, sous_comp_id, url_img);
         ArrayList<String> reponses = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
         ArrayList<Integer> rep_id = reponse_dao.get_id_rep_for_quest(current_question.getId());
@@ -420,6 +436,27 @@ public class Edit_questionController implements Initializable {
     @FXML
     public void checkbx_selected_action_d() {
         uncheck_other(checkbx_d);
+    }
+    
+     @FXML
+    public void rep_text_change_a(){
+        int nb_c = res_carac - rep_a.getText().length();
+        nb_carac_restant_a.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_b(){
+        int nb_c = res_carac - rep_b.getText().length();
+        nb_carac_restant_b.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_c(){
+        int nb_c = res_carac - rep_c.getText().length();
+        nb_carac_restant_c.setText("("+nb_c+" caractères restants)");
+    }
+    @FXML
+    public void rep_text_change_d(){
+        int nb_d = res_carac - rep_d.getText().length();
+        nb_carac_restant_d.setText("("+nb_d+" caractères restants)");
     }
 
     @FXML
