@@ -52,7 +52,7 @@
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="timer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" prefWidth="190.0" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <TextField fx:id="timer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" onKeyPressed="#text_change" prefHeight="25.0" prefWidth="190.0" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
 <!--               <opaqueInsets>
                   <Insets bottom="10.0" />
                </opaqueInsets>-->
@@ -148,7 +148,7 @@
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextArea fx:id="rep_d" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <TextArea fx:id="rep_d" onKeyPressed="#text_change" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                   <CheckBox fx:id="checkbx_d" alignment="CENTER" mnemonicParsing="false" onAction="#checkbx_selected_action_d" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
                <columnConstraints>

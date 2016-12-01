@@ -12,18 +12,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import opisiame.model.Question;
@@ -86,7 +94,37 @@ public class Affiche_questionController implements Initializable {
             pagination_quest.setPageCount(questions.size());
             pagination_quest.setCurrentPageIndex(0);
         } else {
+            System.out.println("opisiame.controller.gestion_quiz.Affiche_questionController.setQuiz_id()");
+            pagination_quest.setPageCount(1);
             label_question.setText("Aucune question enregistrée pour ce quiz");
+            open_modal_new_question();
+            
+                Stage st = (Stage) pagination_quest.getScene().getWindow();
+                st.close();
+
+        }
+    }
+
+    public void open_modal_new_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/popup_no_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Popup_no_questionController popup_controller = fxmlLoader.<Popup_no_questionController>getController();
+            popup_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            //stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initModality(Modality.NONE);
+            // stage.initOwner(Platform.);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -116,7 +154,7 @@ public class Affiche_questionController implements Initializable {
                     BorderPane pane = new BorderPane();
                     Image image = SwingFXUtils.toFXImage(buffered_image, null);
                     System.out.println("image size" + image.getWidth() + " * " + image.getHeight());
-                    
+
                     img_view = new ImageView(image);
                     img_view.setSmooth(true);
                     img_view.setCache(true);
