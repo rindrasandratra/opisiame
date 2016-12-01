@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,9 +9,94 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="opisiame.controller.gestion_resultat.Resultat_par_eleveController">
+<GridPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.gestion_resultat.Resultat_par_eleveController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="155.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="155.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="83.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="134.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="50.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="60.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <Text layoutX="172.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" naiouz hrozieuvgt zolieury tvzeoiur vzeiru v" />
+      <Label text="Résultats d'un élève sur le quiz " GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+         <font>
+            <Font name="Gill Sans MT" size="22.0" />
+         </font>
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
+      </Label>
+      <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+         <image>
+            <Image url="@../../image/retour.png" />
+         </image>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" />
+         </GridPane.margin>
+      </ImageView>
+      <Label fx:id="label_quiz" text="Label" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <font>
+            <Font name="Gill Sans MT" size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="CB_eleves" editable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="266.0" promptText="Choisir l'élève" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ComboBox>
+      <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </Button>
+      <TabPane fx:id="onglets" prefHeight="202.0" prefWidth="325.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+        <tabs>
+          <Tab fx:id="onglet_q" text="Par questions">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tab_question" layoutX="14.0" layoutY="9.0" prefHeight="290.0" prefWidth="625.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="9.0">
+                          <columns>
+                            <TableColumn fx:id="c_question" prefWidth="75.0" text="Question" />
+                            <TableColumn fx:id="c_bonne_r" prefWidth="107.0" text="Bonne réponse" />
+                              <TableColumn fx:id="c_r_eleve" prefWidth="138.0" text="Réponse de l'élève" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="onglet_c" text="Par compétences">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tab_comp" layoutX="14.0" layoutY="10.0" prefHeight="289.0" prefWidth="625.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                          <columns>
+                            <TableColumn fx:id="c_comp" prefWidth="93.0" text="Compétence" />
+                            <TableColumn fx:id="c_pourcent" prefWidth="162.0" text="Pourcentage de validation" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
-</AnchorPane>
+</GridPane>
