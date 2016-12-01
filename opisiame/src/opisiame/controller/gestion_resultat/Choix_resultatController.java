@@ -74,6 +74,36 @@ public class Choix_resultatController implements Initializable {
     }
 
     public void par_quiz() {
+        try {
+            
+            
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Resultat_par_quiz.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Resultat_par_quizController controller = fxmlLoader.<Resultat_par_quizController>getController();
+            int a = quiz_id;
+            controller.setId(a);
+
+            URL url = fxmlLoader.getLocation();
+            ResourceBundle rb = fxmlLoader.getResources();
+            controller.initialize(url, rb);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Résultat par quiz");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            //stage.initOwner(content.getParent().getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+            Stage st = (Stage) content.getScene().getWindow();
+            st.close();
+            
+
+        } catch (IOException ex) {
+            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setId(int id) {

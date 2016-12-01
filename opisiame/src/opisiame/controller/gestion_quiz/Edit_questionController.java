@@ -330,8 +330,10 @@ public class Edit_questionController implements Initializable {
                 set_data_combo_sous_comp((Competence) combo_competence.getSelectionModel().getSelectedItem());
             }
         }
-        if (list_sous_comp.size() > 0) {
-            combo_sous_comp.getSelectionModel().select(get_sous_comp_by_id(q.getSous_comp_id()));
+        if (list_sous_comp != null) {
+            if (list_sous_comp.size() > 0) {
+                combo_sous_comp.getSelectionModel().select(get_sous_comp_by_id(q.getSous_comp_id()));
+            }
         }
     }
 
@@ -349,9 +351,11 @@ public class Edit_questionController implements Initializable {
     }
 
     private void set_data_combo_sous_comp(Competence competence) {
-        list_sous_comp = sous_comp_dao.get_all_sous_competence(competence.getId());
         combo_sous_comp.getItems().clear();
-        combo_sous_comp.getItems().addAll(list_sous_comp);
+        if (competence != null) {
+            list_sous_comp = sous_comp_dao.get_all_sous_competence(competence.getId());
+            combo_sous_comp.getItems().addAll(list_sous_comp);
+        }
         combo_sous_comp.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Sous_competence>() {
             @Override
             public void changed(ObservableValue<? extends Sous_competence> ov, Sous_competence t, Sous_competence t1) {
