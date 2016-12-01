@@ -52,7 +52,7 @@ public class Choix_resultatController implements Initializable {
             Resultat_par_eleveController controller = fxmlLoader.<Resultat_par_eleveController>getController();
             int a = quiz_id;
             Date d = date_part;
-            controller.setDate();
+            controller.setDate(d);
             controller.setId(a);
 
             URL url = fxmlLoader.getLocation();
