@@ -59,12 +59,14 @@ public class Question_dao {
 
     public void update_question(Integer id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
         String SQL;
+        System.out.println("url : "+ url_img);
         if (url_img == null) {
             SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ? WHERE Quest_id = ?";
         } else {
             SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ?, Quest_img = ? WHERE Quest_id = ?";
         }
 
+        System.out.println("sql : "+ SQL);
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
@@ -72,7 +74,7 @@ public class Question_dao {
             ps.setInt(2, timer);
             ps.setInt(3, sous_comp_id);
             if (url_img != null) {
-                if (url_img.compareTo("") != 0) {
+                if (url_img.compareTo("") == 0) {
                     ps.setNull(4, java.sql.Types.BLOB);
                 } else {
                     File file = new File(url_img);
