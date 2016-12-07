@@ -91,7 +91,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefWidth="134.0" style="-fx-background-color: #87CEFA;" text="Importer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button mnemonicParsing="false" onMouseClicked="#ClickImporterButton1" prefWidth="134.0" style="-fx-background-color: #87CEFA;" text="Importer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button mnemonicParsing="false" onMouseClicked="#ClicBoutonAjoutAnim" prefWidth="129.0" style="-fx-background-color: #7CFC00;" text="Ajouter un animateur" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>

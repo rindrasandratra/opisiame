@@ -3,35 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opisiame.controller.gestion_eleve;
+package opisiame.controller.prof;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import opisiame.model.Import_eleve_excel;
+import opisiame.model.Import_animateur_excel;
+
 
 /**
  * FXML Controller class
  *
- * @author clement
+ * @author zhuxiangyu
  */
-public class Import_excelController implements Initializable {
+public class import_excel_animateurController implements Initializable {
 
-    @FXML
-    private TextField zone_url;
     @FXML
     private AnchorPane content;
     @FXML
+    private TextField zone_url;
+    @FXML
+    private Button button;
+    @FXML
     private Label text_erreur;
-
+    
     private String adresse;
-    private Import_eleve_excel coucou;
+    private Import_animateur_excel coucou; 
 
     /**
      * Initializes the controller class.
@@ -39,17 +47,15 @@ public class Import_excelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }    
 
-    }
 
     @FXML
-    public void Valider() throws IOException {
-
+    private void Valider() throws IOException {
         adresse = zone_url.getText();
-        coucou = new Import_eleve_excel(adresse);
+        coucou = new Import_animateur_excel(adresse);  
         fermer();
     }
-
     @FXML
     private void fermer() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
@@ -57,14 +63,15 @@ public class Import_excelController implements Initializable {
         {stage.close();}
         else {
             int nb_erreur = coucou.getErreur().size();
-            text_erreur.setText("Les numéros étudiants des lignes suivantes ne sont pas uniques : ");
+            text_erreur.setText("Les logins des lignes suivantes ne sont pas uniques : ");
             for (int i = 0; i < nb_erreur; ++i){
-                text_erreur.setText(text_erreur.getText() + coucou.getErreur().get(i) + "    ");          
+                text_erreur.setText(text_erreur.getText() + coucou.getErreur().get(i) + "    ");
+            }
         }
-    }}
+    }
 
     @FXML
-    public void explorateur() {
+    private void explorateur() {
         final FileChooser dialog = new FileChooser();
         dialog.setTitle("Choisir le fichier");
         dialog.getExtensionFilters().addAll(
@@ -80,4 +87,5 @@ public class Import_excelController implements Initializable {
 
     }
 
+    
 }

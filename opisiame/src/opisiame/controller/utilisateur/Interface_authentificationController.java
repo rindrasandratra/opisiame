@@ -92,6 +92,7 @@ public class Interface_authentificationController implements Initializable {
 
             final String log = Login_field.getText();
             Session login = new Session(log, "admin");
+            Session.setType("admin");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
@@ -102,6 +103,7 @@ public class Interface_authentificationController implements Initializable {
             final String log = Login_field.getText();
             Session login = new Session(log, "anim");
             Session.setAnim_id(get_anim_id(log));
+            Session.setType("anim");
             Stage stage = (Stage) content.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);

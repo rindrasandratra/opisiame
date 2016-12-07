@@ -67,13 +67,6 @@ public class Delete_sous_compController implements Initializable {
         Stage stage = (Stage) content.getScene().getWindow();
         stage.close();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/affichage_sous_competences.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        Affichage_sous_competencesController aff_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
-
-        URL url = fxmlLoader.getLocation();
-        ResourceBundle rb = fxmlLoader.getResources();
-        aff_controller.initialize(url, rb);
     }
 
     @FXML

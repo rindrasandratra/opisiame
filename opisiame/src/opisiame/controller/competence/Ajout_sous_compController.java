@@ -129,7 +129,7 @@ public class Ajout_sous_compController implements Initializable {
     public void insert_new_sous_comp(String nom) {
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO souscompetence (Competence) VALUES (?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO souscompetence (SousCompetence, Comp_id) VALUES (?, ?)");
             ps.setString(1, nom);
             ps.setInt(2, id_comp);
             ps.executeUpdate();

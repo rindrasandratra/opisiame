@@ -146,7 +146,7 @@ public class CompetencesController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+                        Integer id = t_liste_competence.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
                     }
                 }
@@ -233,7 +233,7 @@ public class CompetencesController implements Initializable {
             Affichage_sous_competencesController aff_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
 
             //stock l'id de la compétence sélectionnée
-            int compID = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+            int compID = t_liste_competence.getFocusModel().getFocusedItem().getId();
             aff_controller.setComp_id(compID);
             aff_controller.update_tableau();
 
@@ -258,7 +258,7 @@ public class CompetencesController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/editer_competence.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Editer_competenceController edit_controller = fxmlLoader.<Editer_competenceController>getController();
-            int compID = t_liste_competence.getSelectionModel().getSelectedItem().getId();
+            int compID = t_liste_competence.getFocusModel().getFocusedItem().getId();
             edit_controller.setComp_id(compID);
 
             URL url = fxmlLoader.getLocation();
