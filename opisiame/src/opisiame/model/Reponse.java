@@ -12,10 +12,23 @@ package opisiame.model;
 public class Reponse {
     private Integer id;
     private String libelle;
-    private Boolean is_bonne_reponse;
+    private Integer is_bonne_reponse;
     private Integer quest_id;
 
     public Reponse() {
+    }
+
+    public Reponse(String libelle, Integer is_bonne_reponse, Integer quest_id) {
+        this.libelle = libelle;
+        this.is_bonne_reponse = is_bonne_reponse;
+        this.quest_id = quest_id;
+    }
+
+    public Reponse(Integer id, String libelle, Integer is_bonne_reponse, Integer quest_id) {
+        this.id = id;
+        this.libelle = libelle;
+        this.is_bonne_reponse = is_bonne_reponse;
+        this.quest_id = quest_id;
     }
 
     public Integer getId() {
@@ -34,11 +47,11 @@ public class Reponse {
         this.libelle = libelle;
     }
 
-    public Boolean getIs_bonne_reponse() {
+    public Integer getIs_bonne_reponse() {
         return is_bonne_reponse;
     }
 
-    public void setIs_bonne_reponse(Boolean is_bonne_reponse) {
+    public void setIs_bonne_reponse(Integer is_bonne_reponse) {
         this.is_bonne_reponse = is_bonne_reponse;
     }
 

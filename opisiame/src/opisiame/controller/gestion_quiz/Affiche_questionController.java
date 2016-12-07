@@ -5,21 +5,27 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.imageio.ImageIO;
 import opisiame.model.Question;
 import opisiame.dao.*;
 import opisiame.model.Reponse;
@@ -35,6 +41,9 @@ public class Affiche_questionController implements Initializable {
      * Initializes the controller class.
      */
     private Integer quiz_id;
+
+    @FXML
+    private GridPane gpane;
 
     @FXML
     private Button label_timer;
@@ -64,6 +73,8 @@ public class Affiche_questionController implements Initializable {
     private Label label_question;
 
     private ArrayList<Question> questions;
+    private ImageView img_view;
+    private double ratio;
 
     Question_dao question_dao = new Question_dao();
 
@@ -74,8 +85,6 @@ public class Affiche_questionController implements Initializable {
             print_question(0);
             pagination_quest.setPageCount(questions.size());
             pagination_quest.setCurrentPageIndex(0);
-        } else {
-            label_question.setText("Aucune question enregistrée pour ce quiz");
         }
     }
 
@@ -84,28 +93,74 @@ public class Affiche_questionController implements Initializable {
     }
 
     public void print_question(Integer index) {
-        Question q = questions.get(index);
-        label_timer.setText((q.getTimer()).toString());
-        label_question.setText(q.getLibelle());
-        sous_comp.setText(q.getSous_comp());
-        print_image(q.getUrl_img());
-        print_reponse(q.getReponses());
+        if (questions.size() > 0) {
+            Question q = questions.get(index);
+            label_timer.setText((q.getTimer()).toString());
+            label_question.setText(q.getLibelle());
+            sous_comp.setText(q.getSous_comp());
+            print_image(q.getImg_blob());
+            print_reponse(q.getReponses());
+        }
     }
 
-    public void print_image(String url) {
+    public void print_image(InputStream blob_img) {
         if (vbox_question.getChildren().size() > 1) {
             vbox_question.getChildren().remove(1);
         }
-        if (url != null) {
-            url = "/ressource/images/" + url;
-            BorderPane pane = new BorderPane();
-            ImageView img = new ImageView(url);
-            pane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            pane.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            pane.setCenter(img);
-            vbox_question.getChildren().add(pane);
+        if (blob_img != null) {
+            try {
+                BufferedImage buffered_image = ImageIO.read(blob_img);
+                if (buffered_image != null) {
+                    BorderPane pane = new BorderPane();
+                    Image image = SwingFXUtils.toFXImage(buffered_image, null);
+                    System.out.println("image size" + image.getWidth() + " * " + image.getHeight());
+
+                    img_view = new ImageView(image);
+                    img_view.setSmooth(true);
+                    img_view.setCache(true);
+                    //img_view.setPreserveRatio(true);
+
+                    pane.resize(5, 5);
+                    buffered_image.flush();
+                    blob_img.reset();
+                    blob_img.close();
+//                    if (image.getWidth() > image.getHeight()) {
+//                        //img_view.setFitWidth(vbox_question.getWidth());
+//                        ratio = gpane.getWidth() / img_view.getFitWidth();
+//                        System.out.println("img v" + img_view.getFitWidth());
+//                        System.out.println("gpane" + gpane.getWidth());
+//                        System.out.println("ratio : "+ratio);
+//                        img_view.resize(20, 20);
+//                    } else {
+//                       // img_view.setFitHeight(vbox_question.getHeight());
+//                        ratio = gpane.getHeight() / img_view.getFitHeight();
+//                        System.out.println("img v" + img_view.getFitHeight());
+//                        System.out.println("gpane" + gpane.getHeight());
+//                        System.out.println("ratio : "+ratio);
+//                        img_view.resize(10, 10);
+//                    }
+                    pane.setCenter(img_view);
+                    vbox_question.getChildren().add(pane);
+                    System.out.println("xxx " + vbox_question.getWidth());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
+
+    final ChangeListener<Number> listener = new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if (img_view != null) {
+                //img_view.setFitHeight(gpane.getHeight() / ratio);
+                img_view.resize(10, 10);
+                img_view.setPreserveRatio(true);
+                System.out.println("img to " + img_view.getFitWidth() + " " + img_view.getFitHeight());
+            }
+        }
+    };
 
     public void print_reponse(ArrayList<Reponse> reponses) {
         ArrayList<Button> bts = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
@@ -115,7 +170,7 @@ public class Affiche_questionController implements Initializable {
     }
 
     public void affiche_rep(Reponse rep, Button b) {
-        if (rep.getIs_bonne_reponse()) {
+        if (rep.getIs_bonne_reponse() == 1) {
             b.setStyle("-fx-background-color: blue");
         } else {
             b.setStyle("-fx-background-color: gray");
@@ -133,6 +188,9 @@ public class Affiche_questionController implements Initializable {
             }
 
         });
+//        img_view = new ImageView();
+//        img_view.setPreserveRatio(true);
+        gpane.heightProperty().addListener(listener);
     }
 
 }

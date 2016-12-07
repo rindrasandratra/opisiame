@@ -5,6 +5,7 @@
  */
 package opisiame.controller.competence;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,7 @@ public class Ajout_sous_compController implements Initializable {
     public void set_competence_name(){
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT Competence FROM compétences WHERE Comp_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT Competence FROM competences WHERE Comp_id = ?");
             ps.setInt(1, id_comp);
             ResultSet rs = ps.executeQuery();
 
@@ -71,10 +72,7 @@ public class Ajout_sous_compController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        //System.out.println(id_comp);
 
-        //affiche le nom de la compétence concernée dans le textfield
         
     }
 
@@ -118,7 +116,7 @@ public class Ajout_sous_compController implements Initializable {
             insert_new_sous_comp(nom);
 
             //ou ouvre la fenêtre liste_profs_admin
-            //ouverture fenêtre menu_anim            
+            //ouverture fenêtre menu_ens            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
 
@@ -137,6 +135,13 @@ public class Ajout_sous_compController implements Initializable {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 
 }

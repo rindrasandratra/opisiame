@@ -19,9 +19,9 @@ import javafx.stage.*;
  */
 public class menu_adminController implements Initializable {
 
-    @FXML 
+    @FXML
     private AnchorPane content;
-    
+
     @FXML
     public void ClicImageOnOff() throws IOException {
         //remise à zéro des variables d'identification (login + mdp)
@@ -34,7 +34,7 @@ public class menu_adminController implements Initializable {
         stage.setResizable(true);
         stage.show();
     }
-    
+
     @FXML
     public void ClicBoutonParam() throws IOException {
         //ouvre la fenêtre ModifParam
@@ -45,9 +45,9 @@ public class menu_adminController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
-    
+
     @FXML
-    public void ClicBoutonEleves() throws IOException{
+    public void ClicBoutonEleves() throws IOException {
         //ouvre la fenêtre liste_eleves_admin
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
@@ -58,7 +58,18 @@ public class menu_adminController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonProfs() throws IOException{
+    public void ClicBoutonAnimateurs() throws IOException {
+        //ouvre la fenêtre liste_profs_admin
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/animateur/liste_anim.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+    }
+    
+    @FXML
+    public void ClicBoutonEnseignants() throws IOException {
         //ouvre la fenêtre liste_profs_admin
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/liste_profs_admin.fxml"));
@@ -79,9 +90,20 @@ public class menu_adminController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    public void ClicBoutonCompetences() throws IOException {
+        //ouvre la fenêtre liste_quiz (admin)
+        Stage stage = (Stage) content.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
     }
 
 }

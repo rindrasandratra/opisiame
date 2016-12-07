@@ -7,6 +7,8 @@ package opisiame.controller.gestion_quiz;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -53,16 +57,20 @@ public class Liste_quizController implements Initializable {
     @FXML
     private TableColumn<Quiz, Boolean> actionCol;
     @FXML
+    private TableColumn<Quiz, Boolean> col_cb;
+    @FXML
     private TableColumn<Quiz, Integer> timer;
     @FXML
     private TextField txt_search;
-    
+
+    private List<Integer> liste_supr = new ArrayList<>();
     Quiz_dao quiz_dao = new Quiz_dao();
 
     /*
     Fonction qui récupère la liste des quizs
      */
     public ObservableList<Quiz> getAllquiz() {
+        liste_supr.clear();
         return quiz_dao.getAllquiz();
     }
 
@@ -96,9 +104,57 @@ public class Liste_quizController implements Initializable {
             }
 
         });
-        //t_liste_quiz.getColumns().add(actionCol);
+
+        col_cb.setCellFactory(new Callback<TableColumn<Quiz, Boolean>, TableCell<Quiz, Boolean>>() {
+            @Override
+            public TableCell<Quiz, Boolean> call(TableColumn<Quiz, Boolean> p) {
+                return new CheckBoxCell();
+            }
+        });
+
+        t_liste_quiz.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste_quiz.getSelectionModel().select(row.getIndex());
+                }
+            }
+        });
 
     }
+
+    private class CheckBoxCell extends TableCell<Quiz, Boolean> {
+
+        final CheckBox check = new CheckBox();
+
+        CheckBoxCell() {
+            check.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (check.isSelected()) {
+                        Integer id = t_liste_quiz.getFocusModel().getFocusedItem().getId();
+                        //Integer id = t_liste_quiz.get
+                        liste_supr.add(id);
+                        System.out.println(id);
+                    }
+                }
+            });
+        }
+
+        //Affichage des boutons
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                HBox lay = new HBox(1);
+                lay.getChildren().add(check);
+                setGraphic(lay);
+            }
+        }
+    };
 
     //Define the button cell
     private class ButtonCell extends TableCell<Quiz, Boolean> {
@@ -110,13 +166,13 @@ public class Liste_quizController implements Initializable {
         ButtonCell() {
             btn_edit.setStyle("-fx-background-color: gray");
             btn_edit.setCursor(Cursor.HAND);
-            
+
             btn_detail.setStyle("-fx-background-color: green");
             btn_detail.setCursor(Cursor.HAND);
-            
+
             btn_delete.setStyle("-fx-background-color: red");
             btn_delete.setCursor(Cursor.HAND);
-            
+
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
@@ -148,7 +204,7 @@ public class Liste_quizController implements Initializable {
             if (!empty) {
 
                 HBox box = new HBox(3);
-                
+
                 box.setAlignment(Pos.CENTER);
 
                 Image img_edit = new Image(getClass().getResourceAsStream("/opisiame/image/edit.png"), 20, 20, true, true);
@@ -175,8 +231,8 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Edit_quizController edit_controller = fxmlLoader.<Edit_quizController>getController();
-            edit_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
-            
+            edit_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
@@ -185,7 +241,7 @@ public class Liste_quizController implements Initializable {
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
@@ -203,7 +259,7 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/delete_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Delete_quizController delete_controller = fxmlLoader.<Delete_quizController>getController();
-            delete_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+            delete_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -230,6 +286,18 @@ public class Liste_quizController implements Initializable {
     public void update_tableau() {
         t_liste_quiz.getItems().clear();
         t_liste_quiz.setItems(getAllquiz());
+        t_liste_quiz.refresh();
+    }
+
+//    final ChangeListener<Number> listener_modif = new ChangeListener<Number>() {
+//        @Override
+//        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//            System.out.println(".changed()");
+//        }
+//    };
+    private void handleButtonAction(ActionEvent event) {
+        // Button was clicked, do something...
+        System.out.println("opisiame.controller.gestion_quiz.Liste_quizController.handleButtonAction()");
     }
 
     public void detail_quiz() {
@@ -237,8 +305,28 @@ public class Liste_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/affichage_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Affichage_quizController detail_controller = fxmlLoader.<Affichage_quizController>getController();
-            detail_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
-            
+            detail_controller.setQuiz_id(t_liste_quiz.getFocusModel().getFocusedItem().getId());
+
+            detail_controller.getBtn_modif().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    edit_quiz();
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
+                }
+            });
+
+            detail_controller.getBtn_delete().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    delete_quiz();
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
+                }
+            });
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Détail quiz");
@@ -278,19 +366,16 @@ public class Liste_quizController implements Initializable {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-        
+
     @FXML
-    public void search_quiz(){
+    public void search_quiz() {
         String str = txt_search.getText();
         ObservableList<Quiz> quizs = quiz_dao.search_quiz_sql(str);
         t_liste_quiz.getItems().clear();
         t_liste_quiz.setItems(quizs);
     }
-    
-    
-        //Clic bouton on/off
+
+    //Clic bouton on/off
     @FXML
     public void ClicImageOnOff() throws IOException {
         //Retour sur la fenetre d'identification
@@ -302,8 +387,7 @@ public class Liste_quizController implements Initializable {
         stage.show();
         session.Session.Logout();
     }
-    
-    
+
     //Clic bouton de retour
     @FXML
     public void ClicBoutonRetour() throws IOException {
@@ -315,7 +399,45 @@ public class Liste_quizController implements Initializable {
         stage.setResizable(true);
         stage.show();
     }
-    
-    
-    
+
+    @FXML
+    public void ClicBoutonSupprSelec() throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/delete_selected_quiz.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Delete_selected_quizController delete_controller = fxmlLoader.<Delete_selected_quizController>getController();
+            delete_controller.setQuiz_id(liste_supr);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Confirmation de suppression");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    try {
+                        Stage stage = (Stage) content.getScene().getWindow();
+                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_quiz/liste_quiz.fxml"));
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(true);
+                        stage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

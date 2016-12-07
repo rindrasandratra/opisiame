@@ -21,6 +21,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -59,7 +60,7 @@ public class Liste_eleves_adminController implements Initializable {
     private String Cont_recherche = null;
 
     /*
-    Fonction qui récupère la liste des quizs
+    Fonction qui récupère la liste des élèves
      */
     public void getAllEleve(/*ObservableList<Eleve> eleves*/) {
         try {
@@ -96,7 +97,6 @@ public class Liste_eleves_adminController implements Initializable {
                 etudiant.setFiliere(res_requette.getString(4));
                 etudiant.setAnnee(res_requette.getInt(5));
                 eleves.add(etudiant);
-                //System.out.println(etudiant.getId());
             }
 
         } catch (SQLException ex) {
@@ -132,6 +132,18 @@ public class Liste_eleves_adminController implements Initializable {
                 return new CheckBoxCell();
             }
         });
+        
+        Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    Tableau.getSelectionModel().select(row.getIndex());
+                }
+            }
+        });
 
     }
 
@@ -146,8 +158,6 @@ public class Liste_eleves_adminController implements Initializable {
                     if (check.isSelected()) {
                         //Integer id = Tableau.getSelectionModel().getSelectedItem().getId();
                         Integer id = Tableau.getFocusModel().getFocusedItem().getId();
-                        //System.out.println(id);
-                        //System.out.println(Tableau.getSelectionModel().getSelectedItem().getPrenom());
                         liste_supr.add(id);
                     }
                 }
@@ -162,7 +172,6 @@ public class Liste_eleves_adminController implements Initializable {
                 HBox lay = new HBox(1);
                 lay.getChildren().add(check);
                 setGraphic(lay);
-                //System.out.print("J'ai mis les bouttons à jour :)");
             }
         }
     };
@@ -176,17 +185,15 @@ public class Liste_eleves_adminController implements Initializable {
         ResourceBundle rb = fxmlLoader.getResources();
         this.initialize(url, rb);
         Tableau.setItems(eleves);
-        //System.out.println("Le tableau a été mis à jour");
+        Tableau.refresh();
     }
 
     public void Rechercher() {
         Cont_recherche = Champ_recherche.getText();
-        //System.out.println(Cont_recherche);
         update_tableau();
     }
 
     public void delete_eleve() {
-        //System.out.println("appuie bouton supprimer");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/Delete_eleve.fxml"));
             Parent root = (Parent) fxmlLoader.load();

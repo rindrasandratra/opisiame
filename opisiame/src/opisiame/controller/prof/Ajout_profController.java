@@ -6,7 +6,9 @@
 package opisiame.controller.prof;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,6 +53,29 @@ public class Ajout_profController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    public static String md5(String input) {
+
+        String md5 = null;
+
+        if (null == input) {
+            return null;
+        }
+
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+            //Converts message digest value in base 16 (hex) 
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5;
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -70,6 +95,7 @@ public class Ajout_profController implements Initializable {
         Boolean champ_ok = true;
         int c1 = 0;
         int c2 = 0;
+        int c3 = 0;
 
         //verif que le nom est bien rempli
         if (nom.equals("")) {
@@ -87,7 +113,7 @@ public class Ajout_profController implements Initializable {
         try {
             Connection connection = Connection_db.getDatabase();
 
-            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM enseignant WHERE Ens_login = ?");
             ps1.setString(1, lg);
             ResultSet rs1 = ps1.executeQuery();
             while (rs1.next()) {
@@ -100,10 +126,17 @@ public class Ajout_profController implements Initializable {
             while (rs2.next()) {
                 c2 = rs2.getInt("total");
             }
+            
+            PreparedStatement ps3 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+            ps3.setString(1, lg);
+            ResultSet rs3 = ps3.executeQuery();
+            while (rs3.next()) {
+                c3 = rs3.getInt("total");
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        if (c1 != 0 || c2 != 0) {
+        if (c1 != 0 || c2 != 0 || c3 !=0) {
             label_lg.setText("login non disponible");
             champ_ok = false;
         }
@@ -122,7 +155,7 @@ public class Ajout_profController implements Initializable {
             insert_new_anim(nom, prenom, lg, mdp);
 
             //ou ouvre la fenêtre liste_profs_admin
-            //ouverture fenêtre menu_anim            
+            //ouverture fenêtre menu_ens            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
 
@@ -133,15 +166,22 @@ public class Ajout_profController implements Initializable {
     public void insert_new_anim(String nom, String prenom, String lg, String mdp) {
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO animateur (Anim_nom,Anim_prenom, Anim_login, Anim_mdp) VALUES (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO enseignant (Ens_nom,Ens_prenom, Ens_login, Ens_mdp) VALUES (?,?,?,?)");
             ps.setString(1, nom);
             ps.setString(2, prenom);
             ps.setString(3, lg);
-            ps.setString(4, mdp);
+            ps.setString(4, md5(mdp));
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 }

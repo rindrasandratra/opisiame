@@ -56,7 +56,6 @@ public class Liste_profs_adminController implements Initializable {
     private TableColumn<Prof, Boolean> c_selec;
     @FXML
     private TextField Champ_recherche;
-    
 
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
@@ -75,17 +74,17 @@ public class Liste_profs_adminController implements Initializable {
             PreparedStatement ps;
 
             if (Cont_recherche != null) {
-                ps = connection.prepareStatement("SELECT * FROM animateur \n"
-                        + "WHERE Anim_id LIKE ?\n"
-                        + "OR Anim_nom LIKE ?\n"
-                        + "OR Anim_prenom LIKE ?\n"
-                        + "OR Anim_login LIKE ?\n");
+                ps = connection.prepareStatement("SELECT * FROM enseignant \n"
+                        + "WHERE Ens_id LIKE ?\n"
+                        + "OR Ens_nom LIKE ?\n"
+                        + "OR Ens_prenom LIKE ?\n"
+                        + "OR Ens_login LIKE ?\n");
                 ps.setString(1, "%" + Cont_recherche + "%");
                 ps.setString(2, "%" + Cont_recherche + "%");
                 ps.setString(3, "%" + Cont_recherche + "%");
                 ps.setString(4, "%" + Cont_recherche + "%");
             } else {
-                ps = connection.prepareStatement("SELECT * FROM animateur");
+                ps = connection.prepareStatement("SELECT * FROM enseignant");
             }
 
             ResultSet rs = ps.executeQuery();
@@ -117,6 +116,7 @@ public class Liste_profs_adminController implements Initializable {
         c_nom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("nom"));
         c_prenom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("prenom"));
         c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("lg"));
+ 
         t_liste_prof.setItems(getAllProf());
 
         //Insert Button
@@ -142,6 +142,18 @@ public class Liste_profs_adminController implements Initializable {
             @Override
             public TableCell<Prof, Boolean> call(TableColumn<Prof, Boolean> param) {
                 return new Liste_profs_adminController.CheckBoxCell();
+            }
+        });
+        
+        t_liste_prof.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    t_liste_prof.getSelectionModel().select(row.getIndex());
+                }
             }
         });
 
@@ -175,6 +187,7 @@ public class Liste_profs_adminController implements Initializable {
                     if (check.isSelected()) {
                         Integer id = t_liste_prof.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
+                        System.out.println(id);
                     }
                 }
             });
@@ -278,7 +291,7 @@ public class Liste_profs_adminController implements Initializable {
 
     @FXML
     public void ClicBoutonRetour() throws IOException {
-        //ouverture fenêtre menu_anim
+        //ouverture fenêtre menu_ens
         Stage stage = (Stage) content.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
         Scene scene = new Scene(root);
@@ -290,6 +303,7 @@ public class Liste_profs_adminController implements Initializable {
     public void update_tableau() {
         t_liste_prof.getItems().clear();
         t_liste_prof.setItems(getAllProf());
+        t_liste_prof.refresh();
 
     }
 
@@ -332,11 +346,7 @@ public class Liste_profs_adminController implements Initializable {
         }
 
     }
-    
-    
-    
-    
-    
+
     @FXML
     public void ToutSupprimer() throws IOException {
         try {
@@ -375,10 +385,6 @@ public class Liste_profs_adminController implements Initializable {
         }
 
     }
-    
-    
-    
-    
 
     @FXML
     public void ClicBoutonAjoutAnim() throws IOException {
@@ -386,7 +392,7 @@ public class Liste_profs_adminController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/ajout_prof.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajout animateur");
+            stage.setTitle("Ajout enseignant");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);

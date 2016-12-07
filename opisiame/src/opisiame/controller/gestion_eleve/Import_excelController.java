@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -63,7 +64,6 @@ public class Import_excelController implements Initializable {
         }
     }}
 
-    @FXML
     public void explorateur() {
         final FileChooser dialog = new FileChooser();
         dialog.setTitle("Choisir le fichier");
@@ -78,6 +78,13 @@ public class Import_excelController implements Initializable {
             zone_url.setText(file.toString());
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 
 }

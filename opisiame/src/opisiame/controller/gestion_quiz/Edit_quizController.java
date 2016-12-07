@@ -5,11 +5,19 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import opisiame.dao.Quiz_dao;
 import opisiame.model.Quiz;
@@ -112,6 +120,58 @@ public class Edit_quizController implements Initializable {
             label_error_timer.setVisible(false);
             label_number_timer_error.setVisible(false);
             update_quiz(nom, value_timer);
+        }
+    }
+
+    @FXML
+    public void btn_modif_question() {
+        btn_valider();
+        Integer nb_quest = quiz_dao.count_nb_quest(this.quiz_id);
+        if (nb_quest != 0) {
+            affiche_modif_question();
+        } else {
+            open_modal_new_question();
+        }
+    }
+
+    public void affiche_modif_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/edit_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Edit_questionController edit_question_controller = fxmlLoader.<Edit_questionController>getController();
+            edit_question_controller.setQuiz_id(quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Modifier question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void open_modal_new_question() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/popup_no_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Popup_no_questionController popup_controller = fxmlLoader.<Popup_no_questionController>getController();
+            popup_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

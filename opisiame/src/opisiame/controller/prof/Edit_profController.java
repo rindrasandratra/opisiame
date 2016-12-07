@@ -23,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import opisiame.database.Connection_db;
 import opisiame.model.Prof;
+import session.Session;
 
 /**
  * FXML Controller class
@@ -64,7 +65,7 @@ public class Edit_profController implements Initializable {
 
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM enseignant WHERE Ens_id = ?");
             ps.setInt(1, anim_id);
             ResultSet rs = ps.executeQuery();
 
@@ -97,6 +98,7 @@ public class Edit_profController implements Initializable {
             Boolean champ_ok = true;
             int c1 = 0;
             int c2 = 0;
+            int c3=0;
 
             //verif que le nom est bien rempli
             if (nom.equals("")) {
@@ -123,7 +125,7 @@ public class Edit_profController implements Initializable {
             try {
                 Connection connection = Connection_db.getDatabase();
 
-                PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+                PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM enseignant WHERE Ens_login = ?");
                 ps1.setString(1, lg);
                 ResultSet rs1 = ps1.executeQuery();
                 while (rs1.next()) {
@@ -136,10 +138,17 @@ public class Edit_profController implements Initializable {
                 while (rs2.next()) {
                     c2 = rs2.getInt("total");
                 }
+                
+                PreparedStatement ps3 = connection.prepareStatement("SELECT COUNT(*) AS total FROM animateur WHERE Anim_login = ?");
+                ps3.setString(1, lg);
+                ResultSet rs3 = ps3.executeQuery();
+                while (rs3.next()) {
+                    c3 = rs3.getInt("total");
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            if (c1 != 0 || c2 != 0) {
+            if (c1 != 0 || c2 != 0 || c3!=0) {
                 label_login.setText("déjà pris");
                 champ_ok = false;
             }
@@ -153,7 +162,7 @@ public class Edit_profController implements Initializable {
             label_login.setText("");
             //met à jour la base de données
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("UPDATE animateur SET Anim_nom = ?, Anim_prenom = ?, Anim_login = ? WHERE Anim_id = ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE enseignant SET Ens_nom = ?, Ens_prenom = ?, Ens_login = ? WHERE Ens_id = ?");
             ps.setString(1, nom);
             ps.setString(2, prenom);
             ps.setString(3, lg);
@@ -171,5 +180,12 @@ public class Edit_profController implements Initializable {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
 }

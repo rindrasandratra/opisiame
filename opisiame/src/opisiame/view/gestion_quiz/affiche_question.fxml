@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="TOP_CENTER" maxHeight="500.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.gestion_quiz.Affiche_questionController">
+<GridPane fx:id="gpane" alignment="TOP_CENTER" maxHeight="500.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.gestion_quiz.Affiche_questionController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Questions: " wrappingWidth="181.984375" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
          <font>
@@ -102,7 +102,7 @@
                   </Button>
                </children>
             </GridPane>
-            <VBox fx:id="vbox_question" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: gray; -fx-border-width: 3; -fx-border-radius: 5; -fx-border-insets: 10;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <VBox fx:id="vbox_question" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: gray; -fx-border-width: 3; -fx-border-radius: 5; -fx-border-insets: 10;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <children>
                   <Label fx:id="label_question" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="278.0" prefWidth="335.0" text="Label" VBox.vgrow="ALWAYS">
                      <VBox.margin>

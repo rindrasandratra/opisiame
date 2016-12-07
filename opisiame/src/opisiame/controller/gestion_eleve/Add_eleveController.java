@@ -102,7 +102,6 @@ public class Add_eleveController implements Initializable {
                 for (int i = 0; i < liste_Annee.size(); ++i) {
                     //remplissage du combobox
                     if (!Choix_annee.getItems().contains(liste_Annee.get(i))) {
-                        System.out.println(liste_Annee.get(i));
                         Choix_annee.getItems().add(liste_Annee.get(i));
                     }
                 }
@@ -122,19 +121,18 @@ public class Add_eleveController implements Initializable {
         PasOkFiliere.setText("");
         PasOkAnnee.setText("");
         PasOkPrenom.setText("");
-        
+
         int ok = 1;
         Integer ID = 0;
-        if (Edit_Id.getText().equals("")){
+        if (Edit_Id.getText().equals("")) {
             PasokId.setText("*");
             ok = 0;
-        }
-        else {
+        } else {
             try {
                 int count = 0;
                 Connection database = Connection_db.getDatabase();
                 PreparedStatement req;
-                ID =Integer.valueOf(Edit_Id.getText());
+                ID = Integer.valueOf(Edit_Id.getText());
                 PreparedStatement pslog = database.prepareStatement("SELECT COUNT(*) AS total FROM participant WHERE Part_id = ?");
                 pslog.setInt(1, ID);
                 ResultSet logres = pslog.executeQuery();
@@ -144,7 +142,8 @@ public class Add_eleveController implements Initializable {
                 if (count != 0) {
                     ok = 0;
                     cle_multiple.setText("Le n° éudiant n'est pas unique");
-                }   } catch (SQLException ex) {
+                }
+            } catch (SQLException ex) {
                 Logger.getLogger(Add_eleveController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -190,6 +189,12 @@ public class Add_eleveController implements Initializable {
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
         }
-        //System.out.println(Choix_Flilere.getValue().toString());
+    }
+
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+
     }
 }

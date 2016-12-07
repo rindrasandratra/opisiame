@@ -59,7 +59,7 @@
                   <Image url="@../../image/on_off.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMouseClicked="#Modifier_MDP" prefHeight="52.0" prefWidth="99.0" text="Valider" GridPane.columnIndex="5" GridPane.rowIndex="4">
+            <Button mnemonicParsing="false" onMouseClicked="#Annuler" prefHeight="52.0" prefWidth="87.0" style="-fx-background-color: DCDCDC;" text="Annuler" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
@@ -67,6 +67,11 @@
             <Label fx:id="Msg" onMouseClicked="#Modifier_MDP" prefHeight="23.0" prefWidth="403.0" textFill="RED" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
             <PasswordField fx:id="NouveauMDP" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <PasswordField fx:id="ConfirmMDP" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onMouseClicked="#Modifier_MDP" prefHeight="52.0" prefWidth="87.0" style="-fx-background-color: adff2f;" text="Valider" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Button>
          </children>
       </GridPane>
    </children>

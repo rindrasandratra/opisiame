@@ -5,6 +5,7 @@
  */
 package opisiame.controller.competence;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,7 +64,7 @@ public class Ajout_compController implements Initializable {
         try {
             Connection connection = Connection_db.getDatabase();
 
-            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM compétences WHERE Competence = ?");
+            PreparedStatement ps1 = connection.prepareStatement("SELECT COUNT(*) AS total FROM competences WHERE Competence = ?");
             ps1.setString(1, nom);
             ResultSet rs1 = ps1.executeQuery();
             while (rs1.next()) {
@@ -85,7 +86,7 @@ public class Ajout_compController implements Initializable {
             insert_new_comp(nom);
 
             //ou ouvre la fenêtre liste_profs_admin
-            //ouverture fenêtre menu_anim            
+            //ouverture fenêtre menu_ens            
             Stage stage = (Stage) content.getScene().getWindow();
             stage.close();
             
@@ -97,13 +98,20 @@ public class Ajout_compController implements Initializable {
     public void insert_new_comp(String nom) {
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO compétences (Competence) VALUES (?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO competences (Competence) VALUES (?)");
             ps.setString(1, nom);
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
+    }
+    
+    @FXML
+    public void Annuler() throws IOException {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
+       
     }
     
 }
