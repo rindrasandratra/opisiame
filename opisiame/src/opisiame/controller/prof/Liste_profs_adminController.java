@@ -59,6 +59,10 @@ public class Liste_profs_adminController implements Initializable {
 
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
+    @FXML
+    private ImageView btn_retour;
+    @FXML
+    private Button BtnToutSuppr;
 
     //récupération de la liste des profs dans la BDD, et affichage
     public ObservableList<Prof> getAllProf() {
@@ -155,6 +159,7 @@ public class Liste_profs_adminController implements Initializable {
 
     }
 
+    @FXML
     public void Rechercher() throws IOException {
         Cont_recherche = Champ_recherche.getText();
         //System.out.println(Cont_recherche);
@@ -169,6 +174,8 @@ public class Liste_profs_adminController implements Initializable {
 
     }
 
+
+
     private class CheckBoxCell extends TableCell<Prof, Boolean> {
 
         final CheckBox check = new CheckBox();
@@ -179,7 +186,6 @@ public class Liste_profs_adminController implements Initializable {
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
                         Integer id = t_liste_prof.getFocusModel().getFocusedItem().getId();
-                        //Integer id = t_liste_prof.;
                         liste_supr.add(id);
                         System.out.println(id);
                     }
@@ -407,8 +413,37 @@ public class Liste_profs_adminController implements Initializable {
     }
 
     @FXML
-    public void ClicBoutonImport() throws IOException {
+    public void ClickImporterButton1() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/prof/import_excel_prof.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        //Import_excelController add_controller = fxmlLoader.<Import_excelController>getController();
 
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Importer des animateur");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        //stage.initOwner(Tableau.getScene().getWindow());
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+        stage.setResizable(false);
+        stage.show();
+
+        stage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                try {
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/prof/import_excel_prof.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
     }
 
 }

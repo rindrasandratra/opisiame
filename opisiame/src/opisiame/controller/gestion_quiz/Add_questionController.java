@@ -11,16 +11,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import opisiame.controller.competence.Affichage_sous_competencesController;
+import opisiame.controller.competence.CompetencesController;
 import opisiame.dao.Competence_dao;
 import opisiame.dao.Question_dao;
 import opisiame.dao.Reponse_dao;
@@ -157,7 +167,8 @@ public class Add_questionController implements Initializable {
                 && (rep_1.compareTo("") != 0)
                 && (rep_2.compareTo("") != 0)
                 && (rep_3.compareTo("") != 0)
-                && (rep_4.compareTo("") != 0)) {
+                && (rep_4.compareTo("") != 0)
+                && check_comp()) {
             b = true;
         }
 
@@ -176,6 +187,14 @@ public class Add_questionController implements Initializable {
             }
         }
         return b;
+    }
+    
+    public Boolean check_comp(){
+        if ((combo_competence.getSelectionModel().isEmpty()) || (combo_sous_comp.getSelectionModel().isEmpty())){
+            competence_problem();
+            return false;
+        }
+        return true;
     }
 
     @FXML
@@ -271,9 +290,52 @@ public class Add_questionController implements Initializable {
         );
         File selected_file = chooser.showOpenDialog(img_view.getScene().getWindow());
         if (selected_file != null) {
+            if (selected_file.length() > 65534) {
+                file_problem();
+            } else {
+                url_img = selected_file.getAbsolutePath();
+                affiche_img();
+            }
+        }
+    }
+    
+    public void file_problem() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/file_size_problem.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
 
-            url_img = selected_file.getAbsolutePath();
-            affiche_img();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Vérification du formulaire");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void competence_problem() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/competence_problem.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Vérification du formulaire");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -282,7 +344,10 @@ public class Add_questionController implements Initializable {
     }
 
     public void affiche_img() {
+        //System.out.println("url : "+url_img);
         img_view.setImage(new Image("file:///" + url_img));
+        img_view.setSmooth(true);
+        img_view.setPreserveRatio(true);
     }
 
     @FXML
@@ -341,11 +406,62 @@ public class Add_questionController implements Initializable {
 
     @FXML
     public void open_competence() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
 
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.show();
+            
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    set_data_combo_competence();
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     public void open_sous_comp() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/affichage_sous_competences.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Affichage_sous_competencesController aff_controller = fxmlLoader.<Affichage_sous_competencesController>getController();
 
+            //stock l'id de la compétence sélectionnée
+            Competence comp = (Competence) combo_competence.getSelectionModel().getSelectedItem();
+            int compID = comp.getId();
+            aff_controller.setComp_id(compID);
+            aff_controller.update_tableau();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Sous compétences");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.show();
+            
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    set_data_combo_sous_comp((Competence) combo_competence.getSelectionModel().getSelectedItem());
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
