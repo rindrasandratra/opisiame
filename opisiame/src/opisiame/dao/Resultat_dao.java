@@ -25,15 +25,15 @@ public class Resultat_dao {
     public Resultat_dao() {
     }
 
-    public ObservableList<Eleve> get_participants_quiz(Integer id_quiz, Date d) {
+    public ObservableList<Eleve> get_participants_quiz(Integer id_quiz, String d) {
         ObservableList<Eleve> eleves = FXCollections.observableArrayList();
-        String SQL = "SELECT P.Part_nom, P.Part_prenom, P.Part_id"
-                + "FROM participant P, participant_quiz PQ"
+        String SQL = "SELECT P.Part_nom, P.Part_prenom, P.Part_id "
+                + "FROM participant P, participant_quiz PQ "
                 + "WHERE PQ.Date_participation = ? AND PQ.Quiz_id = ? AND (P.Part_id = PQ.Part_id)";
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
-            ps.setDate(1, d);
+            ps.setString(1, d);
             ps.setInt(2,id_quiz);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -48,5 +48,7 @@ public class Resultat_dao {
         }
         return eleves;
     }
+    
+
     
 }
