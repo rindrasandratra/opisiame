@@ -5,6 +5,7 @@
  */
 package opisiame.model;
 
+import java.sql.Date;
 import javafx.beans.property.*;
 
 /**
@@ -17,6 +18,7 @@ public class Quiz {
     private StringProperty date_creation = new SimpleStringProperty();
     private IntegerProperty timer = new SimpleIntegerProperty();
     private IntegerProperty anim_id = new SimpleIntegerProperty();
+    private Date date_participation;
 
     public Integer getId() {
         return id.get();
@@ -67,6 +69,14 @@ public class Quiz {
 
     public void setAnim_id(Integer anim_id) {
         this.anim_id.set(anim_id);
+    }
+    
+    public void setDate_participation(Date date){
+        date_participation = date;
+    }
+    
+    public Date getDate_participation(){
+        return date_participation;
     }
 
    

@@ -7,13 +7,18 @@ package opisiame.controller.gestion_resultat;
 
 import java.io.IOException;
 import java.net.URL;
+//import java.util.*;
+import java.sql.*;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import opisiame.dao.Resultat_dao;
+import opisiame.model.Eleve;
 
 /**
  * FXML Controller class
@@ -22,6 +27,8 @@ import javafx.stage.Stage;
  */
 public class Resultat_par_eleveController implements Initializable {
 
+    Resultat_dao resultat_dao = new Resultat_dao();
+    
     @FXML
     private GridPane content;
     @FXML
@@ -50,14 +57,22 @@ public class Resultat_par_eleveController implements Initializable {
     private TableColumn c_pourcent;
     
     int quiz_id;
+    Date date_quiz;
+    private ObservableList<Eleve> liste_eleves;
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        liste_eleves = resultat_dao.get_participants_quiz(quiz_id,date_quiz);
+        CB_eleves.getItems().addAll(liste_eleves);
+        CB_eleves.getSelectionModel().selectFirst();
     }    
     
     public void setId(int id){
         quiz_id = id;
+    }
+    
+    public void setDate (Date d){
+        date_quiz = d;
     }
     
     @FXML

@@ -76,6 +76,10 @@ public class Import_eleve_excel {
         update_database();
         
     }
+
+    public Import_eleve_excel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     private void ouverture_fichier(String adresse) throws IOException {
         InputStream is = new FileInputStream(adresse);
