@@ -64,17 +64,18 @@ public class Affiche_questionController implements Initializable {
     private Button sous_comp;
 
     @FXML
-    private VBox vbox_question;
-
-    @FXML
-    private Pagination pagination_quest;
+    private ImageView question_img_view;
 
     @FXML
     private Label label_question;
 
+    @FXML
+    private Pagination pagination_quest;
+
     private ArrayList<Question> questions;
-    private ImageView img_view;
-    private double ratio;
+    //private ImageView img_view;
+    private double ratio_height;
+    private double ratio_width;
 
     Question_dao question_dao = new Question_dao();
 
@@ -104,61 +105,40 @@ public class Affiche_questionController implements Initializable {
     }
 
     public void print_image(InputStream blob_img) {
-        if (vbox_question.getChildren().size() > 1) {
-            vbox_question.getChildren().remove(1);
-        }
         if (blob_img != null) {
             try {
                 BufferedImage buffered_image = ImageIO.read(blob_img);
                 if (buffered_image != null) {
-                    BorderPane pane = new BorderPane();
                     Image image = SwingFXUtils.toFXImage(buffered_image, null);
-                    System.out.println("image size" + image.getWidth() + " * " + image.getHeight());
-
-                    img_view = new ImageView(image);
-                    img_view.setSmooth(true);
-                    img_view.setCache(true);
-                    //img_view.setPreserveRatio(true);
-
-                    pane.resize(5, 5);
+                    question_img_view.setImage(image);
+                    question_img_view.setSmooth(true);
+                    question_img_view.setCache(true);
+                    question_img_view.setPreserveRatio(true);
+                    ratio_height = gpane.getHeight() / question_img_view.getFitHeight();
+                    ratio_width = gpane.getWidth() / question_img_view.getFitWidth();
                     buffered_image.flush();
                     blob_img.reset();
                     blob_img.close();
-//                    if (image.getWidth() > image.getHeight()) {
-//                        //img_view.setFitWidth(vbox_question.getWidth());
-//                        ratio = gpane.getWidth() / img_view.getFitWidth();
-//                        System.out.println("img v" + img_view.getFitWidth());
-//                        System.out.println("gpane" + gpane.getWidth());
-//                        System.out.println("ratio : "+ratio);
-//                        img_view.resize(20, 20);
-//                    } else {
-//                       // img_view.setFitHeight(vbox_question.getHeight());
-//                        ratio = gpane.getHeight() / img_view.getFitHeight();
-//                        System.out.println("img v" + img_view.getFitHeight());
-//                        System.out.println("gpane" + gpane.getHeight());
-//                        System.out.println("ratio : "+ratio);
-//                        img_view.resize(10, 10);
-//                    }
-                    pane.setCenter(img_view);
-                    vbox_question.getChildren().add(pane);
-                    System.out.println("xxx " + vbox_question.getWidth());
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
 
+        } else {
+            question_img_view.setImage(null);
         }
     }
 
     final ChangeListener<Number> listener = new ChangeListener<Number>() {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            if (img_view != null) {
-                //img_view.setFitHeight(gpane.getHeight() / ratio);
-                img_view.resize(10, 10);
-                img_view.setPreserveRatio(true);
-                System.out.println("img to " + img_view.getFitWidth() + " " + img_view.getFitHeight());
+            if (ratio_height == 0) {
+                ratio_height = gpane.getHeight() / question_img_view.getFitHeight();
+                ratio_width = gpane.getWidth() / question_img_view.getFitWidth();
             }
+            question_img_view.setFitHeight(gpane.getHeight() / ratio_height);
+            question_img_view.setFitWidth(gpane.getWidth() / ratio_width);
+            question_img_view.setSmooth(true);
         }
     };
 
@@ -171,9 +151,12 @@ public class Affiche_questionController implements Initializable {
 
     public void affiche_rep(Reponse rep, Button b) {
         if (rep.getIs_bonne_reponse() == 1) {
-            b.setStyle("-fx-background-color: blue");
+            b.setStyle("-fx-background-color: #b7cff4;"
+                    + "-fx-border-radius: 5px");
         } else {
-            b.setStyle("-fx-background-color: gray");
+            b.setStyle("-fx-background-color: white;"
+                    + "-fx-border-color: gray;"
+                    + "-fx-border-radius: 5px");
         }
         b.setText(rep.getLibelle());
     }
