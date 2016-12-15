@@ -28,7 +28,7 @@ public class Resultat_par_quizController implements Initializable {
     private AnchorPane content;
     
     int quiz_id;
-    Date date_part;
+    String date_part;
     
     
     @Override
@@ -44,7 +44,7 @@ public class Resultat_par_quizController implements Initializable {
         Stage stage = (Stage)content.getScene().getWindow();
         stage.close();
     }
-     public void setDate(Date d){
+     public void setDate(String d){
         date_part = d;
     }
 }

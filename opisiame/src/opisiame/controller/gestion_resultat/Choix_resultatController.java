@@ -29,7 +29,7 @@ public class Choix_resultatController implements Initializable {
     private AnchorPane content;
 
     private int quiz_id;
-    private Date date_part;
+    private String date_part;
 
     /**
      * Initializes the controller class.
@@ -51,7 +51,7 @@ public class Choix_resultatController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Resultat_par_eleveController controller = fxmlLoader.<Resultat_par_eleveController>getController();
             int a = quiz_id;
-            Date d = date_part;
+            String d = date_part;
             controller.setDate(d);
             controller.setId(a);
 
@@ -86,7 +86,7 @@ public class Choix_resultatController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Resultat_par_quizController controller = fxmlLoader.<Resultat_par_quizController>getController();
             int a = quiz_id;
-            Date d = date_part;
+            String d = date_part;
             controller.setDate(d);
             controller.setId(a);
 
@@ -115,7 +115,7 @@ public class Choix_resultatController implements Initializable {
     public void setId(int id) {
         quiz_id = id;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         date_part = date;
     }
 }

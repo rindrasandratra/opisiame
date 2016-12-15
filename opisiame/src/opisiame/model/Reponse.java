@@ -62,6 +62,10 @@ public class Reponse {
     public void setQuest_id(Integer quest_id) {
         this.quest_id = quest_id;
     }
+
+//    public void setLibelle(char nom_question) {
+//        this.libelle=nom_question.;
+//    }
     
     
 }

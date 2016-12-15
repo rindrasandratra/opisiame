@@ -94,4 +94,23 @@ public class Reponse_dao {
         }
         return reponses;
     }
+    
+    public ArrayList<Reponse> get_reponses_by_participationID(Integer part_id){
+        ArrayList<Reponse> reponses = new ArrayList<>();
+        String SQL = "SELECT Rep_id FROM reponse_participant_quiz WHERE Participation_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, part_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Reponse rep = new Reponse();
+                rep.setId(rs.getInt(1));
+                reponses.add(rep);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return reponses;
+    }
 }

@@ -18,7 +18,7 @@ public class Quiz {
     private StringProperty date_creation = new SimpleStringProperty();
     private IntegerProperty timer = new SimpleIntegerProperty();
     private IntegerProperty anim_id = new SimpleIntegerProperty();
-    private Date date_participation;
+    private String date_participation;
 
     public Integer getId() {
         return id.get();
@@ -71,11 +71,12 @@ public class Quiz {
         this.anim_id.set(anim_id);
     }
     
-    public void setDate_participation(Date date){
-        date_participation = date;
+
+    public void setDate_participation(String date){
+        date_participation=date;
     }
     
-    public Date getDate_participation(){
+    public String getDate_participation(){
         return date_participation;
     }
 

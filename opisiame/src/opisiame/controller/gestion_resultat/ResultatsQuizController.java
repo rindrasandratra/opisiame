@@ -61,7 +61,7 @@ public class ResultatsQuizController implements Initializable {
 
     private String Cont_recherche = null;
     private ObservableList<Quiz> quiz = FXCollections.observableArrayList();
-    private Date date_part;
+    private String date_part;
 
     /**
      * Initializes the controller class.
@@ -165,7 +165,7 @@ public class ResultatsQuizController implements Initializable {
             Choix_resultatController edit_controller = fxmlLoader.<Choix_resultatController>getController();
             Quiz s = (Quiz) Tableau.getFocusModel().getFocusedItem();
             int a = s.getId();
-            Date d = s.getDate_participation();
+            String d = s.getDate_participation();
             edit_controller.setId(a);
             edit_controller.setDate(d);
             
@@ -244,7 +244,7 @@ public class ResultatsQuizController implements Initializable {
                 Quiz curent_quiz = new Quiz();
                 curent_quiz.setId(res_requette.getInt(1));
                 curent_quiz.setNom(res_requette.getString(2));
-                curent_quiz.setDate_participation(res_requette.getDate(3));
+                curent_quiz.setDate_participation(res_requette.getString(3));
                 quiz.add(curent_quiz);
                 }
                 //System.out.print("quiz ajouter à la liste " + curent_quiz.getNom() + "\n");

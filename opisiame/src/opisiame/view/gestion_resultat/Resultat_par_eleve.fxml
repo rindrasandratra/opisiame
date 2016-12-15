@@ -52,12 +52,12 @@
             <Font name="Gill Sans MT" size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="CB_eleves" editable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="266.0" promptText="Choisir l'élève" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <ComboBox fx:id="CB_eleves" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="266.0" promptText="Choisir l'élève" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </ComboBox>
-      <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button mnemonicParsing="false" onMouseClicked="#BtnValider" text="Valider" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
