@@ -8,12 +8,15 @@ package opisiame.controller.gestion_quiz;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,6 +67,7 @@ public class Liste_quizController implements Initializable {
     private TextField txt_search;
 
     private List<Integer> liste_supr = new ArrayList<>();
+    private ObservableList<Quiz> liste_quizs;
     Quiz_dao quiz_dao = new Quiz_dao();
 
     /*
@@ -71,7 +75,8 @@ public class Liste_quizController implements Initializable {
      */
     public ObservableList<Quiz> getAllquiz() {
         liste_supr.clear();
-        return quiz_dao.getAllquiz();
+        liste_quizs = quiz_dao.getAllquiz();
+        return liste_quizs;
     }
 
     /*
@@ -370,11 +375,33 @@ public class Liste_quizController implements Initializable {
     @FXML
     public void search_quiz() {
         String str = txt_search.getText();
-        ObservableList<Quiz> quizs = quiz_dao.search_quiz_sql(str);
-        t_liste_quiz.getItems().clear();
-        t_liste_quiz.setItems(quizs);
+        ObservableList<Quiz> quizs_temp = FXCollections.observableArrayList();
+        for (Quiz quiz : liste_quizs) {
+            Boolean contain = false;
+            if (quiz.getId().toString().contains(str)) {
+                contain = true;
+            }
+            if (quiz.getDate_creation().contains(str)) {
+                contain = true;
+            }
+            if (quiz.getNom().contains(str)) {
+                contain = true;
+            }
+            if (quiz.getTimer().toString().contains(str)) {
+                contain = true;
+            }
+            if (contain == true) {
+                quizs_temp.add(quiz);
+            }
+        }
+        t_liste_quiz.setItems(quizs_temp);
+        t_liste_quiz.refresh();
     }
 
+//    public ObservableList<Quiz> recherche_quiz(String str) {
+//        
+//        return quizs_temp;
+//    }
     //Clic bouton on/off
     @FXML
     public void ClicImageOnOff() throws IOException {

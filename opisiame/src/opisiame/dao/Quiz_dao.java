@@ -80,7 +80,24 @@ public class Quiz_dao {
         ObservableList<Quiz> quizs = FXCollections.observableArrayList();
         try {
             Connection connection = Connection_db.getDatabase();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM quiz");
+            PreparedStatement ps;
+            String SQL;
+            switch (Session.getType()) {
+                case "ens":
+                    SQL = "SELECT * FROM quiz WHERE Ens_id = ?";
+                    ps = connection.prepareStatement(SQL);
+                    ps.setInt(1, Session.getUser_id());
+                    break;
+                case "anim":
+                    SQL = "SELECT * FROM quiz JOIN animateur_quiz ON animateur_quiz.Quiz_id = quiz.Quiz_id WHERE animateur_quiz.Anim_id = ?";
+                    ps = connection.prepareStatement(SQL);
+                    ps.setInt(1, Session.getUser_id());
+                    break;
+                default:
+                    SQL = "SELECT * FROM quiz";
+                    ps = connection.prepareStatement(SQL);
+                    break;
+            }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Quiz quiz = new Quiz();
