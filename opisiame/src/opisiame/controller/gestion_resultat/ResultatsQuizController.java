@@ -38,6 +38,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import opisiame.database.Connection_db;
 import opisiame.model.Quiz;
+import session.Session;
 
 /**
  * FXML Controller class
@@ -231,13 +232,16 @@ public class ResultatsQuizController implements Initializable {
 
             if (Cont_recherche != null) {
                 requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id, quiz.Quiz_nom, participant_quiz.Date_participation "
-                        + "FROM quiz, participant_quiz "
-                        + "WHERE quiz.Ens_id = 1 AND quiz.Quiz_nom LIKE ?");
-                requette.setString(1, "%" + Cont_recherche + "%");
+                        + "FROM quiz JOIN participant_quiz ON participant_quiz.Quiz_id = quiz.Quiz_id "
+                        + "WHERE quiz.Ens_id = ? AND quiz.Quiz_nom LIKE ?");
+                requette.setInt(1, Session.getUser_id());
+                requette.setString(2, "%" + Cont_recherche + "%");
             } else {
-                requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id, quiz.Quiz_nom, participant_quiz.Date_participation "
-                        + "FROM quiz, participant_quiz "
-                        + "WHERE quiz.Ens_id = 1");
+                requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id , quiz.Quiz_nom, participant_quiz.Date_participation "
+                        + "FROM quiz JOIN participant_quiz ON participant_quiz.Quiz_id = quiz.Quiz_id "
+                        + "WHERE quiz.Ens_id = ?");
+                
+                requette.setInt(1, Session.getUser_id());
             }
             ResultSet res_requette = requette.executeQuery();
             while (res_requette.next()) {

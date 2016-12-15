@@ -11,17 +11,19 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import opisiame.dao.*;
+import opisiame.database.Connection_db;
 import opisiame.model.Eleve;
 import opisiame.model.Question;
 import opisiame.model.Reponse;
+import opisiame.model.Reponse_eleve_quiz;
 
 /**
  * FXML Controller class
@@ -47,19 +49,19 @@ public class Resultat_par_eleveController implements Initializable {
     @FXML
     private Tab onglet_q;
     @FXML
-    private TableView tab_comp;
+    private TableView<Reponse_eleve_quiz> tab_comp;
     @FXML
-    private TableView tab_question;
+    private TableView<Reponse_eleve_quiz> tab_question;
     @FXML
-    private TableColumn c_question;
+    private TableColumn<Reponse_eleve_quiz, Integer> num_question;
     @FXML
-    private TableColumn c_bonne_r;
+    private TableColumn<Reponse_eleve_quiz, String> c_bonne_r;
     @FXML
-    private TableColumn c_r_eleve;
+    private TableColumn<Reponse_eleve_quiz, String> c_r_eleve;
     @FXML
-    private TableColumn c_comp;
+    private TableColumn<Reponse_eleve_quiz, String> c_comp;
     @FXML
-    private TableColumn c_pourcent;
+    private TableColumn<Reponse_eleve_quiz, String> c_pourcent;
 
     int quiz_id;
     int participation_id;
@@ -68,47 +70,8 @@ public class Resultat_par_eleveController implements Initializable {
     //private ObservableList
     private ArrayList<Question> liste_questions;
     private ArrayList<Reponse> liste_reponses;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        liste_eleves = resultat_dao.get_participants_quiz(quiz_id, date_quiz);
-
-        //remplissage de la combobox avec le nom des élèves
-        int taille = liste_eleves.size();
-        String NomPrenom = "";
-        for (int i = 0; i < taille; i++) {
-            NomPrenom = liste_eleves.get(i).getId().toString();// + liste_eleves.get(i).getNom() + " " + liste_eleves.get(i).getPrenom();
-            CB_eleves.getItems().add(NomPrenom);
-        }
-        CB_eleves.getSelectionModel().selectFirst();
-    }
-
-    @FXML
-    public void BtnValider() throws IOException {
-        //récupérer les questions / réponses / réponses de l'élève correspondant au quiz
-
-        // 1 - récupérer les questions du quiz
-        liste_questions = question_dao.get_questions_by_quiz(quiz_id);
-        int taille = liste_questions.size();
-        for (int i = 0; i < taille; i++) {
-
-            char nom_question = 'a';
-            int question = liste_questions.get(i).getId();
-            liste_reponses = reponse_dao.get_reponses_by_quest(question);
-
-            for (int j = 0; j < 4; j++) {
-                liste_reponses.get(j).setLibelle(Character.toString(nom_question));
-                if (liste_reponses.get(j).getIs_bonne_reponse() == 1) {
-                    liste_reponses.get(j).setIs_bonne_reponse(1);
-                }
-                nom_question++;
-            }
-            
-            
-
-        }
-
-    }
+    private ArrayList<Reponse> liste_reponses_eleve;
+    private ObservableList<Reponse_eleve_quiz> a_afficher = FXCollections.observableArrayList();
 
     public void setId(int id) {
         quiz_id = id;
@@ -116,6 +79,86 @@ public class Resultat_par_eleveController implements Initializable {
 
     public void setDate(String d) {
         date_quiz = d;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        num_question.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, Integer>("num_question"));
+        c_bonne_r.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, String>("rep_quiz"));
+        c_r_eleve.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, String>("rep_eleve"));
+
+        liste_eleves = resultat_dao.get_participants_quiz(quiz_id, date_quiz);
+
+        //remplissage de la combobox avec le nom des élèves
+        int taille = liste_eleves.size();
+        String NomPrenom = "";
+        for (int i = 0; i < taille; i++) {
+            NomPrenom = liste_eleves.get(i).getId().toString();
+            CB_eleves.getItems().add(NomPrenom);
+        }
+        CB_eleves.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void BtnValider() throws IOException {
+
+//        ObservableList<Reponse_eleve_quiz> a = Reponses();
+        tab_question.setItems(Reponses());
+
+    }
+
+    public ObservableList<Reponse_eleve_quiz> Reponses() {
+        //récupération du numéro éudiant (part_id), et du participation_id
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps;
+            ps = connection.prepareStatement("SELECT Participation_id "
+                    + "FROM participant_quiz \n"
+                    + "WHERE Part_id LIKE ?\n");
+            ps.setInt(1, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            participation_id = rs.getInt(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //récupérer les questions / réponses / réponses de l'élève correspondant au quiz
+        // 1 - récupérer les questions du quiz
+        liste_questions = question_dao.get_questions_by_quiz(quiz_id);
+        int taille = liste_questions.size();
+        for (int i = 0; i < taille; i++) {
+
+            Reponse_eleve_quiz afficher = new Reponse_eleve_quiz();
+            afficher.setnum_question(Integer.valueOf(i + 1));
+
+            //recherche des réponses de l'élève
+            liste_reponses_eleve = reponse_dao.get_reponses_eleve(participation_id);
+
+            //récupération de toutes les réponses des questions du quiz
+            char nom_question = 'a';
+            int question = liste_questions.get(i).getId();
+            liste_reponses = reponse_dao.get_reponses_by_quest(question);
+
+            //recherche de la bonne reponse
+            for (int j = 0; j < 4; j++) {
+                afficher.setrep_q(Character.toString(nom_question));
+
+                if (liste_reponses.get(j).getIs_bonne_reponse() == 1) {
+                    afficher.setrep_q(Character.toString(nom_question));
+                }
+
+                if (liste_reponses.get(j).getId().equals(liste_reponses_eleve.get(i).getId())) {
+                    afficher.setrep_e(Character.toString(nom_question));
+                }
+                nom_question++;
+            }
+
+            a_afficher.add(afficher);
+        }
+
+        return a_afficher;
     }
 
     @FXML

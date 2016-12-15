@@ -113,4 +113,31 @@ public class Reponse_dao {
         }
         return reponses;
     }
+    
+    
+        public ArrayList<Reponse> get_reponses_eleve(Integer part_id){
+        ArrayList<Reponse> reponses = new ArrayList<>();
+        String SQL = "SELECT RPQ.Rep_id, R.quest_id"
+                + " FROM reponse_participant_quiz RPQ"
+                + " JOIN reponse R ON R.Rep_id = RPQ.Rep_id"
+                + " WHERE RPQ.Participation_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, part_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Reponse rep = new Reponse();
+                rep.setId(rs.getInt(1));
+                rep.setQuest_id(rs.getInt(2));
+                reponses.add(rep);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return reponses;
+    }
+        
+        
+    
 }
