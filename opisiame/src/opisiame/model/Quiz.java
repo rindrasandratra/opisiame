@@ -80,5 +80,8 @@ public class Quiz {
         return date_participation;
     }
 
-   
+    @Override
+    public String toString() {
+        return getNom();
+    }
 }

@@ -5,6 +5,7 @@
  */
 package opisiame.dao;
 
+import opisiame.model.Participant;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,5 +113,32 @@ public class Reponse_dao {
             ex.printStackTrace();
         }
         return reponses;
+    }
+    
+    public ArrayList<Participant> get_repondant_rep(Integer rep_id){
+        ArrayList<Participant> participants = new ArrayList<>();
+        String SQL = "SELECT * FROM participant "
+                + "JOIN participant_quiz "
+                + "ON participant_quiz.Part_id = participant.Part_id "
+                + "JOIN reponse_participant_quiz "
+                + "ON reponse_participant_quiz.Participation_id = participant_quiz.Participation_id "
+                + "WHERE reponse_participant_quiz.Rep_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, rep_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Participant p = new Participant();
+                p.setPart_id(rs.getInt(1));
+                p.setPart_nom(rs.getString(2));
+                p.setPart_prenom(rs.getString(3));
+                p.setFiliere_id(rs.getInt(4));
+                participants.add(p);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return participants;
     }
 }

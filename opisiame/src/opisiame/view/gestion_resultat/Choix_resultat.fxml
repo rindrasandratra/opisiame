@@ -35,7 +35,7 @@
                   <Insets left="50.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseReleased="#par_quiz" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation pour tout les élèves" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#evaluation_par_question" prefHeight="75.0" prefWidth="206.0" style="-fx-background-color: #9ee855;" text="Evaluation pour tout les élèves" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>

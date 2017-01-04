@@ -17,6 +17,7 @@ import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import opisiame.controller.gestion_quiz.Liste_quizController;
 
 /**
  * FXML Controller class
@@ -44,8 +45,6 @@ public class Choix_resultatController implements Initializable {
     public void par_eleve() throws IOException {
 
         try {
-            
-            
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Resultat_par_eleve.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -70,7 +69,6 @@ public class Choix_resultatController implements Initializable {
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
-            
 
         } catch (IOException ex) {
             Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,8 +77,6 @@ public class Choix_resultatController implements Initializable {
 
     public void par_quiz() {
         try {
-            
-            
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Resultat_par_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -105,7 +101,6 @@ public class Choix_resultatController implements Initializable {
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
-            
 
         } catch (IOException ex) {
             Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,7 +110,29 @@ public class Choix_resultatController implements Initializable {
     public void setId(int id) {
         quiz_id = id;
     }
+
     public void setDate(String date) {
         date_part = date;
+    }
+    
+    @FXML
+    public void evaluation_par_question(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/resultat_questions.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Résultat quiz");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+                        
+            Stage st = (Stage) content.getScene().getWindow();
+            st.close();
+
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
