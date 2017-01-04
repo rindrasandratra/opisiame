@@ -8,8 +8,6 @@ package opisiame.controller.gestion_quiz;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -29,7 +27,6 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
@@ -167,6 +164,7 @@ public class Liste_quizController implements Initializable {
         final Button btn_edit = new Button();
         final Button btn_delete = new Button();
         final Button btn_detail = new Button();
+        final Button btn_lancer = new Button();
 
         ButtonCell() {
             btn_edit.setStyle("-fx-background-color: gray");
@@ -177,15 +175,14 @@ public class Liste_quizController implements Initializable {
 
             btn_delete.setStyle("-fx-background-color: red");
             btn_delete.setCursor(Cursor.HAND);
+            
+            btn_lancer.setStyle("-fx-background-color: blue");
+            btn_lancer.setCursor(Cursor.HAND);
 
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     edit_quiz();
-                    Button bt = (Button) t.getSource();
-                    // System.out.println(btn_delete.getParent().getParent().toString());
-
-                    // System.out.println("index : "+bt.getParent().getParent().toString());
                 }
             });
             btn_delete.setOnAction(new EventHandler<ActionEvent>() {
@@ -198,6 +195,12 @@ public class Liste_quizController implements Initializable {
                 @Override
                 public void handle(ActionEvent t) {
                     detail_quiz();
+                }
+            });
+            btn_lancer.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    lancer_quiz();
                 }
             });
         }
@@ -220,14 +223,39 @@ public class Liste_quizController implements Initializable {
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
                 btn_detail.setGraphic(new ImageView(img_detail));
+                
+                Image img_lancer = new Image(getClass().getResourceAsStream("/opisiame/image/lancer.png"), 20, 20, true, true);
+                btn_lancer.setGraphic(new ImageView(img_lancer));
 
                 box.setPadding(new Insets(5, 0, 5, 0));//ajout de marge à l'interieur du bouton
                 // box.setPrefColumns(1);
                 box.getChildren().add(btn_detail);
                 box.getChildren().add(btn_edit);
                 box.getChildren().add(btn_delete);
+                box.getChildren().add(btn_lancer);
                 setGraphic(box);
             }
+        }
+    }
+    
+    public void lancer_quiz(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_quiz.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Lancer_quizController lancer_controller = fxmlLoader.<Lancer_quizController>getController();
+            lancer_controller.setQuiz_id(t_liste_quiz.getSelectionModel().getSelectedItem().getId());
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Détail quiz");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
