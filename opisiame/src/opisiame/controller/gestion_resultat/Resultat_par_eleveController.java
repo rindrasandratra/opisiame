@@ -41,6 +41,8 @@ public class Resultat_par_eleveController implements Initializable {
     @FXML
     private Label label_quiz;
     @FXML
+    private Label label_note;
+    @FXML
     private ComboBox CB_eleves;
     @FXML
     private TabPane onglets;
@@ -65,7 +67,10 @@ public class Resultat_par_eleveController implements Initializable {
 
     int quiz_id;
     int participation_id;
+    int nbre_questions;
+    int nbre_bonnes_rep;
     String date_quiz;
+    String nom_quiz;
     private ObservableList<Eleve> liste_eleves;
     //private ObservableList
     private ArrayList<Question> liste_questions;
@@ -84,9 +89,29 @@ public class Resultat_par_eleveController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        num_question.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, Integer>("num_question"));
+        nbre_bonnes_rep = 0;
+
+        num_question.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, Integer>("num_ques"));
         c_bonne_r.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, String>("rep_quiz"));
         c_r_eleve.setCellValueFactory(new PropertyValueFactory<Reponse_eleve_quiz, String>("rep_eleve"));
+
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps;
+            ps = connection.prepareStatement("SELECT Quiz_nom "
+                    + "FROM quiz \n"
+                    + "WHERE Quiz_id LIKE ?\n");
+            ps.setInt(1, quiz_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                nom_quiz = rs.getString(1);
+            };
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        label_quiz.setText(nom_quiz);
 
         liste_eleves = resultat_dao.get_participants_quiz(quiz_id, date_quiz);
 
@@ -102,10 +127,12 @@ public class Resultat_par_eleveController implements Initializable {
 
     @FXML
     public void BtnValider() throws IOException {
+        
+        tab_question.getItems().clear();
+        tab_question.setItems(Reponses());        
 
-//        ObservableList<Reponse_eleve_quiz> a = Reponses();
-        tab_question.setItems(Reponses());
-
+        double note = (nbre_bonnes_rep / (float)nbre_questions) * 20.0;
+        label_note.setText("Note : " + note + "/20");
     }
 
     public ObservableList<Reponse_eleve_quiz> Reponses() {
@@ -127,11 +154,11 @@ public class Resultat_par_eleveController implements Initializable {
         //récupérer les questions / réponses / réponses de l'élève correspondant au quiz
         // 1 - récupérer les questions du quiz
         liste_questions = question_dao.get_questions_by_quiz(quiz_id);
-        int taille = liste_questions.size();
-        for (int i = 0; i < taille; i++) {
+        nbre_questions = liste_questions.size();
+        for (int i = 0; i < nbre_questions; i++) {
 
             Reponse_eleve_quiz afficher = new Reponse_eleve_quiz();
-            afficher.setnum_question(Integer.valueOf(i + 1));
+            afficher.setNum_ques(Integer.valueOf(i + 1));
 
             //recherche des réponses de l'élève
             liste_reponses_eleve = reponse_dao.get_reponses_eleve(participation_id);
@@ -143,18 +170,22 @@ public class Resultat_par_eleveController implements Initializable {
 
             //recherche de la bonne reponse
             for (int j = 0; j < 4; j++) {
-                afficher.setrep_q(Character.toString(nom_question));
 
                 if (liste_reponses.get(j).getIs_bonne_reponse() == 1) {
-                    afficher.setrep_q(Character.toString(nom_question));
+                    afficher.setRep_quiz(Character.toString(nom_question));
                 }
 
                 if (liste_reponses.get(j).getId().equals(liste_reponses_eleve.get(i).getId())) {
-                    afficher.setrep_e(Character.toString(nom_question));
+                    afficher.setRep_eleve(Character.toString(nom_question));
                 }
+               
                 nom_question++;
             }
-
+            
+            if (afficher.getRep_eleve().equals(afficher.getRep_quiz())) {
+                nbre_bonnes_rep = nbre_bonnes_rep+1;
+            }     
+            
             a_afficher.add(afficher);
         }
 
