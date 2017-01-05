@@ -99,4 +99,8 @@ public class Question {
         this.img_blob = img_blob;
     }
     
+    @Override
+    public String toString() {
+        return getLibelle();
+    }
 }

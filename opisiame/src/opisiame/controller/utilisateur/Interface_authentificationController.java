@@ -130,48 +130,71 @@ public class Interface_authentificationController implements Initializable {
     @FXML
     public void Submit_passwd() throws IOException, SQLException {
         
-        
-
-        if (lecture_admin() == 1) {
-
-            final String log = Login_field.getText();
-            Session login = new Session(log, "admin");
-            Session.setType("admin");
-            Stage stage = (Stage) content.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } else if (lecture_admin() == 2) {
-
-            final String log = Login_field.getText();
-            Session login = new Session(log, "ens");
-            Session.setUser_id(get_utilisateur_id(log));
-            Session.setType("ens");
-            Stage stage = (Stage) content.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } else if (lecture_admin() == 3) {
-
-            final String log = Login_field.getText();
-            Session login = new Session(log, "anim");
-            Session.setUser_id(get_utilisateur_id(log));
-            Session.setType("anim");
-            Stage stage = (Stage) content.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } else {
-            Message_field.setText("erreur d'authentification");
-            Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");
+        switch (lecture_admin()) {
+            case 1: // ADMINISTRATEUR
+                {
+                    final String log = Login_field.getText();
+                    Session login = new Session(log, "admin");
+                    Session.setType("admin");
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    break;
+                }
+            case 2: // ENSEIGNANT
+                {
+                    final String log = Login_field.getText();
+                    Session login = new Session(log, "ens");
+                    Session.setUser_id(get_ens_id(log));
+                    Session.setType("ens");
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    break;
+                }
+            case 3: //ANIMATEUR
+                {
+                    final String log = Login_field.getText();
+                    Session login = new Session(log, "anim");
+                    Session.setUser_id(get_anim_id(log));
+                    Session.setType("anim");
+                    Stage stage = (Stage) content.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    break;
+                }
+            default:// ERREUR LOGIN
+                Message_field.setText("erreur d'authentification");
+                Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");
+                break;
         }
     }
 
-    Integer get_utilisateur_id(String log) {
+    Integer get_anim_id(String log){
+        Integer anim_id = null;
+        Connection connexion = null;
+        PreparedStatement ps;
+        try {
+            Connection connection = Connection_db.getDatabase();
+            ps = connection.prepareStatement("SELECT * FROM animateur WHERE Anim_login = ?");
+            ps.setString(1, log);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                anim_id = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anim_id;
+    }
+    
+    Integer get_ens_id(String log) {
         Integer anim_id = null;
         Connection connexion = null;
         PreparedStatement ps;

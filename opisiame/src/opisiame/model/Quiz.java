@@ -71,6 +71,7 @@ public class Quiz {
         this.anim_id.set(anim_id);
     }
     
+
     public void setDate_participation(String date){
         date_participation=date;
     }
@@ -79,5 +80,8 @@ public class Quiz {
         return date_participation;
     }
 
-   
+    @Override
+    public String toString() {
+        return getNom();
+    }
 }
