@@ -73,7 +73,7 @@
                      <children>
                         <TableView fx:id="tab_question" focusTraversable="false" layoutX="14.0" layoutY="9.0" prefHeight="290.0" prefWidth="625.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="9.0">
                           <columns>
-                            <TableColumn fx:id="num_question" prefWidth="75.0" text="Question" />
+                            <TableColumn fx:id="question" prefWidth="75.0" text="Question" />
                             <TableColumn fx:id="c_bonne_r" prefWidth="107.0" text="Bonne réponse" />
                               <TableColumn fx:id="c_r_eleve" prefWidth="138.0" text="Réponse de l'élève" />
                           </columns>

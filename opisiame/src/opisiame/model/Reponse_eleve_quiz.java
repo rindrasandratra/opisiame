@@ -16,6 +16,7 @@ import javafx.beans.property.StringProperty;
  */
 public class Reponse_eleve_quiz {
 
+    private StringProperty lib_ques = new SimpleStringProperty();
     private IntegerProperty num_ques = new SimpleIntegerProperty();
     private StringProperty rep_quiz = new SimpleStringProperty();
     private StringProperty rep_eleve = new SimpleStringProperty();
@@ -23,16 +24,26 @@ public class Reponse_eleve_quiz {
     public Reponse_eleve_quiz() {
     }
 
-    public Reponse_eleve_quiz(IntegerProperty num, StringProperty rep_q, StringProperty rep_e) {
+    public Reponse_eleve_quiz(StringProperty lib_ques, IntegerProperty num, StringProperty rep_q, StringProperty rep_e) {
+        this.lib_ques = lib_ques;
         this.num_ques = num;
         this.rep_quiz = rep_q;
         this.rep_eleve = rep_e;
     }
-    
-     public Reponse_eleve_quiz(Integer num, String rep_q, String rep_e) {
+
+    public Reponse_eleve_quiz(String lib, Integer num, String rep_q, String rep_e) {
+        this.lib_ques.set(lib);
         this.num_ques.set(num);
         this.rep_quiz.set(rep_q);
         this.rep_eleve.set(rep_e);
+    }
+
+    public String getLib_ques() {
+        return this.lib_ques.get();
+    }
+
+    public void setLib_ques(String lib_ques) {
+        this.lib_ques.set(lib_ques);
     }
 
     public Integer getNum_ques() {
@@ -58,31 +69,5 @@ public class Reponse_eleve_quiz {
     public void setRep_eleve(String rep_eleve) {
         this.rep_eleve.set(rep_eleve);
     }
-     
-      
-//    public Integer getnum_question() {
-//        return num_ques.get();
-//    }
-//
-//    public void setnum_question(Integer id) {
-//        this.num_ques.set(id);
-//    }
-//
-//    public String getrep_q() {
-//        return rep_quiz.get();
-//    }
-//
-//    public void setrep_q(String nom) {
-//        this.rep_quiz.set(nom);
-//    }
-//
-//    public String getrep_e() {
-//        return rep_eleve.get();
-//    }
-//
-//    public void setrep_e(String lg) {
-//        this.rep_eleve.setValue(lg);
-//    }
-
 
 }
