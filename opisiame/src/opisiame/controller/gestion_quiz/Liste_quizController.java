@@ -33,6 +33,7 @@ import javafx.stage.*;
 import javafx.util.Callback;
 import opisiame.dao.Quiz_dao;
 import opisiame.model.*;
+import session.Session;
 
 /**
  * FXML Controller class
@@ -448,11 +449,29 @@ public class Liste_quizController implements Initializable {
     public void ClicBoutonRetour() throws IOException {
         //Retour sur la fenetre menu
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.show();
+
+        String type = Session.getType();
+        if (type.equals("anim")) {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } else if (type.equals("admin")) {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } else if (type.equals("ens")) {
+            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        }
     }
 
     @FXML
