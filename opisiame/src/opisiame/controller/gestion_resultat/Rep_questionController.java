@@ -104,7 +104,7 @@ public class Rep_questionController implements Initializable {
         liste_reponses_question.clear();
         List<Question> questions = question_dao.get_questions_by_quiz(quiz_selected.getId());
         for (Question quest : questions) {
-            Reponse_question rq = reponse_question_dao.get_res_by_quest(quest.getId());
+            Reponse_question rq = reponse_question_dao.get_res_by_quest(quest.getId(), participation_quiz.getDate_participation());
             rq.setQuestion(quest.getLibelle());
             liste_reponses_question.add(rq);
         }
@@ -159,6 +159,7 @@ public class Rep_questionController implements Initializable {
                     date_select_quiz.setDisable(false);
                     setQuiz_selected(t1);
                     btn_export.setDisable(true);
+                    t_liste_rep.getItems().clear();
                 }
             }
         });

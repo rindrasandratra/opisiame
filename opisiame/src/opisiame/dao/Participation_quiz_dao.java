@@ -35,8 +35,6 @@ public class Participation_quiz_dao {
             if (!ids.contains(participation_quiz.getQuiz_id())){
                 ids.add(participation_quiz.getQuiz_id());
                 Quiz q = quiz_dao.get_quiz_by_id(participation_quiz.getQuiz_id());
-                System.out.println("nono : "+ q.getNom());
-                System.out.println("id : "+ q.getId());
                 quizs.add(q);
             }
         }
@@ -46,8 +44,10 @@ public class Participation_quiz_dao {
     public ObservableList<Timestamp> get_dates_participations(Integer quiz_id, ObservableList<Participation_quiz> participation_quizs ){
         ObservableList<Timestamp> dates = FXCollections.observableArrayList();
         for (Participation_quiz participation_quiz : participation_quizs) {
-            if (Objects.equals(participation_quiz.getQuiz_id(), quiz_id))
-                dates.add(participation_quiz.getDate_participation());
+            if (Objects.equals(participation_quiz.getQuiz_id(), quiz_id)){
+                if (!dates.contains(participation_quiz.getDate_participation()))
+                    dates.add(participation_quiz.getDate_participation());
+            }
         }
         return dates;
     }

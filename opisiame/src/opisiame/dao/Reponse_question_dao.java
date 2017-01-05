@@ -5,6 +5,7 @@
  */
 package opisiame.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import opisiame.model.Reponse;
@@ -18,13 +19,13 @@ public class Reponse_question_dao {
 
     Reponse_dao reponse_dao = new Reponse_dao();
 
-    public Reponse_question get_res_by_quest(Integer quest_id) {
+    public Reponse_question get_res_by_quest(Integer quest_id, Timestamp date_participation) {
         Reponse_question rq = new Reponse_question();
         List<Reponse> reponses = reponse_dao.get_reponses_by_quest(quest_id);
         List<Integer> nb_reps = new ArrayList<>();
         Integer nb_bonne_rep = 0;
         for (Reponse reponse : reponses) {
-            Integer value = reponse_dao.get_repondant_rep(reponse.getId()).size();
+            Integer value = reponse_dao.get_repondant_rep(reponse.getId(), date_participation).size();
             nb_reps.add(value);
             if (reponse.getIs_bonne_reponse() == 0) {
                 nb_bonne_rep = value;

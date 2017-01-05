@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import opisiame.database.Connection_db;
 import opisiame.model.Reponse;
@@ -117,18 +118,21 @@ public class Reponse_dao {
         return reponses;
     }
 
-    public ArrayList<Participant> get_repondant_rep(Integer rep_id) {
+    public ArrayList<Participant> get_repondant_rep(Integer rep_id, Timestamp date_participation) {
         ArrayList<Participant> participants = new ArrayList<>();
         String SQL = "SELECT * FROM participant "
                 + "JOIN participant_quiz "
                 + "ON participant_quiz.Part_id = participant.Part_id "
                 + "JOIN reponse_participant_quiz "
                 + "ON reponse_participant_quiz.Participation_id = participant_quiz.Participation_id "
-                + "WHERE reponse_participant_quiz.Rep_id = ?";
+                + "WHERE reponse_participant_quiz.Rep_id = ? "
+                + "AND CAST(participant_quiz.Date_participation AS CHAR) =  ?";
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setInt(1, rep_id);
+            String dt = date_participation.toString();
+            ps.setString(2, dt);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Participant p = new Participant();
