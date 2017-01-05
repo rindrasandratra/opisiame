@@ -17,6 +17,7 @@
     <rowConstraints>
         <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="50.0" vgrow="NEVER" />
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="362.0" valignment="CENTER" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
@@ -28,7 +29,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
         </Text>
-        <TableView fx:id="t_liste_rep" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="286.0" prefWidth="645.0" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+        <TableView fx:id="t_liste_rep" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="286.0" prefWidth="645.0" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="question" editable="false" minWidth="-Infinity" text="Question" />
                 <TableColumn fx:id="rep_a" text="Réponse A" />
@@ -48,7 +49,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
-      <Button fx:id="export_result" mnemonicParsing="false" text="Exporter le résultat" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="btn_export" disable="true" mnemonicParsing="false" onAction="#export_result" text="Exporter le résultat" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="10.0" right="20.0" top="10.0" />
          </GridPane.margin>
@@ -56,6 +57,11 @@
       <ComboBox fx:id="select_quiz" prefWidth="150.0" promptText="Sélectionner le quiz" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" top="10.0" />
+         </GridPane.margin>
+      </ComboBox>
+      <ComboBox fx:id="date_select_quiz" disable="true" prefHeight="25.0" prefWidth="206.0" promptText="La date de lancement du quiz" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="20.0" />
          </GridPane.margin>
       </ComboBox>
     </children>
