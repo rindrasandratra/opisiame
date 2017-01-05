@@ -20,7 +20,7 @@ import opisiame.model.Sous_competence;
  * @author Sandratra
  */
 public class Sous_comp_dao {
-    
+
     public Integer insert_new_sous_comp(String libelle, Integer comp_id) {
         String SQL = "INSERT INTO souscompetence (SousCompetence, Comp_id) VALUES (?,?)";
         Integer insert_id = null;
@@ -34,7 +34,7 @@ public class Sous_comp_dao {
                 System.err.println("Échec de la création de la question, aucune ligne ajoutée dans la table.");
             }
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 insert_id = rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class Sous_comp_dao {
         }
         return insert_id;
     }
-    
+
     public ObservableList<Sous_competence> get_all_sous_competence(Integer comp_id) {
         ObservableList<Sous_competence> sous_competences = FXCollections.observableArrayList();
         String SQL = "SELECT *  FROM souscompetence WHERE Comp_id = ?";
@@ -62,5 +62,26 @@ public class Sous_comp_dao {
             ex.printStackTrace();
         }
         return sous_competences;
+    }
+
+    public String get_comp(Integer SousComp_id) {
+        String Comp = "";
+        String SQL = "SELECT C.Competence "
+                + "FROM competences C "
+                + "JOIN souscompetence SC "
+                + "ON C.Comp_id = SC.Comp_id "
+                + "WHERE SC.SousComp_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, SousComp_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Comp = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return Comp;
     }
 }

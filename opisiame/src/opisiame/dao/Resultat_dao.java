@@ -21,7 +21,7 @@ import opisiame.model.Eleve;
  * @author Audrey
  */
 public class Resultat_dao {
-    
+
     public Resultat_dao() {
     }
 
@@ -34,7 +34,7 @@ public class Resultat_dao {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setString(1, d);
-            ps.setInt(2,id_quiz);
+            ps.setInt(2, id_quiz);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Eleve eleve = new Eleve();
@@ -48,4 +48,25 @@ public class Resultat_dao {
         }
         return eleves;
     }
+
+    public String get_competence(Integer SousComp_id) {
+        String s = "";
+        String SQL = "SELECT C.Competence\n"
+                + "FROM competences C\n"
+                + "JOIN souscompetence SC ON SC.Comp_id = C.Comp_id\n"
+                + "WHERE SC.SousComp_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1, SousComp_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                s = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return s;
+    }
+
 }
