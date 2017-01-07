@@ -161,8 +161,10 @@ public class Resultat_par_eleveController implements Initializable {
             PreparedStatement ps;
             ps = connection.prepareStatement("SELECT Participation_id "
                     + "FROM participant_quiz \n"
-                    + "WHERE Part_id LIKE ?\n");
-            ps.setInt(1, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
+                    + "WHERE Date_participation LIKE ? AND Part_id LIKE ?\n");
+            //+ "WHERE Part_id LIKE ?\n");
+            ps.setString(1, date_quiz.substring(0,date_quiz.length()-2));
+            ps.setInt(2, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
             ResultSet rs = ps.executeQuery();
             rs.next();
             participation_id = rs.getInt(1);
@@ -233,19 +235,18 @@ public class Resultat_par_eleveController implements Initializable {
                         afficher.setRep_eleve(Character.toString(nom_question)); //si l'élève a choisi cette reponse, on garde son libelle (A, B, C ou D)e
                     }
                 }
-                
+
                 nom_question++; //passage à la réponse (A, B, C, D) suivante
             }
 
             //si l'élève n'a pas répondu à la question, on l'indique
             if (afficher.getRep_eleve().equals("")) {
-                afficher.setRep_eleve("-"); 
-                System.out.println(afficher.getRep_eleve());
+                afficher.setRep_eleve("-");
             }
 
             //si l'élève a bien repondu, on lui ajoute un point
             if (afficher.getRep_eleve().equals(afficher.getRep_quiz())) {
-                nbre_bonnes_rep = nbre_bonnes_rep + 1; 
+                nbre_bonnes_rep = nbre_bonnes_rep + 1;
                 a_afficher_2.get(indice).setPourcentage((float) (a_afficher_2.get(indice).getPourcentage().intValue() + 1));
             }
 
@@ -280,4 +281,3 @@ public class Resultat_par_eleveController implements Initializable {
     }
 
 }
-

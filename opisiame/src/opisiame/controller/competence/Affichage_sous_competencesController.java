@@ -278,18 +278,18 @@ public class Affichage_sous_competencesController implements Initializable {
 
     }
 
-    //Clic bouton on/off -> retourne sur la page d'identification
-    @FXML
-    public void ClicImageOnOff() throws IOException {
-        //Retour sur la fenetre d'identification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-        session.Session.Logout();
-    }
+//    //Clic bouton on/off -> retourne sur la page d'identification
+//    @FXML
+//    public void ClicImageOnOff() throws IOException {
+//        //Retour sur la fenetre d'identification
+//        Stage stage = (Stage) content.getScene().getWindow();
+//        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.setResizable(false);
+//        stage.show();
+//        session.Session.Logout();
+//    }
 
     //Clic bouton de retour -> retourne sur la fenêtre 
     @FXML
