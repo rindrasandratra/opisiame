@@ -5,11 +5,13 @@
  */
 package opisiame.controller.gestion_resultat;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Point;
 import java.io.File;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,7 +40,7 @@ public class Choix_exportController implements Initializable {
 
     @FXML
     public void excel_export() {
-        File excel_file = choix_chemin_enregistrement();
+        File excel_file = choix_chemin_enregistrement("Excel files (*.xls)", "*.xls");
         if (excel_file != null) {
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet sheet = wb.createSheet("Resultat par question");
@@ -69,7 +71,7 @@ public class Choix_exportController implements Initializable {
                 e.printStackTrace();
             }
         }
-        //stage.close();
+        close_window();
     }
 
     public void create_data(HSSFSheet sheet, Integer i, String question, String rep_a, String rep_b, String rep_c, String rep_d, String pourcentage) {
@@ -94,11 +96,11 @@ public class Choix_exportController implements Initializable {
         cell_pourcentage.setCellValue(pourcentage);
     }
 
-    public File choix_chemin_enregistrement() {
+    public File choix_chemin_enregistrement(String description, String extension) {
         Stage stage = (Stage) content.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choix d'enregistrement du fichier");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xls)", "*.xls");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
         fileChooser.getExtensionFilters().add(extFilter);
         File selected_directory = fileChooser.showSaveDialog(stage);
         System.out.println("file : " + selected_directory.getAbsolutePath());
@@ -107,7 +109,69 @@ public class Choix_exportController implements Initializable {
 
     @FXML
     public void pdf_export() {
-        choix_chemin_enregistrement();
+        File pdf_file = choix_chemin_enregistrement("PDF files (*.pdf)", "*.pdf");
+        if (pdf_file != null) {
+            Document document = new Document(PageSize.A4);
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(pdf_file));
+                document.open();
+                document.add(new Paragraph("Résultat Quiz"));
+
+                Table tableau = new Table(6, reponse_questions.size());
+                tableau.setAutoFillEmptyCells(true);
+                tableau.setPadding(2);
+
+                Cell cell = new Cell("Question");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                cell = new Cell("Pourcentage reponse A");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                cell = new Cell("Pourcentage reponse B");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                cell = new Cell("Pourcentage reponse C");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                cell = new Cell("Pourcentage reponse D");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                cell = new Cell("Pourcentage bonne réponse");
+                cell.setHeader(true);
+                tableau.addCell(cell);
+
+                tableau.endHeaders();
+                tableau.setWidth(100);
+                fill_data_pdf(tableau);
+                document.add(tableau);
+            } catch (DocumentException | IOException de) {
+                de.printStackTrace();
+            }
+
+            document.close();
+        }
+        close_window();
+    }
+
+    public void fill_data_pdf(Table table) throws BadElementException {
+        for (int i = 0; i < reponse_questions.size(); i++) {
+            table.addCell(reponse_questions.get(i).getQuestion(), new Point(i+1, 0));
+            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_a(), new Point(i+1, 1));
+            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_b(), new Point(i+1, 2));
+            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_c(), new Point(i+1, 3));
+            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_d(), new Point(i+1, 4));
+            table.addCell(reponse_questions.get(i).getStr_pourcentage(), new Point(i+1, 5));
+        }
+    }
+
+    public void close_window() {
+        Stage stage = (Stage) content.getScene().getWindow();
+        stage.close();
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import opisiame.database.Connection_db;
 import opisiame.model.Reponse;
@@ -99,6 +100,7 @@ public class Reponse_dao {
         return reponses;
     }
 
+    
     public ArrayList<Reponse> get_reponses_by_participationID(Integer part_id) {
         ArrayList<Reponse> reponses = new ArrayList<>();
         String SQL = "SELECT Rep_id FROM reponse_participant_quiz WHERE Participation_id = ?";
@@ -118,6 +120,7 @@ public class Reponse_dao {
         return reponses;
     }
 
+    // récupère les participants qui ont choisi la réponse (en paramètre) pour une date de participation donnée
     public ArrayList<Participant> get_repondant_rep(Integer rep_id, Timestamp date_participation) {
         ArrayList<Participant> participants = new ArrayList<>();
         String SQL = "SELECT * FROM participant "
@@ -131,7 +134,8 @@ public class Reponse_dao {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setInt(1, rep_id);
-            String dt = date_participation.toString();
+            SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dt = date_format.format(date_participation);
             ps.setString(2, dt);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
