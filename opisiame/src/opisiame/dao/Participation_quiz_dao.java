@@ -72,7 +72,6 @@ public class Participation_quiz_dao {
                 Participation_quiz participation_quiz = new Participation_quiz();
                 participation_quiz.setId(rs.getInt(3));
                 participation_quiz.setDate_participation(rs.getTimestamp(1));
-                System.out.println("oo : "+ rs.getDate(1) + " ii : "+ rs.getInt(2));
                 participation_quiz.setQuiz_id(rs.getInt(2));
                 List<Integer> liste_parts = get_participants_quizs(participation_quiz);
                 participation_quiz.setParticipants(liste_parts);

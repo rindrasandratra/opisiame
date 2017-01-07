@@ -7,9 +7,7 @@ package opisiame.controller.gestion_resultat;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -28,13 +26,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import opisiame.controller.gestion_quiz.Delete_selected_quizController;
 import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.dao.Participation_quiz_dao;
 import opisiame.dao.Question_dao;
 import opisiame.dao.Quiz_dao;
 import opisiame.dao.Reponse_question_dao;
-import opisiame.model.Competence;
 import opisiame.model.Participation_quiz;
 import opisiame.model.Question;
 import opisiame.model.Quiz;
@@ -138,9 +134,7 @@ public class Rep_questionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         participation_quizs = participation_quiz_dao.get_participation_quizs();
-        System.out.println("part : "+participation_quizs.get(0).getQuiz_id());
         liste_quiz = participation_quiz_dao.get_quizs(participation_quizs);
-        System.out.println("nom : "+liste_quiz.get(0).getNom());
         select_quiz.setItems(liste_quiz);
         
         question.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("question"));
