@@ -5,8 +5,6 @@
  */
 package opisiame.model;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -21,6 +19,7 @@ public class Reponse_question {
     private Double pourcentage_rep_c;
     private Double pourcentage_rep_d ;
     private Double pourcentage;
+    private String bonne_rep;
     
     private SimpleStringProperty str_pourcentage_rep_a = new SimpleStringProperty();
     private SimpleStringProperty str_pourcentage_rep_b = new SimpleStringProperty();
@@ -119,7 +118,14 @@ public class Reponse_question {
 
     public void setPourcentage(Double pourcentage) {
         this.pourcentage = pourcentage;
-        this.setStr_pourcentage(pourcentage + " %");
+        this.setStr_pourcentage("( "+ bonne_rep +" ) "+pourcentage + " %");
     }
-       
+
+    public String getBonne_rep() {
+        return bonne_rep;
+    }
+
+    public void setBonne_rep(String bonne_rep) {
+        this.bonne_rep = bonne_rep;
+    }   
 }
