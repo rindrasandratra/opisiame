@@ -390,7 +390,7 @@ public class CompetencesController implements Initializable {
         Stage stage = (Stage) content.getScene().getWindow();
 
         String type = Session.getType();
-        if (type.equals("anim")) {
+        if (type.equals("ens")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
