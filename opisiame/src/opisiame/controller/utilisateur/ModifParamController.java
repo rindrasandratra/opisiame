@@ -141,6 +141,7 @@ public class ModifParamController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
 
             } else {
@@ -166,6 +167,7 @@ public class ModifParamController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
 
             } else {
@@ -193,6 +195,7 @@ public class ModifParamController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
 
             } else {
@@ -226,25 +229,25 @@ public class ModifParamController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("admin")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("ens")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         }
     }
-    
+
     @FXML
     public void Annuler() throws IOException {
         Stage stage = (Stage) content.getScene().getWindow();
@@ -254,21 +257,21 @@ public class ModifParamController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("admin")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("ens")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         }
     }

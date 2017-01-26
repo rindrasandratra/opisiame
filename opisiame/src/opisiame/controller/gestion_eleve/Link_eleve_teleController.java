@@ -145,19 +145,19 @@ public class Link_eleve_teleController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+        stage.setResizable(false);
             stage.show();
         } else if (type.equals("anim")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+        stage.setResizable(false);
             stage.show();
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+        stage.setResizable(false);
             stage.show();
         }
     }

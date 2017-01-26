@@ -240,7 +240,7 @@ public class Liste_eleves_adminController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.show();
     }
 

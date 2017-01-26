@@ -176,7 +176,7 @@ public class Liste_quizController implements Initializable {
 
             btn_delete.setStyle("-fx-background-color: red");
             btn_delete.setCursor(Cursor.HAND);
-            
+
             btn_lancer.setStyle("-fx-background-color: blue");
             btn_lancer.setCursor(Cursor.HAND);
 
@@ -224,7 +224,7 @@ public class Liste_quizController implements Initializable {
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
                 btn_detail.setGraphic(new ImageView(img_detail));
-                
+
                 Image img_lancer = new Image(getClass().getResourceAsStream("/opisiame/image/lancer.png"), 20, 20, true, true);
                 btn_lancer.setGraphic(new ImageView(img_lancer));
 
@@ -238,8 +238,8 @@ public class Liste_quizController implements Initializable {
             }
         }
     }
-    
-    public void lancer_quiz(){
+
+    public void lancer_quiz() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_quiz.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -455,21 +455,21 @@ public class Liste_quizController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("admin")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
 
         } else if (type.equals("ens")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         }
     }
