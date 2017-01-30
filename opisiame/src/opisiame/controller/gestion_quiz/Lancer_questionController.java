@@ -58,8 +58,8 @@ public class Lancer_questionController implements Initializable {
     @FXML
     private GridPane gpane;
 
-    @FXML
-    private Button label_timer;
+//    @FXML
+//    private Button label_timer;
 
     @FXML
     private Button rep_1;
@@ -120,7 +120,7 @@ public class Lancer_questionController implements Initializable {
         if (current_question_no < questions.size()) {
             Question q = questions.get(current_question_no);
             current_question = q;
-            label_timer.setText((q.getTimer()).toString());
+            //label_timer.setText((q.getTimer()).toString());
             label_question.setText(q.getLibelle());
             print_image(q.getImg_blob());
             print_reponse(q.getReponses());
