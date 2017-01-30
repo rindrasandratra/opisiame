@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,12 +21,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import opisiame.controller.gestion_quiz.Lancer_questionController;
+import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.database.Connection_db;
 import opisiame.model.Eleve;
 import session.Session;
@@ -40,6 +47,10 @@ public class Link_eleve_teleController implements Initializable {
 
     @FXML
     private AnchorPane content;
+    @FXML
+    private Button btn_valider;
+    @FXML
+    private Button btn_lancer_quiz;
     @FXML
     private TableView<Eleve> Tableau;
     @FXML
@@ -58,6 +69,16 @@ public class Link_eleve_teleController implements Initializable {
     private TextField Champ_recherche;
 
     private String Cont_recherche = null;
+    private Integer quiz_timer;
+    private Integer quiz_id;
+    
+    public void setQuiz_timer(Integer qt){
+        quiz_timer = qt;
+    }
+    
+    public void setQuiz_id(Integer qt){
+        quiz_id = qt;
+    }
 
     /*
     Fonction qui récupère la liste des élèves
@@ -104,9 +125,6 @@ public class Link_eleve_teleController implements Initializable {
 
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         id.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("id"));
@@ -135,6 +153,35 @@ public class Link_eleve_teleController implements Initializable {
         update_tableau();
     }
 
+    //Bouton valider
+    @FXML
+    public void ClicBoutonValider() throws IOException {
+
+    }
+
+    //Bouton valider
+    @FXML
+    public void ClicBoutonLancerQuiz() throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
+            lancer_ques_controller.setQuiz_timer(Integer.valueOf(quiz_timer));
+            lancer_ques_controller.setQuiz_id(quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Animation quiz");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     //Boutton de retour
     @FXML
     public void ClicBoutonRetour() throws IOException {
@@ -145,19 +192,19 @@ public class Link_eleve_teleController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        stage.setResizable(false);
+            stage.setResizable(false);
             stage.show();
         } else if (type.equals("anim")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        stage.setResizable(false);
+            stage.setResizable(false);
             stage.show();
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        stage.setResizable(false);
+            stage.setResizable(false);
             stage.show();
         }
     }

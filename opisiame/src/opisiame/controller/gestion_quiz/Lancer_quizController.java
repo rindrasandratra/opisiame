@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import opisiame.controller.gestion_eleve.Link_eleve_teleController;
 import opisiame.model.Quiz;
 import opisiame.dao.*;
 
@@ -47,8 +48,8 @@ public class Lancer_quizController implements Initializable {
 
     @FXML
     private Text label_titre;
-
-
+    
+    private Integer quiz_timer;
     private Integer quiz_id;
 
     Quiz_dao quiz_dao = new Quiz_dao();
@@ -74,11 +75,12 @@ public class Lancer_quizController implements Initializable {
     public void demarrer() throws IOException {
         Stage stage_parent = (Stage) label_nb_quest.getScene().getWindow();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
+            //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_eleve/Link_eleve_tele.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
-            lancer_ques_controller.setQuiz_timer(Integer.valueOf(label_timer.getText()));
-            lancer_ques_controller.setQuiz_id(quiz_id);
+            Link_eleve_teleController link_eleve_tele_controller = fxmlLoader.<Link_eleve_teleController>getController();
+            link_eleve_tele_controller.setQuiz_timer(Integer.valueOf(label_timer.getText()));
+            link_eleve_tele_controller.setQuiz_id(quiz_id);
             
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
