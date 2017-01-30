@@ -127,7 +127,7 @@ public class CompetencesController implements Initializable {
                 return new CompetencesController.CheckBoxCell();
             }
         });
-        
+
         t_liste_competence.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -191,7 +191,7 @@ public class CompetencesController implements Initializable {
             btn_edit.setStyle("-fx-background-color: gray");
             btn_edit.setCursor(Cursor.HAND);
 
-            btn_detail.setStyle("-fx-background-color: green");
+            btn_detail.setStyle("-fx-background-color: #90EE90");
             btn_detail.setCursor(Cursor.HAND);
 
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
@@ -226,7 +226,8 @@ public class CompetencesController implements Initializable {
                 btn_edit.setGraphic(new ImageView(img_edit));
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
-                btn_detail.setGraphic(new ImageView(img_detail));
+               //btn_detail.setGraphic(new ImageView(img_detail));
+                btn_detail.setText("Sous-compétences");
 
                 box.setPadding(new Insets(5, 0, 5, 0));
                 // box.setPrefColumns(1);
@@ -390,17 +391,17 @@ public class CompetencesController implements Initializable {
         Stage stage = (Stage) content.getScene().getWindow();
 
         String type = Session.getType();
-        if (type.equals("anim")) {
+        if (type.equals("ens")) {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         }
 

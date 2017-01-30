@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import opisiame.model.Rep_eleves_quiz;
 import opisiame.model.Reponse_question;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -32,49 +33,93 @@ public class Choix_exportController implements Initializable {
     AnchorPane content;
 
     ObservableList<Reponse_question> reponse_questions;
+    ObservableList<Rep_eleves_quiz> resultats_eleves;
+    String onglet_actif;
 
     public void setReponse_questions(ObservableList<Reponse_question> reponse_questions) {
-        //reponse_questions = FXCollections.observableArrayList();
         this.reponse_questions = reponse_questions;
+    }
+
+    public void setResultatsEleves(ObservableList<Rep_eleves_quiz> res_eleves) {
+        this.resultats_eleves = res_eleves;
+    }
+
+    public void setOngletActif(String onglet) {
+        this.onglet_actif = onglet;
     }
 
     @FXML
     public void excel_export() {
+
         File excel_file = choix_chemin_enregistrement("Excel files (*.xls)", "*.xls");
-        if (excel_file != null) {
-            HSSFWorkbook wb = new HSSFWorkbook();
-            HSSFSheet sheet = wb.createSheet("Resultat par question");
-            sheet.autoSizeColumn(5);
-            create_data(sheet, 0, "Question", "Pourcentage reponse A", "Pourcentage reponse B", "Pourcentage reponse C", "Pourcentage reponse D", "Pourcentage bonne réponse");
 
-            Row row = sheet.getRow(0);
-            HSSFCellStyle cellStyle = null;
-            HSSFFont font = wb.createFont();
-            font.setBold(true);
-            cellStyle = wb.createCellStyle();
-            cellStyle.setFont(font);
-            row.setRowStyle(cellStyle);
+        if (onglet_actif.equals("questions")) {
+            if (excel_file != null) {
+                HSSFWorkbook wb = new HSSFWorkbook();
+                HSSFSheet sheet = wb.createSheet("Resultat par question");
+                sheet.autoSizeColumn(5);
+                create_data1(sheet, 0, "Question", "Pourcentage reponse A", "Pourcentage reponse B", "Pourcentage reponse C", "Pourcentage reponse D", "Pourcentage bonne réponse");
 
-            for (int i = 0; i < reponse_questions.size(); i++) {
-                Reponse_question rq = reponse_questions.get(i);
-                create_data(sheet, i + 1, rq.getQuestion(), rq.getStr_pourcentage_rep_a(), rq.getStr_pourcentage_rep_b(), rq.getStr_pourcentage_rep_c(), rq.getStr_pourcentage_rep_d(), rq.getStr_pourcentage());
+                Row row = sheet.getRow(0);
+                HSSFCellStyle cellStyle = null;
+                HSSFFont font = wb.createFont();
+                font.setBold(true);
+                cellStyle = wb.createCellStyle();
+                cellStyle.setFont(font);
+                row.setRowStyle(cellStyle);
+
+                for (int i = 0; i < reponse_questions.size(); i++) {
+                    Reponse_question rq = reponse_questions.get(i);
+                    create_data1(sheet, i + 1, rq.getQuestion(), rq.getStr_pourcentage_rep_a(), rq.getStr_pourcentage_rep_b(), rq.getStr_pourcentage_rep_c(), rq.getStr_pourcentage_rep_d(), rq.getStr_pourcentage());
+                }
+
+                FileOutputStream fileOut;
+                try {
+                    fileOut = new FileOutputStream(excel_file);
+                    wb.write(fileOut);
+                    fileOut.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else if (onglet_actif.equals("eleves")) {
+            if (excel_file != null) {
+                HSSFWorkbook wb = new HSSFWorkbook();
+                HSSFSheet sheet = wb.createSheet("Resultat des étudiants");
+                sheet.autoSizeColumn(3);
+                create_data2(sheet, 0, "Etudiant", "Note", "Pourcentage");
 
-            FileOutputStream fileOut;
-            try {
-                fileOut = new FileOutputStream(excel_file);
-                wb.write(fileOut);
-                fileOut.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Row row = sheet.getRow(0);
+                HSSFCellStyle cellStyle = null;
+                HSSFFont font = wb.createFont();
+                font.setBold(true);
+                cellStyle = wb.createCellStyle();
+                cellStyle.setFont(font);
+                row.setRowStyle(cellStyle);
+
+                for (int i = 0; i < resultats_eleves.size(); i++) {
+                    Rep_eleves_quiz re = resultats_eleves.get(i);
+                    create_data2(sheet, i + 1, re.getNum_eleve().toString(), re.getNote_eleve().toString(), re.getPourcent_eleve().toString());
+                }
+
+                FileOutputStream fileOut;
+                try {
+                    fileOut = new FileOutputStream(excel_file);
+                    wb.write(fileOut);
+                    fileOut.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         close_window();
     }
 
-    public void create_data(HSSFSheet sheet, Integer i, String question, String rep_a, String rep_b, String rep_c, String rep_d, String pourcentage) {
+    public void create_data1(HSSFSheet sheet, Integer i, String question, String rep_a, String rep_b, String rep_c, String rep_d, String pourcentage) {
         HSSFRow row = sheet.createRow(i); // ligne i
 
         HSSFCell cell_question = row.createCell((short) 0); // colonne 0
@@ -96,6 +141,19 @@ public class Choix_exportController implements Initializable {
         cell_pourcentage.setCellValue(pourcentage);
     }
 
+    public void create_data2(HSSFSheet sheet, Integer i, String etudiant, String note, String pourcentage) {
+        HSSFRow row = sheet.createRow(i); // ligne i
+
+        HSSFCell cell_question = row.createCell((short) 0); // colonne 0
+        cell_question.setCellValue(etudiant);
+
+        HSSFCell cell_rep_a = row.createCell((short) 1); // colonne 1
+        cell_rep_a.setCellValue(note);
+
+        HSSFCell cell_pourcentage = row.createCell((short) 2); // colonne 2
+        cell_pourcentage.setCellValue(pourcentage);
+    }
+
     public File choix_chemin_enregistrement(String description, String extension) {
         Stage stage = (Stage) content.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -103,70 +161,118 @@ public class Choix_exportController implements Initializable {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
         fileChooser.getExtensionFilters().add(extFilter);
         File selected_directory = fileChooser.showSaveDialog(stage);
-        System.out.println("file : " + selected_directory.getAbsolutePath());
+        //System.out.println("file : " + selected_directory.getAbsolutePath());
         return selected_directory;
     }
 
     @FXML
     public void pdf_export() {
         File pdf_file = choix_chemin_enregistrement("PDF files (*.pdf)", "*.pdf");
-        if (pdf_file != null) {
-            Document document = new Document(PageSize.A4);
-            try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdf_file));
-                document.open();
-                document.add(new Paragraph("Résultat Quiz"));
 
-                Table tableau = new Table(6, reponse_questions.size());
-                tableau.setAutoFillEmptyCells(true);
-                tableau.setPadding(2);
+        if (onglet_actif.equals("questions")) {
 
-                Cell cell = new Cell("Question");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+            if (pdf_file != null) {
+                Document document = new Document(PageSize.A4);
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream(pdf_file));
+                    document.open();
+                    document.add(new Paragraph("Résultat Quiz"));
 
-                cell = new Cell("Pourcentage reponse A");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+                    Table tableau = new Table(6, reponse_questions.size());
+                    tableau.setAutoFillEmptyCells(true);
+                    tableau.setPadding(2);
 
-                cell = new Cell("Pourcentage reponse B");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+                    Cell cell = new Cell("Question");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
 
-                cell = new Cell("Pourcentage reponse C");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+                    cell = new Cell("Pourcentage reponse A");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
 
-                cell = new Cell("Pourcentage reponse D");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+                    cell = new Cell("Pourcentage reponse B");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
 
-                cell = new Cell("Pourcentage bonne réponse");
-                cell.setHeader(true);
-                tableau.addCell(cell);
+                    cell = new Cell("Pourcentage reponse C");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
 
-                tableau.endHeaders();
-                tableau.setWidth(100);
-                fill_data_pdf(tableau);
-                document.add(tableau);
-            } catch (DocumentException | IOException de) {
-                de.printStackTrace();
+                    cell = new Cell("Pourcentage reponse D");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    cell = new Cell("Pourcentage bonne réponse");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    tableau.endHeaders();
+                    tableau.setWidth(100);
+                    fill_data_pdf(tableau);
+                    document.add(tableau);
+                } catch (DocumentException | IOException de) {
+                    de.printStackTrace();
+                }
+                document.close();
             }
 
-            document.close();
+        } else if (onglet_actif.equals("eleves")) {
+
+            if (pdf_file != null) {
+                Document document = new Document(PageSize.A4);
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream(pdf_file));
+                    document.open();
+                    document.add(new Paragraph("Résultats des étudiants"));
+
+                    Table tableau = new Table(3, resultats_eleves.size());
+                    tableau.setAutoFillEmptyCells(true);
+                    tableau.setPadding(2);
+
+                    Cell cell = new Cell("Etudiant");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    cell = new Cell("Note");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    cell = new Cell("Pourcentage");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    tableau.endHeaders();
+                    tableau.setWidth(100);
+                    fill_data_pdf(tableau);
+                    document.add(tableau);
+                } catch (DocumentException | IOException de) {
+                    de.printStackTrace();
+                }
+                document.close();
+            }
         }
+
         close_window();
     }
 
     public void fill_data_pdf(Table table) throws BadElementException {
-        for (int i = 0; i < reponse_questions.size(); i++) {
-            table.addCell(reponse_questions.get(i).getQuestion(), new Point(i+1, 0));
-            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_a(), new Point(i+1, 1));
-            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_b(), new Point(i+1, 2));
-            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_c(), new Point(i+1, 3));
-            table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_d(), new Point(i+1, 4));
-            table.addCell(reponse_questions.get(i).getStr_pourcentage(), new Point(i+1, 5));
+        if (onglet_actif.equals("questions")) {
+            for (int i = 0; i < reponse_questions.size(); i++) {
+                table.addCell(reponse_questions.get(i).getQuestion(), new Point(i + 1, 0));
+                table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_a(), new Point(i + 1, 1));
+                table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_b(), new Point(i + 1, 2));
+                table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_c(), new Point(i + 1, 3));
+                table.addCell(reponse_questions.get(i).getStr_pourcentage_rep_d(), new Point(i + 1, 4));
+                table.addCell(reponse_questions.get(i).getStr_pourcentage(), new Point(i + 1, 5));
+            }
+        } else if (onglet_actif.equals("eleves")) {
+            for (int i = 0; i < resultats_eleves.size(); i++) {
+                table.addCell(resultats_eleves.get(i).getNum_eleve().toString(), new Point(i + 1, 0));
+                table.addCell(resultats_eleves.get(i).getNote_eleve().toString(), new Point(i + 1, 1));
+                table.addCell(resultats_eleves.get(i).getPourcent_eleve().toString(), new Point(i + 1, 2));
+            }
         }
+
     }
 
     public void close_window() {

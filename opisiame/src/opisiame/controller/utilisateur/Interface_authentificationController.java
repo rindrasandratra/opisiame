@@ -120,55 +120,61 @@ public class Interface_authentificationController implements Initializable {
         if (count3 == 1) {
             ok3 = 3;
         }
-        
-        if ((ok1 !=0 && ok2!= 0) || (ok1 !=0 && ok3!= 0) || (ok2 !=0 && ok3!= 0)) ok = 0;
-        else ok = ok1 + ok2 + ok3;
+
+        if ((ok1 != 0 && ok2 != 0) || (ok1 != 0 && ok3 != 0) || (ok2 != 0 && ok3 != 0)) {
+            ok = 0;
+        } else {
+            ok = ok1 + ok2 + ok3;
+        }
 
         return ok;
     }
 
     @FXML
     public void Submit_passwd() throws IOException, SQLException {
-        
+
         switch (lecture_admin()) {
             case 1: // ADMINISTRATEUR
-                {
-                    final String log = Login_field.getText();
-                    Session login = new Session(log, "admin");
-                    Session.setType("admin");
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    break;
-                }
+            {
+                final String log = Login_field.getText();
+                Session login = new Session(log, "admin");
+                Session.setType("admin");
+                Stage stage = (Stage) content.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+                break;
+            }
             case 2: // ENSEIGNANT
-                {
-                    final String log = Login_field.getText();
-                    Session login = new Session(log, "ens");
-                    Session.setUser_id(get_ens_id(log));
-                    Session.setType("ens");
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    break;
-                }
+            {
+                final String log = Login_field.getText();
+                Session login = new Session(log, "ens");
+                Session.setUser_id(get_ens_id(log));
+                Session.setType("ens");
+                Stage stage = (Stage) content.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+                break;
+            }
             case 3: //ANIMATEUR
-                {
-                    final String log = Login_field.getText();
-                    Session login = new Session(log, "anim");
-                    Session.setUser_id(get_anim_id(log));
-                    Session.setType("anim");
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    break;
-                }
+            {
+                final String log = Login_field.getText();
+                Session login = new Session(log, "anim");
+                Session.setUser_id(get_anim_id(log));
+                Session.setType("anim");
+                Stage stage = (Stage) content.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+                break;
+            }
             default:// ERREUR LOGIN
                 Message_field.setText("erreur d'authentification");
                 Message_field.setStyle("-fx-font-weight: bold; -fx-text-fill : #f00");
@@ -176,7 +182,7 @@ public class Interface_authentificationController implements Initializable {
         }
     }
 
-    Integer get_anim_id(String log){
+    Integer get_anim_id(String log) {
         Integer anim_id = null;
         Connection connexion = null;
         PreparedStatement ps;
@@ -193,7 +199,7 @@ public class Interface_authentificationController implements Initializable {
         }
         return anim_id;
     }
-    
+
     Integer get_ens_id(String log) {
         Integer anim_id = null;
         Connection connexion = null;

@@ -216,8 +216,8 @@ public class Resultat_par_eleveController implements Initializable {
 
             //récupération de toutes les réponses des questions du quiz
             char nom_question = 'A';
-            int question = liste_questions.get(i).getId();
-            liste_reponses = reponse_dao.get_reponses_by_quest(question);
+            int ind_question = liste_questions.get(i).getId();
+            liste_reponses = reponse_dao.get_reponses_by_quest(ind_question);
 
             //initialisation
             afficher.setRep_eleve("");

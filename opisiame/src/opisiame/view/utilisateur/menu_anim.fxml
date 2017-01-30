@@ -10,8 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="opisiame.controller.utilisateur.Menu_animController">
+<AnchorPane id="AnchorPane" fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="opisiame.controller.utilisateur.Menu_animController">
    <children>
       <GridPane layoutX="61.0" layoutY="32.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -33,7 +32,7 @@
                   <Font size="37.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onMousePressed="#btn_quiz" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: e1fc11; -fx-background-radius: 202020;" text="Démarrer un quiz" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onMousePressed="#btn_quiz" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: e1fc11; -fx-background-radius: 202020;" text="Démarrer &#10;un quiz" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
@@ -41,10 +40,13 @@
                   <Insets bottom="50.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onMousePressed="#btn_mdp" prefHeight="68.0" prefWidth="159.0" style="-fx-background-color: #70f9de; -fx-background-radius: 202020;" text="changer de mot de passe" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onMousePressed="#btn_mdp" prefHeight="68.0" prefWidth="159.0" style="-fx-background-color: #70f9de; -fx-background-radius: 202020;" text="Changer de &#10;mot de passe" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="50.0" />
                </GridPane.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
             </Button>
             <ImageView fitHeight="137.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
