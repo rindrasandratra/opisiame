@@ -35,6 +35,9 @@ public class Lancer_quizController implements Initializable {
 
     @FXML
     private Label label_date;
+    
+    @FXML
+    private Button btn_demarrer;
 
     @FXML
     private Label label_timer;
@@ -60,7 +63,11 @@ public class Lancer_quizController implements Initializable {
         label_titre.setText(quiz.getNom());
         label_date.setText(quiz.getDate_creation());
         label_timer.setText((quiz.getTimer()).toString());
-        label_nb_quest.setText(String.valueOf(quiz_dao.count_nb_quest(this.quiz_id)));
+        int nb_quest = quiz_dao.count_nb_quest(this.quiz_id);
+        label_nb_quest.setText(String.valueOf(nb_quest));
+        if (nb_quest < 1){
+            btn_demarrer.setDisable(true);
+        }
     }
 
     @FXML
@@ -70,8 +77,9 @@ public class Lancer_quizController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
+            lancer_ques_controller.setQuiz_timer(Integer.valueOf(label_timer.getText()));
             lancer_ques_controller.setQuiz_id(quiz_id);
-
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Animation quiz");

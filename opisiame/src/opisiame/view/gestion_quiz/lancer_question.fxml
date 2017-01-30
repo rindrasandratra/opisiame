@@ -112,7 +112,17 @@
                   <Insets right="20.0" />
                </GridPane.margin>
             </GridPane>
-            <Pagination fx:id="pagination_quest" prefHeight="64.0" prefWidth="399.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <Button fx:id="btn_next_question" mnemonicParsing="false" onAction="#next_question" prefHeight="36.0" prefWidth="85.0" style="-fx-background-color: blue;" text="&gt;&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </Button>
          </children>
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="345.0" />

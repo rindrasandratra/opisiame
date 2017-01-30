@@ -36,7 +36,7 @@
                   <Font name="Gill Sans MT" size="24.0" />
                </font>
             </Text>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#demarrer" prefHeight="30.0" prefWidth="137.0" style="-fx-background-color: #10cc00;" text="Démarrer le quiz" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <Button fx:id="btn_demarrer" alignment="CENTER" mnemonicParsing="false" onAction="#demarrer" prefHeight="30.0" prefWidth="137.0" style="-fx-background-color: #10cc00;" text="Démarrer le quiz" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="45.0" />
                </GridPane.margin>

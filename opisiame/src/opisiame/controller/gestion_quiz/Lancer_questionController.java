@@ -12,18 +12,28 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import opisiame.model.Question;
@@ -41,6 +51,9 @@ public class Lancer_questionController implements Initializable {
      * Initializes the controller class.
      */
     private Integer quiz_id;
+    private Integer quiz_timer;
+
+    private Integer current_question_no;
 
     @FXML
     private GridPane gpane;
@@ -60,7 +73,6 @@ public class Lancer_questionController implements Initializable {
     @FXML
     private Button rep_4;
 
-
     @FXML
     private ImageView question_img_view;
 
@@ -68,7 +80,7 @@ public class Lancer_questionController implements Initializable {
     private Label label_question;
 
     @FXML
-    private Pagination pagination_quest;
+    private Button btn_next_question;
 
     private ArrayList<Question> questions;
     //private ImageView img_view;
@@ -77,28 +89,63 @@ public class Lancer_questionController implements Initializable {
 
     Question_dao question_dao = new Question_dao();
 
+    Question current_question;
+
+    Timer t;
+
     public void setQuiz_id(Integer quiz_id) {
         this.quiz_id = quiz_id;
         get_all_questions();
         if (questions.size() > 0) {
-            print_question(0);
-            pagination_quest.setPageCount(questions.size());
-            pagination_quest.setCurrentPageIndex(0);
+            current_question_no = 0;
+            print_question();
+//            pagination_quest.setPageCount(questions.size());
+//            pagination_quest.setCurrentPageIndex(0);
         }
+    }
+
+    public Integer getQuiz_timer() {
+        return quiz_timer;
+    }
+
+    public void setQuiz_timer(Integer quiz_timer) {
+        this.quiz_timer = quiz_timer;
     }
 
     private void get_all_questions() {
         questions = question_dao.get_questions_by_quiz(this.quiz_id);
     }
 
-    public void print_question(Integer index) {
-        if (questions.size() > 0) {
-            Question q = questions.get(index);
+    public void print_question() {
+        if (current_question_no < questions.size()) {
+            Question q = questions.get(current_question_no);
+            current_question = q;
             label_timer.setText((q.getTimer()).toString());
             label_question.setText(q.getLibelle());
             print_image(q.getImg_blob());
             print_reponse(q.getReponses());
+            int timer = get_quest_timer();
+            if (timer > 0) {
+                run_timer(timer);
+                btn_next_question.setDisable(true);
+            } else {
+                btn_next_question.setDisable(false);
+                btn_next_question.setText(" >> ");
+            }
         }
+    }
+
+    public void run_timer(Integer duree) {
+        btn_next_question.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if ("0".equals(newValue)) {
+                    next_question();
+                }
+            }
+        });
+        Timer_update_label thread_class = new Timer_update_label(btn_next_question, duree);
+        thread_class.start();
     }
 
     public void print_image(InputStream blob_img) {
@@ -152,15 +199,42 @@ public class Lancer_questionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        pagination_quest.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer p) {
-                print_question(p);
-                return new VBox();
-            }
-
-        });
         gpane.heightProperty().addListener(listener);
+    }
+
+    @FXML
+    private void next_question() {
+        current_question_no++;
+        if (current_question_no >= questions.size() - 1) {
+            end_quiz();
+        }
+        print_question();
+    }
+
+    public int get_quest_timer() {
+        if (current_question.getTimer() > 0) {
+            return current_question.getTimer();
+        } else if (quiz_timer > 0) {
+            return quiz_timer;
+        } else {
+            return 0;
+        }
+    }
+
+    public void end_quiz() {
+        btn_next_question.setText("Terminer");
+        btn_next_question.setDisable(false);
+        btn_next_question.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                close_window();
+            }
+        });
+    }
+
+    public void close_window() {
+        Stage stage = (Stage) rep_1.getScene().getWindow();
+        stage.close();
     }
 
 }
