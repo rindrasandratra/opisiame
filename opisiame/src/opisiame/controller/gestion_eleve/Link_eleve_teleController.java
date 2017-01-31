@@ -71,12 +71,12 @@ public class Link_eleve_teleController implements Initializable {
     private String Cont_recherche = null;
     private Integer quiz_timer;
     private Integer quiz_id;
-    
-    public void setQuiz_timer(Integer qt){
+
+    public void setQuiz_timer(Integer qt) {
         quiz_timer = qt;
     }
-    
-    public void setQuiz_id(Integer qt){
+
+    public void setQuiz_id(Integer qt) {
         quiz_id = qt;
     }
 
@@ -156,7 +156,7 @@ public class Link_eleve_teleController implements Initializable {
     //Bouton valider
     @FXML
     public void ClicBoutonValider() throws IOException {
-
+        //ajouter dans l'appli le couple eleve/@mac pour savoir qui a répondu quoi au quiz
     }
 
     //Bouton valider
@@ -182,33 +182,32 @@ public class Link_eleve_teleController implements Initializable {
         }
     }
 
-    //Boutton de retour
-    @FXML
-    public void ClicBoutonRetour() throws IOException {
-        Stage stage = (Stage) content.getScene().getWindow();
-
-        String type = Session.getType();
-        if (type.equals("ens")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } else if (type.equals("anim")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } else {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        }
-    }
-
+//    //Boutton de retour
+//    @FXML
+//    public void ClicBoutonRetour() throws IOException {
+//        Stage stage = (Stage) content.getScene().getWindow();
+//
+//        String type = Session.getType();
+//        if (type.equals("ens")) {
+//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.setResizable(false);
+//            stage.show();
+//        } else if (type.equals("anim")) {
+//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.setResizable(false);
+//            stage.show();
+//        } else {
+//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.setResizable(false);
+//            stage.show();
+//        }
+//    }
     //boutton log out
     @FXML
     public void ClicBoutonHome() throws IOException {

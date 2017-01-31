@@ -123,14 +123,6 @@
                   </Button>
                </children>
             </GridPane>
-            <ImageView fx:id="Retour" fitHeight="34.0" fitWidth="40.0" onMouseReleased="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-               <image>
-                  <Image url="@../../image/retour.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets left="20.0" />
-               </GridPane.margin>
-            </ImageView>
          </children>
       </GridPane>
    </children>
