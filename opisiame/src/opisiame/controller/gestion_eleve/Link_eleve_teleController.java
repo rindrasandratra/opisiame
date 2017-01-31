@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,6 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.comm.CommPortIdentifier;
 import opisiame.controller.gestion_quiz.Lancer_questionController;
 import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.database.Connection_db;
@@ -67,6 +70,8 @@ public class Link_eleve_teleController implements Initializable {
     private TableColumn<Eleve, Integer> Annee;
     @FXML
     private TextField Champ_recherche;
+    @FXML
+    private ComboBox choix_port;
 
     private String Cont_recherche = null;
     private Integer quiz_timer;
@@ -134,6 +139,25 @@ public class Link_eleve_teleController implements Initializable {
         Annee.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("Annee"));
         getAllEleve(/*eleves*/);
         Tableau.setItems(eleves);
+        init_liste_port();
+    }
+
+    public void init_liste_port() {
+        Enumeration pList = CommPortIdentifier.getPortIdentifiers();
+        System.out.println("taille liste : "+pList.toString());
+        // Process the list.
+        while (pList.hasMoreElements()) {
+            CommPortIdentifier cpi = (CommPortIdentifier) pList.nextElement();
+            System.out.print("Port " + cpi.getName() + " ");
+            if (cpi.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+                System.out.println("is a Serial Port: " + cpi);
+                choix_port.getItems().add(cpi);
+            } else if (cpi.getPortType() == CommPortIdentifier.PORT_PARALLEL) {
+                System.out.println("is a Parallel Port: " + cpi);
+            } else {
+                System.out.println("is an Unknown Port: " + cpi);
+            }
+        }
     }
 
     public void update_tableau() {
@@ -151,6 +175,11 @@ public class Link_eleve_teleController implements Initializable {
     public void Rechercher() {
         Cont_recherche = Champ_recherche.getText();
         update_tableau();
+    }
+
+    @FXML
+    public void select_port() {
+
     }
 
     //Bouton valider
@@ -182,32 +211,6 @@ public class Link_eleve_teleController implements Initializable {
         }
     }
 
-//    //Boutton de retour
-//    @FXML
-//    public void ClicBoutonRetour() throws IOException {
-//        Stage stage = (Stage) content.getScene().getWindow();
-//
-//        String type = Session.getType();
-//        if (type.equals("ens")) {
-//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.setResizable(false);
-//            stage.show();
-//        } else if (type.equals("anim")) {
-//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_anim.fxml"));
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.setResizable(false);
-//            stage.show();
-//        } else {
-//            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.setResizable(false);
-//            stage.show();
-//        }
-//    }
     //boutton log out
     @FXML
     public void ClicBoutonHome() throws IOException {
