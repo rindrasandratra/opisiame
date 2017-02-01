@@ -5,6 +5,7 @@
  */
 package opisiame.controller.gestion_eleve;
 
+import gnu.io.CommPortIdentifier;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -32,7 +33,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.comm.CommPortIdentifier;
 import opisiame.controller.gestion_quiz.Lancer_questionController;
 import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.database.Connection_db;

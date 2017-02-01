@@ -28,12 +28,12 @@
         </Text>
         <TableView fx:id="t_liste_quiz" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <columns>
-            <TableColumn fx:id="col_cb" editable="false" minWidth="-Infinity" prefWidth="53.0" text="..." />
-                <TableColumn fx:id="id" editable="false" minWidth="-Infinity" prefWidth="153.0" text="id" />
-                <TableColumn fx:id="nom_quiz" text="Nom du quiz" />
-                <TableColumn fx:id="date" editable="false" text="Date de création" />
-            <TableColumn fx:id="timer" editable="false" prefWidth="65.0" text="Timer" />
-            <TableColumn fx:id="actionCol" editable="false" minWidth="-Infinity" prefWidth="174.0" text="Action" />
+            <TableColumn fx:id="col_cb" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="..." />
+                <TableColumn fx:id="id" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="id" />
+                <TableColumn fx:id="nom_quiz" minWidth="100.0" prefWidth="-1.0" text="Nom du quiz" />
+                <TableColumn fx:id="date" editable="false" minWidth="100.0" prefWidth="-1.0" text="Date de création" />
+            <TableColumn fx:id="timer" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="Timer" />
+            <TableColumn fx:id="actionCol" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Action" />
             </columns>
 
                      <GridPane.margin>
