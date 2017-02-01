@@ -5,6 +5,9 @@
  */
 package opisiame.controller.gestion_eleve;
 
+import com.rapplogic.xbee.XBeePin;
+import com.rapplogic.xbee.api.ApiId;
+import gnu.io.CommPortIdentifier;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -13,8 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,12 +34,27 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.comm.CommPortIdentifier;
+
 import opisiame.controller.gestion_quiz.Lancer_questionController;
-import opisiame.controller.gestion_quiz.Liste_quizController;
 import opisiame.database.Connection_db;
 import opisiame.model.Eleve;
-import session.Session;
+
+import com.rapplogic.xbee.api.ErrorResponse;
+import com.rapplogic.xbee.api.RemoteAtRequest;
+
+import com.rapplogic.xbee.api.XBee;
+import com.rapplogic.xbee.api.XBeeAddress64;
+import com.rapplogic.xbee.api.XBeeException;
+import com.rapplogic.xbee.api.XBeeResponse;
+import com.rapplogic.xbee.api.wpan.IoSample;
+import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
+import java.util.logging.Level;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.TableRow;
+import javafx.scene.input.MouseEvent;
+
+import org.apache.log4j.Logger;
 
 /**
  * FXML Controller class
@@ -69,14 +86,33 @@ public class Link_eleve_teleController implements Initializable {
     @FXML
     private TableColumn<Eleve, Integer> Annee;
     @FXML
+    private TableColumn<Eleve, String> tel;
+    @FXML
     private TextField Champ_recherche;
     @FXML
     private ComboBox choix_port;
+
+    private String num_port;
 
     private String Cont_recherche = null;
     private Integer quiz_timer;
     private Integer quiz_id;
 
+    private final static Logger log = Logger.getLogger(Link_eleve_teleController.class);
+
+    private XBee xbee = new XBee();
+
+    String led_yellow = "D7";
+    String led_green = "D5";
+    String led_red = "D4";
+
+
+    /*
+    DIO0 boutton vert
+    DIO1 boutton gris
+    DIO2 boutton rouge
+    DIO3 boutton bleu
+     */
     public void setQuiz_timer(Integer qt) {
         quiz_timer = qt;
     }
@@ -139,23 +175,31 @@ public class Link_eleve_teleController implements Initializable {
         Annee.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("Annee"));
         getAllEleve(/*eleves*/);
         Tableau.setItems(eleves);
+        //PropertyConfigurator.configure("log4j.properties");
         init_liste_port();
+        Tableau.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    select_etudiant();
+                }
+            }
+        });
     }
 
     public void init_liste_port() {
         Enumeration pList = CommPortIdentifier.getPortIdentifiers();
-        System.out.println("taille liste : "+pList.toString());
+        System.out.println("taille liste : " + pList.toString());
         // Process the list.
         while (pList.hasMoreElements()) {
             CommPortIdentifier cpi = (CommPortIdentifier) pList.nextElement();
             System.out.print("Port " + cpi.getName() + " ");
             if (cpi.getPortType() == CommPortIdentifier.PORT_SERIAL) {
                 System.out.println("is a Serial Port: " + cpi);
-                choix_port.getItems().add(cpi);
-            } else if (cpi.getPortType() == CommPortIdentifier.PORT_PARALLEL) {
-                System.out.println("is a Parallel Port: " + cpi);
-            } else {
-                System.out.println("is an Unknown Port: " + cpi);
+                choix_port.getItems().add(cpi.getName());
             }
         }
     }
@@ -179,7 +223,20 @@ public class Link_eleve_teleController implements Initializable {
 
     @FXML
     public void select_port() {
-
+        num_port = choix_port.getSelectionModel().getSelectedItem().toString();
+        System.out.println("choix port : " + num_port);
+//        try {
+//
+//            xbee.open(num_port, 9600);
+//
+//        } catch (Exception e) {
+//            Alert alert = new Alert(AlertType.ERROR);
+//            alert.setTitle("Error Dialog");
+//            //alert.setHeaderText("Erreur sur le port choisi");
+//            alert.setContentText("Erreur sur le port choisi");
+//            alert.showAndWait();
+//            e.printStackTrace();
+//        }
     }
 
     //Bouton valider
@@ -207,7 +264,7 @@ public class Link_eleve_teleController implements Initializable {
             stage.show();
 
         } catch (IOException ex) {
-            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -222,6 +279,103 @@ public class Link_eleve_teleController implements Initializable {
         stage.setResizable(false);
         stage.show();
         session.Session.Logout();
+    }
+
+    @FXML
+    public void select_etudiant() {
+        Boolean rep = false;
+        System.out.println("wait");
+//        if ((num_port != "") && (num_port != null)) {
+            try {
+                xbee.open("COM4", 9600);
+                while (true) {
+                    xbee.clearResponseQueue();
+                    XBeeResponse response = xbee.getResponse();
+
+                    if (response.isError()) {
+                        log.info("response contains errors", ((ErrorResponse) response).getException());
+                        continue;
+                    }
+
+                    ProcessResponse processResponse = new ProcessResponse(response);
+                    processResponse.start();
+                }
+            } catch (Exception e) {
+                log.error(e);
+            }
+            finally{
+                xbee.close();
+            }
+//        }
+    }
+    
+    public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
+
+        RemoteAtRequest request_led_on = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});
+        xbee.sendAsynchronous(request_led_on);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // xbee.clearResponseQueue();
+    }
+
+    public void switch_off_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
+        RemoteAtRequest request_led_off = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_LOW.getValue()});
+        xbee.sendAsynchronous(request_led_off);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // xbee.clearResponseQueue();
+    }
+
+    class ProcessResponse extends Thread {
+
+        XBeeResponse response;
+
+        public ProcessResponse(XBeeResponse response) {
+            this.response = response;
+        }
+
+        @Override
+        public void run() {
+            if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
+                RxResponseIoSample ioSample = (RxResponseIoSample) response;
+
+                System.out.println("iosampe : " + ioSample.toString());
+
+                System.err.println("iosample ::: " + ioSample.toString());
+
+                XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
+
+                System.err.println("address : " + ioSample.getSourceAddress());
+                System.err.println("address64 : " + address_remote);
+
+                try {
+                    for (IoSample sample : ioSample.getSamples()) {
+                        if (!ioSample.containsAnalog()) {
+                            if (!sample.isD2On()) { // bouton : rouge
+                                switch_on_led(led_red, address_remote);
+                                switch_off_led(led_red, address_remote);
+                            }
+                            if (!sample.isD1On()) {
+                                switch_on_led(led_yellow, address_remote);
+                                switch_off_led(led_yellow, address_remote);
+                            }
+                            if (!sample.isD0On()) {
+                                switch_on_led(led_green, address_remote);
+                                switch_off_led(led_green, address_remote);
+                            }
+                        }
+                    }
+                } catch (XBeeException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
