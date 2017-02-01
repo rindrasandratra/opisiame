@@ -62,12 +62,12 @@
                <children>
                   <TableView fx:id="Tableau" prefHeight="200.0" prefWidth="500.0" tableMenuButtonVisible="true" GridPane.rowSpan="5">
                     <columns>
-                      <TableColumn fx:id="id" minWidth="30.0" prefWidth="116.0" text="n° étudiant" />
+                      <TableColumn fx:id="id" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="n° étudiant" />
                         <TableColumn fx:id="tel" minWidth="30.0" prefWidth="106.0" text="Télécommande" />
                         <TableColumn fx:id="Nom" prefWidth="54.0" text="Nom" />
                         <TableColumn fx:id="Prenom" prefWidth="155.0" text="Prénom" />
-                        <TableColumn fx:id="Filiere" prefWidth="55.0" text="Filière" />
-                        <TableColumn fx:id="Annee" minWidth="30.0" prefWidth="5.0" text="Année" />
+                        <TableColumn fx:id="Filiere" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" text="Filière" />
+                        <TableColumn fx:id="Annee" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Année" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

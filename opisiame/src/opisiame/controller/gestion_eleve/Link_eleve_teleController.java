@@ -51,6 +51,10 @@ import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.util.logging.Level;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
 import javafx.scene.input.MouseEvent;
 
@@ -89,6 +93,8 @@ public class Link_eleve_teleController implements Initializable {
     private TableColumn<Eleve, String> tel;
     @FXML
     private TextField Champ_recherche;
+    @FXML
+    private TextField tf_mac_telec;
     @FXML
     private ComboBox choix_port;
 
@@ -173,16 +179,20 @@ public class Link_eleve_teleController implements Initializable {
         Prenom.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Prenom"));
         Filiere.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Filiere"));
         Annee.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("Annee"));
+        tel.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Adresse_mac_tel"));
+
         getAllEleve(/*eleves*/);
         Tableau.setItems(eleves);
         //PropertyConfigurator.configure("log4j.properties");
         init_liste_port();
+
         Tableau.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Node node = ((Node) event.getTarget()).getParent();
                 TableRow row;
                 if (node instanceof TableRow) {
+
                     row = (TableRow) node;
                     select_etudiant();
                 }
@@ -207,11 +217,11 @@ public class Link_eleve_teleController implements Initializable {
     public void update_tableau() {
         Tableau.getItems().clear();
         eleves.clear();
-        //getAllEleve(/*eleves*/);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/eleve/Liste_eleves_adminController.fxml"));
-        URL url = fxmlLoader.getLocation();
-        ResourceBundle rb = fxmlLoader.getResources();
-        this.initialize(url, rb);
+//        //getAllEleve(/*eleves*/);
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/eleve/Liste_eleves_adminController.fxml"));
+//        URL url = fxmlLoader.getLocation();
+//        ResourceBundle rb = fxmlLoader.getResources();
+//        this.initialize(url, rb);
         Tableau.setItems(eleves);
         Tableau.refresh();
     }
@@ -238,6 +248,31 @@ public class Link_eleve_teleController implements Initializable {
     @FXML
     public void ClicBoutonValider() throws IOException {
         //ajouter dans l'appli le couple eleve/@mac pour savoir qui a répondu quoi au quiz
+        if (!"".equals(tf_mac_telec.getText())) {
+            String adr = tf_mac_telec.getText();
+            if (!test_if_tel_exists(adr)) {
+                Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(adr);
+                Tableau.refresh();
+            } else {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Attention");
+                alert.setHeaderText("Télécommande déjà enregistrée pour un autre étudiant");
+                alert.setContentText("Veuillez resélectionner un étudiant et une autre télécommande");
+                alert.showAndWait();
+            }
+        }
+        tf_mac_telec.deleteText(0, tf_mac_telec.getText().length());
+    }
+
+    public Boolean test_if_tel_exists(String adr) {
+        for (int i = 0; i < eleves.size(); i++) {
+            if (eleves.get(i).getAdresse_mac_tel() != null) {
+                if (eleves.get(i).getAdresse_mac_tel().equals(adr)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //Bouton valider
@@ -278,29 +313,46 @@ public class Link_eleve_teleController implements Initializable {
 
     @FXML
     public void select_etudiant() {
-        System.out.println("wait");
-        if ((num_port != "") && (num_port != null)) {
+        if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() != null) {
             try {
-                
-                while (true) {
-                    xbee.clearResponseQueue();
-                    XBeeResponse response = xbee.getResponse();
+                btn_valider.setDisable(true);
+                System.out.println("wait");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Attention");
+                alert.setHeaderText(null);
+                alert.setContentText("Appuyez sur une des télecommandes");
+                alert.show();
+                Thread.sleep(2500);
+                alert.close();
 
-                    if (response.isError()) {
-                        log.info("response contains errors", ((ErrorResponse) response).getException());
-                        continue;
+                if ((num_port != "") && (num_port != null)) {
+                    try {
+                        tf_mac_telec.setText("Attente appui télécommande");
+                        while (true) {
+                            xbee.clearResponseQueue();
+                            XBeeResponse response = xbee.getResponse();
+
+                            if (response.isError()) {
+                                log.info("response contains errors", ((ErrorResponse) response).getException());
+                                continue;
+                            }
+
+                            ProcessResponse processResponse = new ProcessResponse(response);
+                            processResponse.start();
+
+                            break;
+
+                        }
+                    } catch (Exception e) {
+                        log.error(e);
                     }
-
-                    ProcessResponse processResponse = new ProcessResponse(response);
-                    processResponse.start();
-                    break;
                 }
-            } catch (Exception e) {
-                log.error(e);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
 
         RemoteAtRequest request_led_on = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});
@@ -332,6 +384,16 @@ public class Link_eleve_teleController implements Initializable {
             this.response = response;
         }
 
+        XBeeAddress64 adress_mac;
+
+        public XBeeAddress64 getAdress_mac() {
+            return adress_mac;
+        }
+
+        public void setAdress_mac(XBeeAddress64 adress_mac) {
+            this.adress_mac = adress_mac;
+        }
+
         @Override
         public void run() {
             if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
@@ -343,24 +405,31 @@ public class Link_eleve_teleController implements Initializable {
 
                 XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
 
+                tf_mac_telec.setText(address_remote.toString());
+
+                btn_valider.setDisable(false);
+
+                this.adress_mac = address_remote;
+
                 System.err.println("address : " + ioSample.getSourceAddress());
                 System.err.println("address64 : " + address_remote);
 
                 try {
                     for (IoSample sample : ioSample.getSamples()) {
                         if (!ioSample.containsAnalog()) {
-                            if (!sample.isD2On()) { // bouton : rouge
-                                switch_on_led(led_red, address_remote);
-                                switch_off_led(led_red, address_remote);
-                            }
-                            if (!sample.isD1On()) {
-                                switch_on_led(led_yellow, address_remote);
-                                switch_off_led(led_yellow, address_remote);
-                            }
-                            if (!sample.isD0On()) {
-                                switch_on_led(led_green, address_remote);
-                                switch_off_led(led_green, address_remote);
-                            }
+                            switch_on_led(led_green, address_remote);
+//                            if (!sample.isD2On()) { // bouton : rouge
+//                                switch_on_led(led_red, address_remote);
+//                                switch_off_led(led_red, address_remote);
+//                            }
+//                            if (!sample.isD1On()) {
+//                                switch_on_led(led_yellow, address_remote);
+//                                switch_off_led(led_yellow, address_remote);
+//                            }
+//                            if (!sample.isD0On()) {
+//                                switch_on_led(led_green, address_remote);
+//                                switch_off_led(led_green, address_remote);
+//                            }
                         }
                     }
                 } catch (XBeeException e) {

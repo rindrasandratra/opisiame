@@ -18,6 +18,7 @@ public class Eleve {
     private StringProperty nom = new SimpleStringProperty();
     private StringProperty filiere = new SimpleStringProperty();
     private IntegerProperty annee = new SimpleIntegerProperty();
+    private StringProperty Adresse_mac_tel = new SimpleStringProperty();
 
     //Constructeur
     public Eleve(IntegerProperty ID, StringProperty PRENOM, StringProperty NOM, StringProperty FILIERE, IntegerProperty ANNEE) {
@@ -29,6 +30,14 @@ public class Eleve {
     }
 
     public Eleve() {
+    }
+
+    public String getAdresse_mac_tel() {
+        return Adresse_mac_tel.get();
+    }
+
+    public void setAdresse_mac_tel(String Adresse_mac_tel) {
+        this.Adresse_mac_tel.set(Adresse_mac_tel);
     }
 
     // Pour retourner les attributs
