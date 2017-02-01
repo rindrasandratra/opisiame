@@ -225,18 +225,13 @@ public class Link_eleve_teleController implements Initializable {
     public void select_port() {
         num_port = choix_port.getSelectionModel().getSelectedItem().toString();
         System.out.println("choix port : " + num_port);
-//        try {
-//
-//            xbee.open(num_port, 9600);
-//
-//        } catch (Exception e) {
-//            Alert alert = new Alert(AlertType.ERROR);
-//            alert.setTitle("Error Dialog");
-//            //alert.setHeaderText("Erreur sur le port choisi");
-//            alert.setContentText("Erreur sur le port choisi");
-//            alert.showAndWait();
-//            e.printStackTrace();
-//        }
+        try {
+
+            xbee.open(num_port, 9600);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Bouton valider
@@ -283,11 +278,10 @@ public class Link_eleve_teleController implements Initializable {
 
     @FXML
     public void select_etudiant() {
-        Boolean rep = false;
         System.out.println("wait");
-//        if ((num_port != "") && (num_port != null)) {
+        if ((num_port != "") && (num_port != null)) {
             try {
-                xbee.open("COM4", 9600);
+                
                 while (true) {
                     xbee.clearResponseQueue();
                     XBeeResponse response = xbee.getResponse();
@@ -299,14 +293,12 @@ public class Link_eleve_teleController implements Initializable {
 
                     ProcessResponse processResponse = new ProcessResponse(response);
                     processResponse.start();
+                    break;
                 }
             } catch (Exception e) {
                 log.error(e);
             }
-            finally{
-                xbee.close();
-            }
-//        }
+        }
     }
     
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
