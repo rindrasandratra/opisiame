@@ -53,8 +53,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
 import javafx.scene.input.MouseEvent;
 
@@ -235,9 +233,7 @@ public class Link_eleve_teleController implements Initializable {
         num_port = choix_port.getSelectionModel().getSelectedItem().toString();
         System.out.println("choix port : " + num_port);
         try {
-
             xbee.open(num_port, 9600);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -277,25 +273,33 @@ public class Link_eleve_teleController implements Initializable {
     //Bouton valider
     @FXML
     public void ClicBoutonLancerQuiz() throws IOException {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
-            lancer_ques_controller.setQuiz_timer(quiz_timer);
-            lancer_ques_controller.setQuiz_id(quiz_id);
-            lancer_ques_controller.setEleves(eleves);
-            lancer_ques_controller.setXbee(xbee);
+        if (num_port != null) {
+            try {
+                xbee.close();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
+                lancer_ques_controller.setEleves(eleves);
+                lancer_ques_controller.setNum_port(num_port);
+                lancer_ques_controller.setQuiz_timer(quiz_timer);
+                lancer_ques_controller.setQuiz_id(quiz_id);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Animation quiz");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Animation quiz");
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -312,7 +316,6 @@ public class Link_eleve_teleController implements Initializable {
         session.Session.Logout();
     }
 
-    
     public void select_etudiant() {
         System.out.println("selectes");
         if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {

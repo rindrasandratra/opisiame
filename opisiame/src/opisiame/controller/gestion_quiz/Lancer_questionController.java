@@ -44,6 +44,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.imageio.ImageIO;
+import opisiame.controller.com.ListenToRemoteThread;
 import opisiame.model.Question;
 import opisiame.dao.*;
 import opisiame.model.Eleve;
@@ -63,16 +64,17 @@ public class Lancer_questionController implements Initializable {
     private Integer quiz_timer;
 
     private Integer current_question_no;
-    
-    private List<Eleve> eleves;   
-    private XBee xbee;
+
+    private List<Eleve> eleves;
+    private XBee xbee = new XBee();
 
     @FXML
     private GridPane gpane;
 
+    ListenToRemoteThread listenRemote;
+
 //    @FXML
 //    private Button label_timer;
-
     @FXML
     private Button rep_1;
 
@@ -98,6 +100,7 @@ public class Lancer_questionController implements Initializable {
     //private ImageView img_view;
     private double ratio_height;
     private double ratio_width;
+    String num_port;
 
     Question_dao question_dao = new Question_dao();
 
@@ -109,10 +112,18 @@ public class Lancer_questionController implements Initializable {
         this.eleves = eleves;
     }
 
-    public void setXbee(XBee xbee) {
-        this.xbee = xbee;
+    public void setNum_port(String num_port) {
+        this.num_port = num_port;
+        System.out.println("port : "+num_port);
+        
+        try {
+            xbee.open(num_port, 9600);
+            System.out.println("xbee connected");
+        } catch (XBeeException ex) {
+            ex.printStackTrace();
+        }
     }
-    
+
     public void setQuiz_id(Integer quiz_id) {
         this.quiz_id = quiz_id;
         get_all_questions();
@@ -155,9 +166,13 @@ public class Lancer_questionController implements Initializable {
             }
         }
     }
-    
-    public void listen_remote(){
-        
+
+    public void listen_remote() {
+        System.out.println("num port : " + num_port);
+        if (num_port != null) {
+            listenRemote = new ListenToRemoteThread(xbee, num_port,eleves);
+            listenRemote.start();
+        }
     }
 
     public void run_timer(Integer duree) {
@@ -229,6 +244,7 @@ public class Lancer_questionController implements Initializable {
 
     @FXML
     private void next_question() {
+        listenRemote.setRunning(false);
         current_question_no++;
         if (current_question_no >= questions.size() - 1) {
             end_quiz();
@@ -261,5 +277,5 @@ public class Lancer_questionController implements Initializable {
         Stage stage = (Stage) rep_1.getScene().getWindow();
         stage.close();
     }
-    
+
 }
