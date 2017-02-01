@@ -5,12 +5,20 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import com.rapplogic.xbee.api.ApiId;
+import com.rapplogic.xbee.api.XBee;
+import com.rapplogic.xbee.api.XBeeAddress64;
+import com.rapplogic.xbee.api.XBeeException;
+import com.rapplogic.xbee.api.XBeeResponse;
+import com.rapplogic.xbee.api.wpan.IoSample;
+import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.logging.Level;
@@ -38,6 +46,7 @@ import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import opisiame.model.Question;
 import opisiame.dao.*;
+import opisiame.model.Eleve;
 import opisiame.model.Reponse;
 
 /**
@@ -54,6 +63,9 @@ public class Lancer_questionController implements Initializable {
     private Integer quiz_timer;
 
     private Integer current_question_no;
+    
+    private List<Eleve> eleves;   
+    private XBee xbee;
 
     @FXML
     private GridPane gpane;
@@ -93,6 +105,14 @@ public class Lancer_questionController implements Initializable {
 
     Timer t;
 
+    public void setEleves(List<Eleve> eleves) {
+        this.eleves = eleves;
+    }
+
+    public void setXbee(XBee xbee) {
+        this.xbee = xbee;
+    }
+    
     public void setQuiz_id(Integer quiz_id) {
         this.quiz_id = quiz_id;
         get_all_questions();
@@ -125,6 +145,7 @@ public class Lancer_questionController implements Initializable {
             print_image(q.getImg_blob());
             print_reponse(q.getReponses());
             int timer = get_quest_timer();
+            listen_remote();
             if (timer > 0) {
                 run_timer(timer);
                 btn_next_question.setDisable(true);
@@ -133,6 +154,10 @@ public class Lancer_questionController implements Initializable {
                 btn_next_question.setText(" >> ");
             }
         }
+    }
+    
+    public void listen_remote(){
+        
     }
 
     public void run_timer(Integer duree) {
@@ -236,5 +261,5 @@ public class Lancer_questionController implements Initializable {
         Stage stage = (Stage) rep_1.getScene().getWindow();
         stage.close();
     }
-
+    
 }

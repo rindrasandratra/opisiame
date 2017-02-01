@@ -217,11 +217,10 @@ public class Link_eleve_teleController implements Initializable {
     public void update_tableau() {
         Tableau.getItems().clear();
         eleves.clear();
-//        //getAllEleve(/*eleves*/);
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/eleve/Liste_eleves_adminController.fxml"));
-//        URL url = fxmlLoader.getLocation();
-//        ResourceBundle rb = fxmlLoader.getResources();
-//        this.initialize(url, rb);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/eleve/Liste_eleves_adminController.fxml"));
+        URL url = fxmlLoader.getLocation();
+        ResourceBundle rb = fxmlLoader.getResources();
+        this.initialize(url, rb);
         Tableau.setItems(eleves);
         Tableau.refresh();
     }
@@ -282,8 +281,10 @@ public class Link_eleve_teleController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
-            lancer_ques_controller.setQuiz_timer(Integer.valueOf(quiz_timer));
+            lancer_ques_controller.setQuiz_timer(quiz_timer);
             lancer_ques_controller.setQuiz_id(quiz_id);
+            lancer_ques_controller.setXbee(xbee);
+            lancer_ques_controller.setEleves(eleves);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -354,7 +355,6 @@ public class Link_eleve_teleController implements Initializable {
     }
 
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
-
         RemoteAtRequest request_led_on = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});
         xbee.sendAsynchronous(request_led_on);
         try {
@@ -362,7 +362,6 @@ public class Link_eleve_teleController implements Initializable {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // xbee.clearResponseQueue();
     }
 
     public void switch_off_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
@@ -373,7 +372,6 @@ public class Link_eleve_teleController implements Initializable {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // xbee.clearResponseQueue();
     }
 
     class ProcessResponse extends Thread {
@@ -399,10 +397,6 @@ public class Link_eleve_teleController implements Initializable {
             if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
                 RxResponseIoSample ioSample = (RxResponseIoSample) response;
 
-                System.out.println("iosampe : " + ioSample.toString());
-
-                System.err.println("iosample ::: " + ioSample.toString());
-
                 XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
 
                 tf_mac_telec.setText(address_remote.toString());
@@ -411,25 +405,12 @@ public class Link_eleve_teleController implements Initializable {
 
                 this.adress_mac = address_remote;
 
-                System.err.println("address : " + ioSample.getSourceAddress());
                 System.err.println("address64 : " + address_remote);
 
                 try {
                     for (IoSample sample : ioSample.getSamples()) {
                         if (!ioSample.containsAnalog()) {
                             switch_on_led(led_green, address_remote);
-//                            if (!sample.isD2On()) { // bouton : rouge
-//                                switch_on_led(led_red, address_remote);
-//                                switch_off_led(led_red, address_remote);
-//                            }
-//                            if (!sample.isD1On()) {
-//                                switch_on_led(led_yellow, address_remote);
-//                                switch_off_led(led_yellow, address_remote);
-//                            }
-//                            if (!sample.isD0On()) {
-//                                switch_on_led(led_green, address_remote);
-//                                switch_off_led(led_green, address_remote);
-//                            }
                         }
                     }
                 } catch (XBeeException e) {
