@@ -283,8 +283,8 @@ public class Link_eleve_teleController implements Initializable {
             Lancer_questionController lancer_ques_controller = fxmlLoader.<Lancer_questionController>getController();
             lancer_ques_controller.setQuiz_timer(quiz_timer);
             lancer_ques_controller.setQuiz_id(quiz_id);
-            lancer_ques_controller.setXbee(xbee);
             lancer_ques_controller.setEleves(eleves);
+            lancer_ques_controller.setXbee(xbee);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -312,9 +312,10 @@ public class Link_eleve_teleController implements Initializable {
         session.Session.Logout();
     }
 
-    @FXML
+    
     public void select_etudiant() {
-        if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() != null) {
+        System.out.println("selectes");
+        if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {
             try {
                 btn_valider.setDisable(true);
                 System.out.println("wait");
@@ -355,6 +356,7 @@ public class Link_eleve_teleController implements Initializable {
     }
 
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
+
         RemoteAtRequest request_led_on = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});
         xbee.sendAsynchronous(request_led_on);
         try {
@@ -362,6 +364,7 @@ public class Link_eleve_teleController implements Initializable {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // xbee.clearResponseQueue();
     }
 
     public void switch_off_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
@@ -372,6 +375,7 @@ public class Link_eleve_teleController implements Initializable {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // xbee.clearResponseQueue();
     }
 
     class ProcessResponse extends Thread {
@@ -396,6 +400,8 @@ public class Link_eleve_teleController implements Initializable {
         public void run() {
             if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
                 RxResponseIoSample ioSample = (RxResponseIoSample) response;
+
+                System.err.println("iosample ::: " + ioSample.toString());
 
                 XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
 
