@@ -19,6 +19,15 @@ public class Eleve {
     private StringProperty filiere = new SimpleStringProperty();
     private IntegerProperty annee = new SimpleIntegerProperty();
     private StringProperty Adresse_mac_tel = new SimpleStringProperty();
+    private Integer part_id;
+
+    public Integer getPart_id() {
+        return part_id;
+    }
+
+    public void setPart_id(Integer part_id) {
+        this.part_id = part_id;
+    }
 
     //Constructeur
     public Eleve(IntegerProperty ID, StringProperty PRENOM, StringProperty NOM, StringProperty FILIERE, IntegerProperty ANNEE) {

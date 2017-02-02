@@ -10,10 +10,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import opisiame.database.Connection_db;
@@ -128,6 +131,29 @@ public class Participation_quiz_dao {
             ex.printStackTrace();
         }
         return liste_participants;
+    }
+
+    public Integer insert_participation(int eleve_id, int quiz_id, Timestamp t) {
+        Integer insert_id = null;
+        try {
+            String SQL = "INSERT INTO participant_quiz (Date_participation, Quiz_id, Part_id) VALUES (?,?,?)";
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setTimestamp(1, t);
+            ps.setInt(2, quiz_id);
+            ps.setInt(3, eleve_id);
+            int succes = ps.executeUpdate();
+            if (succes == 0) {
+                System.err.println("Échec de la création de la question, aucune ligne ajoutée dans la table.");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                insert_id = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Participation_quiz_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return insert_id;
     }
 
     public int get_part_id(int id, int quiz_id, Timestamp t) {

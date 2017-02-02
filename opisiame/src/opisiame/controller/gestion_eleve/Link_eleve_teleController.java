@@ -48,6 +48,7 @@ import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -55,6 +56,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableRow;
 import javafx.scene.input.MouseEvent;
+import opisiame.dao.Participation_quiz_dao;
 
 import org.apache.log4j.Logger;
 
@@ -95,6 +97,10 @@ public class Link_eleve_teleController implements Initializable {
     private TextField tf_mac_telec;
     @FXML
     private ComboBox choix_port;
+    
+    Participation_quiz_dao participation_quiz_dao = new Participation_quiz_dao();
+    
+    Timestamp date_participation;
 
     private String num_port;
 
@@ -172,6 +178,7 @@ public class Link_eleve_teleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        date_participation = new Timestamp(System.currentTimeMillis());
         id.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("id"));
         Nom.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Nom"));
         Prenom.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Prenom"));
@@ -238,6 +245,11 @@ public class Link_eleve_teleController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    public Integer insert_new_participation(){
+        Integer part_id =  participation_quiz_dao.insert_participation(Tableau.getSelectionModel().getSelectedItem().getId(), quiz_id, date_participation);
+        return part_id;
+    }
 
     //Bouton valider
     @FXML
@@ -247,6 +259,8 @@ public class Link_eleve_teleController implements Initializable {
             String adr = tf_mac_telec.getText();
             if (!test_if_tel_exists(adr)) {
                 Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(adr);
+                int part_id = insert_new_participation();
+                Tableau.getSelectionModel().getSelectedItem().setPart_id(part_id);
                 Tableau.refresh();
             } else {
                 Alert alert = new Alert(AlertType.WARNING);

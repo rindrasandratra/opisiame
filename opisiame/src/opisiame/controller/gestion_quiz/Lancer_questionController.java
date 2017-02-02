@@ -5,7 +5,9 @@
  */
 package opisiame.controller.gestion_quiz;
 
+import com.rapplogic.xbee.XBeePin;
 import com.rapplogic.xbee.api.ApiId;
+import com.rapplogic.xbee.api.RemoteAtRequest;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
@@ -45,6 +47,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import opisiame.controller.com.ListenToRemoteThread;
+import opisiame.controller.gestion_eleve.Link_eleve_teleController;
 import opisiame.model.Question;
 import opisiame.dao.*;
 import opisiame.model.Eleve;
@@ -166,11 +169,31 @@ public class Lancer_questionController implements Initializable {
             }
         }
     }
+    
+    public void switch_off_remotes(){
+        try {
+            String led_green = "D5";
+            RemoteAtRequest request_led_off = new RemoteAtRequest(XBeeAddress64.BROADCAST, led_green, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_LOW.getValue()});
+            xbee.sendAsynchronous(request_led_off);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (XBeeException ex) {
+            Logger.getLogger(Lancer_questionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void listen_remote() {
         System.out.println("num port : " + num_port);
+        switch_off_remotes();
         if (num_port != null) {
             listenRemote = new ListenToRemoteThread(xbee, num_port,eleves);
+            listenRemote.setRep_id_a(current_question.getReponses().get(0).getId());
+            listenRemote.setRep_id_b(current_question.getReponses().get(1).getId());
+            listenRemote.setRep_id_c(current_question.getReponses().get(2).getId());
+            listenRemote.setRep_id_d(current_question.getReponses().get(3).getId());
             listenRemote.start();
         }
     }

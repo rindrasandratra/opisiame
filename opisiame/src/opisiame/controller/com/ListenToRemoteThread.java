@@ -15,9 +15,11 @@ import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import opisiame.controller.gestion_eleve.Link_eleve_teleController;
+import opisiame.dao.Reponse_participation_dao;
 import opisiame.model.Eleve;
 
 /**
@@ -28,21 +30,48 @@ public class ListenToRemoteThread extends Thread {
 
     private XBee xbee;
 
+    List<XBeeAddress64> remotes_responded;
+
     String num_port;
-    
+
     List<Eleve> eleves;
 
     private Boolean running = true;
+
+    private int rep_id_a;
+    private int rep_id_b;
+    private int rep_id_c;
+    private int rep_id_d;
 
     String led_yellow = "D7";
     String led_green = "D5";
     String led_red = "D4";
 
-    public ListenToRemoteThread(XBee xBee, String num_port,List<Eleve> Eleves) {
+    Reponse_participation_dao reponse_participation_dao = new Reponse_participation_dao();
+
+    public void setRep_id_a(int rep_id_a) {
+        this.rep_id_a = rep_id_a;
+    }
+
+    public void setRep_id_b(int rep_id_b) {
+        this.rep_id_b = rep_id_b;
+    }
+
+    public void setRep_id_c(int rep_id_c) {
+        this.rep_id_c = rep_id_c;
+    }
+
+    public void setRep_id_d(int rep_id_d) {
+        this.rep_id_d = rep_id_d;
+    }
+
+    public ListenToRemoteThread(XBee xBee, String num_port, List<Eleve> Eleves) {
         this.num_port = num_port;
         this.xbee = xBee;
         this.eleves = Eleves;
         running = true;
+        remotes_responded = new ArrayList<>();
+        remotes_responded.clear();
     }
 
     @Override
@@ -113,40 +142,60 @@ public class ListenToRemoteThread extends Thread {
             this.adress_mac = adress_mac;
         }
 
+        public Integer get_part_id(String adr_max) {
+            for (int i = 0; i < eleves.size(); i++) {
+                if (eleves.get(i).getAdresse_mac_tel() != null) {
+                    if (eleves.get(i).getAdresse_mac_tel().equals(adr_max)) {
+                        return eleves.get(i).getPart_id();
+                    }
+                }
+            }
+            return null;
+        }
+
+        /*
+    DIO0 boutton vert
+    DIO1 boutton gris
+    DIO2 boutton rouge
+    DIO3 boutton bleu
+         */
         @Override
         public void run() {
             if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
                 RxResponseIoSample ioSample = (RxResponseIoSample) response;
-
                 System.err.println("iosample ::: " + ioSample.toString());
-
                 XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
-
+                int part_id = get_part_id(address_remote.toString());
                 this.adress_mac = address_remote;
-
                 System.err.println("address64 : " + address_remote);
 
-                try {
-                    for (IoSample sample : ioSample.getSamples()) {
-                        if (!ioSample.containsAnalog()) {
-                            if (!sample.isD2On()) { // bouton : rouge
-                                switch_on_led(led_red, address_remote);
-                                switch_off_led(led_red, address_remote);
-                            }
-                            if (!sample.isD1On()) {
-                                switch_on_led(led_yellow, address_remote);
-                                switch_off_led(led_yellow, address_remote);
-                            }
-                            if (!sample.isD0On()) {
+                if (!remotes_responded.contains(address_remote)) {
+                    try {
+                        for (IoSample sample : ioSample.getSamples()) {
+                            if (!ioSample.containsAnalog()) {
+                                if (!sample.isD2On()) { // bouton : rouge  => b
+                                    reponse_participation_dao.insert_rep_participation(rep_id_b, part_id);
+                                }
+                                if (!sample.isD1On()) { // bouton gris  => c
+                                    reponse_participation_dao.insert_rep_participation(rep_id_c, part_id);
+                                }
+                                if (!sample.isD0On()) { // bouton vert => a
+                                    reponse_participation_dao.insert_rep_participation(rep_id_a, part_id);
+                                }
+                                if (!sample.isD3On()) { // bouton bleu  => d
+                                    reponse_participation_dao.insert_rep_participation(rep_id_d, part_id);
+                                }
                                 switch_on_led(led_green, address_remote);
                                 switch_off_led(led_green, address_remote);
+                                remotes_responded.add(address_remote);
                             }
                         }
+                    } catch (XBeeException e) {
+                        System.out.println("bouh ya (cacha)");
+                        e.printStackTrace();
                     }
-                } catch (XBeeException e) {
-                    System.out.println("bouh ya (cacha)");
-                    e.printStackTrace();
                 }
+
             }
         }
     }
