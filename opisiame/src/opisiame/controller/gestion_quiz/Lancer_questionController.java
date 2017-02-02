@@ -189,6 +189,7 @@ public class Lancer_questionController implements Initializable {
         System.out.println("num port : " + num_port);
         switch_off_remotes();
         if (num_port != null) {
+            System.out.println("Nouvelle question : "+ current_question.getId());
             listenRemote = new ListenToRemoteThread(xbee, num_port,eleves);
             listenRemote.setRep_id_a(current_question.getReponses().get(0).getId());
             listenRemote.setRep_id_b(current_question.getReponses().get(1).getId());
