@@ -22,14 +22,14 @@ import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 public class Process_response extends Thread {
 
     XBeeResponse response;
-    
+
     private XBee xbee = new XBee();
 
     public Process_response(XBeeResponse response, XBee xbee_coordinator) {
         this.response = response;
         this.xbee = xbee_coordinator;
     }
-    
+
     String led_yellow = "D7";
     String led_green = "D5";
     String led_red = "D4";
@@ -39,18 +39,11 @@ public class Process_response extends Thread {
         if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
             RxResponseIoSample ioSample = (RxResponseIoSample) response;
 
-            System.out.println("iosampe : " + ioSample.toString());
-
-            System.err.println("iosample ::: " + ioSample.toString());
-
             XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
-
-            System.err.println("address : " + ioSample.getSourceAddress());
-            System.err.println("address64 : " + address_remote);
 
             try {
                 for (IoSample sample : ioSample.getSamples()) {
-                    
+
                     if (!ioSample.containsAnalog()) {
                         if (!sample.isD2On()) { // bouton : rouge
                             switch_on_led(led_red, address_remote);
@@ -71,7 +64,7 @@ public class Process_response extends Thread {
             }
         }
     }
-    
+
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
 
         RemoteAtRequest request_led_on = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});

@@ -63,6 +63,10 @@ public class Liste_quizController implements Initializable {
     private TableColumn<Quiz, Integer> timer;
     @FXML
     private TextField txt_search;
+    @FXML
+    private Button btn_suppr_selected;
+    @FXML
+    private Button btn_ajout_quiz;
 
     private List<Integer> liste_supr = new ArrayList<>();
     private ObservableList<Quiz> liste_quizs;
@@ -126,6 +130,11 @@ public class Liste_quizController implements Initializable {
                 }
             }
         });
+        
+        if (Session.getType().equals("anim")) {
+            btn_suppr_selected.setVisible(false);
+            btn_ajout_quiz.setVisible(false);
+        }
 
     }
 
@@ -230,9 +239,11 @@ public class Liste_quizController implements Initializable {
 
                 box.setPadding(new Insets(5, 0, 5, 0));//ajout de marge à l'interieur du bouton
                 // box.setPrefColumns(1);
-                box.getChildren().add(btn_detail);
-                box.getChildren().add(btn_edit);
-                box.getChildren().add(btn_delete);
+                if (!Session.getType().equals("anim")) {
+                    box.getChildren().add(btn_edit);
+                    box.getChildren().add(btn_delete);
+                    box.getChildren().add(btn_detail);
+                }
                 box.getChildren().add(btn_lancer);
                 setGraphic(box);
             }
