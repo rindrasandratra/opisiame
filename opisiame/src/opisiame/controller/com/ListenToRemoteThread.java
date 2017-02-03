@@ -74,12 +74,14 @@ public class ListenToRemoteThread extends Thread {
         remotes_responded.clear();
         System.out.println("taille liste après le clear : " + remotes_responded.size());
     }
-    
-        
-    public Boolean test_if_is_in_list(XBeeAddress64 adr_mac){
-        for(int i=0; i<remotes_responded.size(); i++){
-            if (remotes_responded.get(i) == adr_mac)
+
+    public Boolean test_if_is_in_list(String adr_mac) {
+        for (int i = 0; i < remotes_responded.size(); i++) {
+            System.out.println("if " + remotes_responded.get(i).toString() + " == " + adr_mac);
+            if (remotes_responded.get(i).toString().equals(adr_mac)) {
+                System.out.println("equal");
                 return true;
+            }
         }
         return false;
     }
@@ -100,7 +102,7 @@ public class ListenToRemoteThread extends Thread {
                     processResponse.start();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } finally {
 //                    xbee.close();
             }
@@ -181,7 +183,7 @@ public class ListenToRemoteThread extends Thread {
                     System.err.println("address64 : " + address_remote);
                     System.out.println("Before if : " + part_id);
                     System.out.println("Taille liste adr : " + remotes_responded.size());
-                    if (!test_if_is_in_list(address_remote)) {
+                    if (!test_if_is_in_list(address_remote.toString())) {
                         System.out.println("After if : " + part_id);
                         try {
                             for (IoSample sample : ioSample.getSamples()) {
@@ -189,29 +191,30 @@ public class ListenToRemoteThread extends Thread {
                                     if (!sample.isD2On()) { // bouton : rouge  => b
                                         System.out.println("insert : " + rep_id_b + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_b, part_id);
-                                        switch_on_led(led_green, address_remote);
                                         switch_off_led(led_green, address_remote);
+                                        switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
+                                        
                                     }
                                     if (!sample.isD1On()) { // bouton gris  => c
                                         System.out.println("insert : " + rep_id_c + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_c, part_id);
-                                        switch_on_led(led_green, address_remote);
                                         switch_off_led(led_green, address_remote);
+                                        switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
                                     }
                                     if (!sample.isD0On()) { // bouton vert => a
                                         System.out.println("insert : " + rep_id_a + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_a, part_id);
-                                        switch_on_led(led_green, address_remote);
                                         switch_off_led(led_green, address_remote);
+                                        switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
                                     }
                                     if (!sample.isD3On()) { // bouton bleu  => d
                                         System.out.println("insert : " + rep_id_d + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_d, part_id);
-                                        switch_on_led(led_green, address_remote);
                                         switch_off_led(led_green, address_remote);
+                                        switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
                                     }
                                 }

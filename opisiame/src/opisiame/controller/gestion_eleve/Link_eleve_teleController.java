@@ -50,6 +50,7 @@ import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.sql.Timestamp;
 import java.util.logging.Level;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -97,9 +98,11 @@ public class Link_eleve_teleController implements Initializable {
     private TextField tf_mac_telec;
     @FXML
     private ComboBox choix_port;
-    
+    @FXML
+    private TextField tf_choix_eleve;
+
     Participation_quiz_dao participation_quiz_dao = new Participation_quiz_dao();
-    
+
     Timestamp date_participation;
 
     private String num_port;
@@ -197,7 +200,6 @@ public class Link_eleve_teleController implements Initializable {
                 Node node = ((Node) event.getTarget()).getParent();
                 TableRow row;
                 if (node instanceof TableRow) {
-
                     row = (TableRow) node;
                     select_etudiant();
                 }
@@ -245,9 +247,9 @@ public class Link_eleve_teleController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    public Integer insert_new_participation(){
-        Integer part_id =  participation_quiz_dao.insert_participation(Tableau.getSelectionModel().getSelectedItem().getId(), quiz_id, date_participation);
+
+    public Integer insert_new_participation() {
+        Integer part_id = participation_quiz_dao.insert_participation(Tableau.getSelectionModel().getSelectedItem().getId(), quiz_id, date_participation);
         return part_id;
     }
 
@@ -271,6 +273,7 @@ public class Link_eleve_teleController implements Initializable {
             }
         }
         tf_mac_telec.deleteText(0, tf_mac_telec.getText().length());
+        tf_choix_eleve.deleteText(0, tf_choix_eleve.getText().length());
     }
 
     public Boolean test_if_tel_exists(String adr) {
@@ -336,15 +339,9 @@ public class Link_eleve_teleController implements Initializable {
             try {
                 btn_valider.setDisable(true);
                 System.out.println("wait");
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Attention");
-                alert.setHeaderText(null);
-                alert.setContentText("Appuyez sur une des télecommandes");
-                alert.show();
-                Thread.sleep(2500);
-                alert.close();
 
                 if ((num_port != "") && (num_port != null)) {
+                    Thread.sleep(500);
                     try {
                         tf_mac_telec.setText("Attente appui télécommande");
                         while (true) {
@@ -433,7 +430,7 @@ public class Link_eleve_teleController implements Initializable {
                 try {
                     for (IoSample sample : ioSample.getSamples()) {
                         if (!ioSample.containsAnalog()) {
-                            switch_on_led(led_green, address_remote);
+                            switch_on_led(led_yellow, address_remote);
                         }
                     }
                 } catch (XBeeException e) {
