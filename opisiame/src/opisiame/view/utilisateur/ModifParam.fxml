@@ -63,6 +63,9 @@
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Label fx:id="Msg" onMouseClicked="#Modifier_MDP" prefHeight="23.0" prefWidth="403.0" textFill="RED" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
             <PasswordField fx:id="NouveauMDP" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
@@ -71,6 +74,9 @@
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </GridPane>

@@ -192,6 +192,55 @@ public class Edit_quizController implements Initializable {
         Stage stage = (Stage) nom_quiz.getScene().getWindow();
         stage.close();
     }
+    
+    @FXML
+    public void add_question(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/add_question.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Add_questionController add_question_controller = fxmlLoader.<Add_questionController>getController();
+            add_question_controller.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout question");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.centerOnScreen();
+            stage.show();
+
+            Stage st = (Stage) nom_quiz.getScene().getWindow();
+            st.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    public void manage_animateur(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/manage_animateur.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Manage_animateurController manage_animateurController = fxmlLoader.<Manage_animateurController>getController();
+            manage_animateurController.setQuiz_id(this.quiz_id);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Gestion des animateurs du quiz");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Initializes the controller class.

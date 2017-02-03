@@ -39,6 +39,9 @@
                <GridPane.margin>
                   <Insets bottom="50.0" />
                </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button mnemonicParsing="false" onMousePressed="#btn_mdp" prefHeight="68.0" prefWidth="159.0" style="-fx-background-color: #70f9de; -fx-background-radius: 202020;" text="Changer de &#10;mot de passe" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
@@ -47,6 +50,9 @@
                <font>
                   <Font size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <ImageView fitHeight="137.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
@@ -57,11 +63,17 @@
                <image>
                   <Image url="@../../image/on_off.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fitHeight="43.0" fitWidth="53.0" onMousePressed="#btn_retour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../../image/retour.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
       </GridPane>

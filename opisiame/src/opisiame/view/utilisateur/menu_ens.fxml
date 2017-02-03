@@ -21,9 +21,18 @@
           <GridPane.margin>
             <Insets fx:id="x2" />
           </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
         </Button>
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonRésultatsQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ff978c;" text="Résultats" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: #99ffea;" text="Quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonRésultatsQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ff978c;" text="Résultats" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+        <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonListeQuiz" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: #99ffea;" text="Quiz" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.margin="$x2" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
         <ImageView fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <image>
             <Image url="@../../image/opisiame_logo.png" />
@@ -39,7 +48,10 @@
                   <Image url="@../../image/param.png" />
                </image>
             </ImageView>
-            <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ffec75;" text="Compétences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ffec75;" text="Compétences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="40.0" prefWidth="142.0" />
