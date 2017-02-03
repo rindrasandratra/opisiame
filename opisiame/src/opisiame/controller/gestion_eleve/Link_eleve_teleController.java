@@ -51,12 +51,22 @@ import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableRow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import opisiame.dao.Participation_quiz_dao;
 
 import org.apache.log4j.Logger;
@@ -92,6 +102,8 @@ public class Link_eleve_teleController implements Initializable {
     private TableColumn<Eleve, Integer> Annee;
     @FXML
     private TableColumn<Eleve, String> tel;
+    @FXML
+    private TableColumn<Eleve, Boolean> c_action;
     @FXML
     private TextField Champ_recherche;
     @FXML
@@ -194,19 +206,81 @@ public class Link_eleve_teleController implements Initializable {
         //PropertyConfigurator.configure("log4j.properties");
         init_liste_port();
 
-        Tableau.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//        Tableau.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                Node node = ((Node) event.getTarget()).getParent();
+//                TableRow row;
+//                if (node instanceof TableRow) {
+//                    row = (TableRow) node;
+//                   // select_etudiant();
+//                }
+//            }
+//        });
+
+        c_action.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Eleve, Boolean>, ObservableValue<Boolean>>() {
+
             @Override
-            public void handle(MouseEvent event) {
-                Node node = ((Node) event.getTarget()).getParent();
-                TableRow row;
-                if (node instanceof TableRow) {
-                    row = (TableRow) node;
-                    select_etudiant();
-                }
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Eleve, Boolean> p) {
+                return new SimpleBooleanProperty(p.getValue() != null);
             }
+        });
+
+        c_action.setCellFactory(new Callback<TableColumn<Eleve, Boolean>, TableCell<Eleve, Boolean>>() {
+
+            @Override
+            public TableCell<Eleve, Boolean> call(TableColumn<Eleve, Boolean> p) {
+                return new ButtonCell();
+            }
+
         });
     }
 
+    //Define the button cell
+    private class ButtonCell extends TableCell<Eleve, Boolean> {
+
+        final Button btn_edit = new Button();
+        final Button btn_delete = new Button();
+        final Button btn_detail = new Button();
+        final Button btn_lancer = new Button();
+
+        ButtonCell() {
+            btn_edit.setStyle("-fx-background-color: gray");
+            btn_edit.setCursor(Cursor.HAND);
+
+            btn_edit.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    //edit_quiz();
+                    select_etudiant();
+                }
+            });
+
+        }
+
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+
+                HBox box = new HBox(1);
+
+                box.setAlignment(Pos.CENTER);
+
+                Image img_edit = new Image(getClass().getResourceAsStream("/opisiame/image/edit.png"), 20, 20, true, true);
+                btn_edit.setGraphic(new ImageView(img_edit));
+
+                box.setPadding(new Insets(5, 0, 5, 0));//ajout de marge à l'interieur du bouton
+                // box.setPrefColumns(1);
+                box.getChildren().add(btn_edit);
+                setGraphic(box);
+            }
+        }
+
+    }
+
+    //Display button if the row is not empty
     public void init_liste_port() {
         Enumeration pList = CommPortIdentifier.getPortIdentifiers();
         System.out.println("taille liste : " + pList.toString());
@@ -295,8 +369,10 @@ public class Link_eleve_teleController implements Initializable {
                 xbee.close();
                 try {
                     Thread.sleep(1000);
+
                 } catch (InterruptedException ex) {
-                    java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger(Link_eleve_teleController.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/lancer_question.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
@@ -361,10 +437,12 @@ public class Link_eleve_teleController implements Initializable {
                         }
                     } catch (Exception e) {
                         log.error(e);
+
                     }
                 }
             } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(Link_eleve_teleController.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -375,8 +453,10 @@ public class Link_eleve_teleController implements Initializable {
         xbee.sendAsynchronous(request_led_on);
         try {
             Thread.sleep(1000);
+
         } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Link_eleve_teleController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         // xbee.clearResponseQueue();
     }
@@ -386,8 +466,11 @@ public class Link_eleve_teleController implements Initializable {
         xbee.sendAsynchronous(request_led_off);
         try {
             Thread.sleep(1000);
+
         } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Link_eleve_teleController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         }
         // xbee.clearResponseQueue();
     }
