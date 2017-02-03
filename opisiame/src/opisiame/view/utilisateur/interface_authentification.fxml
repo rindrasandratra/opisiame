@@ -36,6 +36,9 @@
                     <Double fx:value="0.0" />
                     <Double fx:value="-60.0" />
                   </points>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                 </Polygon>
                 <ImageView fitHeight="81.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="1" GridPane.valignment="CENTER">
                   <image>

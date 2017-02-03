@@ -23,6 +23,11 @@ import session.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -51,6 +56,28 @@ public class Interface_authentificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        Login_field.requestFocus();
+        Login_field.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.TAB) {
+                    Passwd_field.setFocusTraversable(true);
+                    Passwd_field.requestFocus();
+                }
+            }
+        });
+        Passwd_field.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    try {
+                        Submit_passwd();
+                    } catch (IOException | SQLException ex) {
+                        Logger.getLogger(Interface_authentificationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
+                }
+            }
+        });
     }
 
     public static String md5(String input) {

@@ -28,7 +28,7 @@
         </Text>
         <TableView fx:id="t_liste_quiz" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <columns>
-            <TableColumn fx:id="col_cb" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="..." />
+            <TableColumn fx:id="col_cb" editable="false" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" text="..." />
                 <TableColumn fx:id="id" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="id" />
                 <TableColumn fx:id="nom_quiz" minWidth="100.0" prefWidth="-1.0" text="Nom du quiz" />
                 <TableColumn fx:id="date" editable="false" minWidth="100.0" prefWidth="-1.0" text="Date de création" />
