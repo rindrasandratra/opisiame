@@ -117,6 +117,9 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="btn_lancer_quiz" mnemonicParsing="false" onAction="#ClicBoutonLancerQuiz" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #7CFC00;" text="Lancer le quiz" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
@@ -125,6 +128,9 @@
                      <font>
                         <Font name="Gill Sans MT Bold" size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Elève sélectionné" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
@@ -146,6 +152,11 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </ComboBox>
+            <Button mnemonicParsing="false" onAction="#actualiser_port" text="Actualiser" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="250.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </children>

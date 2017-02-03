@@ -68,16 +68,16 @@ public class Add_questionController implements Initializable {
 
     @FXML
     private ComboBox combo_sous_comp;
-    
+
     @FXML
     private CheckBox checkbx_a;
-    
+
     @FXML
     private CheckBox checkbx_b;
-    
+
     @FXML
     private CheckBox checkbx_c;
-    
+
     @FXML
     private CheckBox checkbx_d;
 
@@ -95,23 +95,23 @@ public class Add_questionController implements Initializable {
 
     @FXML
     private ImageView img_view;
-    
+
     @FXML
     private Label nb_carac_restant_a;
-    
+
     @FXML
     private Label nb_carac_restant_b;
-    
+
     @FXML
     private Label nb_carac_restant_c;
-    
+
     @FXML
     private Label nb_carac_restant_d;
 
     private String libelle, rep_1, rep_2, rep_3, rep_4, sous_competence, url_img;
     private Integer timer_value;
-    
-    ArrayList<CheckBox> chkb ;
+
+    ArrayList<CheckBox> chkb;
 
     Competence_dao competence_dao = new Competence_dao();
     Reponse_dao reponse_dao = new Reponse_dao();
@@ -133,7 +133,7 @@ public class Add_questionController implements Initializable {
 
     public void setQuiz_id(Integer Quiz_id) {
         this.Quiz_id = Quiz_id;
-        System.out.println("setquizid: "+this.Quiz_id);
+        System.out.println("setquizid: " + this.Quiz_id);
     }
 
     @Override
@@ -188,9 +188,9 @@ public class Add_questionController implements Initializable {
         }
         return b;
     }
-    
-    public Boolean check_comp(){
-        if ((combo_competence.getSelectionModel().isEmpty()) || (combo_sous_comp.getSelectionModel().isEmpty())){
+
+    public Boolean check_comp() {
+        if ((combo_competence.getSelectionModel().isEmpty()) || (combo_sous_comp.getSelectionModel().isEmpty())) {
             competence_problem();
             return false;
         }
@@ -222,13 +222,14 @@ public class Add_questionController implements Initializable {
 
     public void ajout_quest_rep() {
         Integer sous_comp_id = null;
-        if (combo_sous_comp.getSelectionModel().getSelectedItem() != null)
+        if (combo_sous_comp.getSelectionModel().getSelectedItem() != null) {
             sous_comp_id = ((Sous_competence) combo_sous_comp.getSelectionModel().getSelectedItem()).getId();
+        }
         Integer quest_id = question_dao.insert_new_question(this.Quiz_id, libelle, timer_value, sous_comp_id, url_img);
         ArrayList<String> reponses = new ArrayList(Arrays.asList(rep_1, rep_2, rep_3, rep_4));
         for (int i = 0; i < reponses.size(); i++) {
-            Integer is_true = chkb.get(i).isSelected()? 1 : 0;
-            Reponse rep = new Reponse(reponses.get(i),is_true,quest_id);
+            Integer is_true = chkb.get(i).isSelected() ? 1 : 0;
+            Reponse rep = new Reponse(reponses.get(i), is_true, quest_id);
             reponse_dao.insert_new_reponse(rep);
         }
     }
@@ -253,13 +254,15 @@ public class Add_questionController implements Initializable {
         liste_Competence = competence_dao.get_all_competence();
         combo_competence.getItems().addAll(liste_Competence);
         combo_competence.getSelectionModel().selectFirst();
-        if (liste_Competence.size() > 0)
+        if (liste_Competence.size() > 0) {
             set_data_combo_sous_comp((Competence) combo_competence.getSelectionModel().getSelectedItem());
+        }
         combo_competence.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Competence>() {
             @Override
             public void changed(ObservableValue<? extends Competence> ov, Competence t, Competence t1) {
-                if (t1 != null)
+                if (t1 != null) {
                     set_data_combo_sous_comp(t1);
+                }
             }
         });
     }
@@ -298,7 +301,7 @@ public class Add_questionController implements Initializable {
             }
         }
     }
-    
+
     public void file_problem() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/file_size_problem.fxml"));
@@ -312,13 +315,14 @@ public class Add_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void competence_problem() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/competence_problem.fxml"));
@@ -332,6 +336,7 @@ public class Add_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -355,52 +360,56 @@ public class Add_questionController implements Initializable {
         img_view.setImage(null);
         url_img = "";
     }
-    
-    public void uncheck_other(CheckBox x){
+
+    public void uncheck_other(CheckBox x) {
         for (CheckBox checkBox : chkb) {
-            if (x != checkBox){
+            if (x != checkBox) {
                 checkBox.setSelected(false);
             }
         }
     }
+
     @FXML
-    public void checkbx_selected_action_a(){
+    public void checkbx_selected_action_a() {
         uncheck_other(checkbx_a);
     }
-    
+
     @FXML
-    public void checkbx_selected_action_b(){
+    public void checkbx_selected_action_b() {
         uncheck_other(checkbx_b);
     }
-    
+
     @FXML
-    public void checkbx_selected_action_c(){
+    public void checkbx_selected_action_c() {
         uncheck_other(checkbx_c);
     }
-    
+
     @FXML
-    public void rep_text_change_a(){
+    public void rep_text_change_a() {
         int nb_c = res_carac - rep_a.getText().length();
-        nb_carac_restant_a.setText("("+nb_c+" caractères restants)");
+        nb_carac_restant_a.setText("(" + nb_c + " caractères restants)");
     }
+
     @FXML
-    public void rep_text_change_b(){
+    public void rep_text_change_b() {
         int nb_c = res_carac - rep_b.getText().length();
-        nb_carac_restant_b.setText("("+nb_c+" caractères restants)");
+        nb_carac_restant_b.setText("(" + nb_c + " caractères restants)");
     }
+
     @FXML
-    public void rep_text_change_c(){
+    public void rep_text_change_c() {
         int nb_c = res_carac - rep_c.getText().length();
-        nb_carac_restant_c.setText("("+nb_c+" caractères restants)");
+        nb_carac_restant_c.setText("(" + nb_c + " caractères restants)");
     }
+
     @FXML
-    public void rep_text_change_d(){
+    public void rep_text_change_d() {
         int nb_d = res_carac - rep_d.getText().length();
-        nb_carac_restant_d.setText("("+nb_d+" caractères restants)");
+        nb_carac_restant_d.setText("(" + nb_d + " caractères restants)");
     }
-    
+
     @FXML
-    public void checkbx_selected_action_d(){
+    public void checkbx_selected_action_d() {
         uncheck_other(checkbx_d);
     }
 
@@ -417,8 +426,9 @@ public class Add_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
@@ -451,8 +461,9 @@ public class Add_questionController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {

@@ -143,7 +143,7 @@ public class Liste_animController implements Initializable {
                 return new Liste_animController.CheckBoxCell();
             }
         });
-        
+
         t_liste.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -255,6 +255,7 @@ public class Liste_animController implements Initializable {
             stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -280,6 +281,7 @@ public class Liste_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -291,6 +293,7 @@ public class Liste_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -317,6 +320,7 @@ public class Liste_animController implements Initializable {
             stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -328,6 +332,7 @@ public class Liste_animController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
@@ -356,6 +361,7 @@ public class Liste_animController implements Initializable {
             stage.initOwner(t_liste.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -367,6 +373,7 @@ public class Liste_animController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_animController.class.getName()).log(Level.SEVERE, null, ex);
@@ -392,6 +399,7 @@ public class Liste_animController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {

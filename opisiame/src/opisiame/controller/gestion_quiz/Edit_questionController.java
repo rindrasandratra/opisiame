@@ -281,9 +281,9 @@ public class Edit_questionController implements Initializable {
 
         return b;
     }
-    
-    public Boolean check_comp(){
-        if ((combo_competence.getSelectionModel().isEmpty()) || (combo_sous_comp.getSelectionModel().isEmpty())){
+
+    public Boolean check_comp() {
+        if ((combo_competence.getSelectionModel().isEmpty()) || (combo_sous_comp.getSelectionModel().isEmpty())) {
             competence_problem();
             return false;
         }
@@ -431,6 +431,7 @@ public class Edit_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -517,8 +518,9 @@ public class Edit_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
@@ -551,8 +553,9 @@ public class Edit_questionController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(checkbx_a.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
@@ -564,7 +567,7 @@ public class Edit_questionController implements Initializable {
             Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void competence_problem() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_quiz/competence_problem.fxml"));
@@ -578,6 +581,7 @@ public class Edit_questionController implements Initializable {
             stage.initOwner(checkbx_a.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {

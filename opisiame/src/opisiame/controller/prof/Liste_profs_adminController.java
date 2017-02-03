@@ -116,7 +116,7 @@ public class Liste_profs_adminController implements Initializable {
         c_nom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("nom"));
         c_prenom_prof.setCellValueFactory(new PropertyValueFactory<Prof, String>("prenom"));
         c_login.setCellValueFactory(new PropertyValueFactory<Prof, String>("lg"));
- 
+
         t_liste_prof.setItems(getAllProf());
 
         //Insert Button
@@ -144,7 +144,7 @@ public class Liste_profs_adminController implements Initializable {
                 return new Liste_profs_adminController.CheckBoxCell();
             }
         });
-        
+
         t_liste_prof.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -173,8 +173,6 @@ public class Liste_profs_adminController implements Initializable {
         this.initialize(url, rb);
 
     }
-
-
 
     private class CheckBoxCell extends TableCell<Prof, Boolean> {
 
@@ -261,6 +259,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.initOwner(t_liste_prof.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -286,6 +285,7 @@ public class Liste_profs_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -297,6 +297,7 @@ public class Liste_profs_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -323,6 +324,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.initOwner(t_liste_prof.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -334,6 +336,7 @@ public class Liste_profs_adminController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -362,6 +365,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.initOwner(t_liste_prof.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -373,6 +377,7 @@ public class Liste_profs_adminController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -398,6 +403,7 @@ public class Liste_profs_adminController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste_prof.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -426,6 +432,7 @@ public class Liste_profs_adminController implements Initializable {
         //stage.initOwner(Tableau.getScene().getWindow());
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
 
         stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -437,13 +444,14 @@ public class Liste_profs_adminController implements Initializable {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.setResizable(false);
+                    stage.centerOnScreen();
                     stage.show();
                 } catch (IOException ex) {
                     Logger.getLogger(Liste_profs_adminController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
     }
 
 }

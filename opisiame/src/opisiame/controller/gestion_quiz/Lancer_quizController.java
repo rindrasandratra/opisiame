@@ -36,7 +36,7 @@ public class Lancer_quizController implements Initializable {
 
     @FXML
     private Label label_date;
-    
+
     @FXML
     private Button btn_demarrer;
 
@@ -48,7 +48,7 @@ public class Lancer_quizController implements Initializable {
 
     @FXML
     private Text label_titre;
-    
+
     private Integer quiz_timer;
     private Integer quiz_id;
 
@@ -66,7 +66,7 @@ public class Lancer_quizController implements Initializable {
         label_timer.setText((quiz.getTimer()).toString());
         int nb_quest = quiz_dao.count_nb_quest(this.quiz_id);
         label_nb_quest.setText(String.valueOf(nb_quest));
-        if (nb_quest < 1){
+        if (nb_quest < 1) {
             btn_demarrer.setDisable(true);
         }
     }
@@ -81,13 +81,14 @@ public class Lancer_quizController implements Initializable {
             Link_eleve_teleController link_eleve_tele_controller = fxmlLoader.<Link_eleve_teleController>getController();
             link_eleve_tele_controller.setQuiz_timer(Integer.valueOf(label_timer.getText()));
             link_eleve_tele_controller.setQuiz_id(quiz_id);
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Animation quiz");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -97,13 +98,11 @@ public class Lancer_quizController implements Initializable {
 
     }
 
-    
     @FXML
     public void annuler() throws IOException {
         Stage stage = (Stage) label_nb_quest.getScene().getWindow();
         stage.close();
     }
-   
 
     /**
      * Initializes the controller class.

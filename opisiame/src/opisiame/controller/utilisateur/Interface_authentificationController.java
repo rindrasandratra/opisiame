@@ -144,6 +144,7 @@ public class Interface_authentificationController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
                 break;
             }
@@ -158,6 +159,7 @@ public class Interface_authentificationController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
                 break;
             }
@@ -172,6 +174,7 @@ public class Interface_authentificationController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
                 break;
             }

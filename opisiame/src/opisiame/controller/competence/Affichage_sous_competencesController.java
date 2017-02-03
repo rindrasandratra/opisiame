@@ -142,7 +142,7 @@ public class Affichage_sous_competencesController implements Initializable {
                 return new Affichage_sous_competencesController.CheckBoxCell();
             }
         });
-        
+
         t_liste_souscompetence.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -160,7 +160,6 @@ public class Affichage_sous_competencesController implements Initializable {
         Cont_recherche = txt_search.getText();
         update_tableau();
 
-       
     }
 
     private class CheckBoxCell extends TableCell<Sous_competence, Boolean> {
@@ -172,7 +171,7 @@ public class Affichage_sous_competencesController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if (check.isSelected()) {
-                        Integer id = t_liste_souscompetence.getFocusModel().getFocusedItem().getId();                        
+                        Integer id = t_liste_souscompetence.getFocusModel().getFocusedItem().getId();
                         liste_supr.add(id);
                     }
                 }
@@ -257,6 +256,7 @@ public class Affichage_sous_competencesController implements Initializable {
             stage.initOwner(t_liste_souscompetence.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -290,7 +290,6 @@ public class Affichage_sous_competencesController implements Initializable {
 //        stage.show();
 //        session.Session.Logout();
 //    }
-
     //Clic bouton de retour -> retourne sur la fenêtre 
     @FXML
     public void ClicBoutonRetour() throws IOException {
@@ -318,6 +317,7 @@ public class Affichage_sous_competencesController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste_souscompetence.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -349,13 +349,14 @@ public class Affichage_sous_competencesController implements Initializable {
             stage.initOwner(t_liste_souscompetence.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     update_tableau();
-                    
+
                 }
             });
 

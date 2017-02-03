@@ -64,6 +64,7 @@ public class Choix_resultatController implements Initializable {
             //stage.initOwner(content.getParent().getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
@@ -96,6 +97,7 @@ public class Choix_resultatController implements Initializable {
             //stage.initOwner(content.getParent().getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
@@ -112,9 +114,9 @@ public class Choix_resultatController implements Initializable {
     public void setDate(String date) {
         date_part = date;
     }
-    
+
     @FXML
-    public void evaluation_par_question(){
+    public void evaluation_par_question() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/resultat_questions.fxml"));
             Stage stage = new Stage();
@@ -123,11 +125,11 @@ public class Choix_resultatController implements Initializable {
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
-                        
+
             Stage st = (Stage) content.getScene().getWindow();
             st.close();
-
 
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);

@@ -131,6 +131,8 @@ public class Link_eleve_teleController implements Initializable {
     String led_green = "D5";
     String led_red = "D4";
 
+    Thread_wait_for_cmd thread_wait_for_cmd;
+
 
     /*
     DIO0 boutton vert
@@ -206,21 +208,20 @@ public class Link_eleve_teleController implements Initializable {
         //PropertyConfigurator.configure("log4j.properties");
         init_liste_port();
 
-//        Tableau.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                Node node = ((Node) event.getTarget()).getParent();
-//                TableRow row;
-//                if (node instanceof TableRow) {
-//                    row = (TableRow) node;
-//                   // select_etudiant();
-//                }
-//            }
-//        });
+        Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    Tableau.getSelectionModel().select(row.getIndex());
+                }
+            }
+        });
 
         c_action.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Eleve, Boolean>, ObservableValue<Boolean>>() {
-
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Eleve, Boolean> p) {
                 return new SimpleBooleanProperty(p.getValue() != null);
@@ -241,9 +242,6 @@ public class Link_eleve_teleController implements Initializable {
     private class ButtonCell extends TableCell<Eleve, Boolean> {
 
         final Button btn_edit = new Button();
-        final Button btn_delete = new Button();
-        final Button btn_detail = new Button();
-        final Button btn_lancer = new Button();
 
         ButtonCell() {
             btn_edit.setStyle("-fx-background-color: gray");
@@ -252,7 +250,8 @@ public class Link_eleve_teleController implements Initializable {
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    //edit_quiz();
+                    tf_choix_eleve.setText(Tableau.getSelectionModel().getSelectedItem().getId().toString());
+                    tf_mac_telec.setText("Attente appui télécommande");
                     select_etudiant();
                 }
             });
@@ -284,6 +283,7 @@ public class Link_eleve_teleController implements Initializable {
     public void init_liste_port() {
         Enumeration pList = CommPortIdentifier.getPortIdentifiers();
         System.out.println("taille liste : " + pList.toString());
+        choix_port.getItems().clear();
         // Process the list.
         while (pList.hasMoreElements()) {
             CommPortIdentifier cpi = (CommPortIdentifier) pList.nextElement();
@@ -388,7 +388,12 @@ public class Link_eleve_teleController implements Initializable {
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-                stage.show();
+                
+                stage.centerOnScreen();
+            stage.show();
+
+                Stage st = (Stage) content.getScene().getWindow();
+                st.close();
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -405,44 +410,49 @@ public class Link_eleve_teleController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
         session.Session.Logout();
     }
 
-    public void select_etudiant() {
-        System.out.println("selectes");
-        if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {
+    class Thread_wait_for_cmd extends Thread {
+
+        @Override
+        public void run() {
             try {
                 btn_valider.setDisable(true);
-                System.out.println("wait");
-
-                if ((num_port != "") && (num_port != null)) {
-                    Thread.sleep(500);
-                    try {
-                        tf_mac_telec.setText("Attente appui télécommande");
-                        while (true) {
-                            xbee.clearResponseQueue();
-                            XBeeResponse response = xbee.getResponse();
-
-                            if (response.isError()) {
-                                log.info("response contains errors", ((ErrorResponse) response).getException());
-                                continue;
-                            }
-
-                            ProcessResponse processResponse = new ProcessResponse(response);
-                            processResponse.start();
-
-                            break;
-
-                        }
-                    } catch (Exception e) {
-                        log.error(e);
-
+                while (true) {
+                    xbee.clearResponseQueue();
+                    XBeeResponse response = xbee.getResponse();
+                    if (response.isError()) {
+                        log.info("response contains errors", ((ErrorResponse) response).getException());
+                        continue;
                     }
+                    ProcessResponse processResponse = new ProcessResponse(response);
+                    processResponse.start();
+                    break;
                 }
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Link_eleve_teleController.class
-                        .getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                log.error(e);
+            }
+        }
+    }
+
+    @FXML
+    public void actualiser_port() {
+        init_liste_port();
+    }
+
+    public void select_etudiant() {
+        if ((thread_wait_for_cmd != null) && (thread_wait_for_cmd.isAlive())) {
+            thread_wait_for_cmd.interrupt();
+        }
+        if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {
+//            try {
+            System.out.println("wait");
+            if ((!"".equals(num_port)) && (num_port != null)) {
+                thread_wait_for_cmd = new Thread_wait_for_cmd();
+                thread_wait_for_cmd.start();
             }
         }
     }

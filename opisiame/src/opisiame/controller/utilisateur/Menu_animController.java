@@ -27,11 +27,10 @@ public class Menu_animController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
     @FXML
     private AnchorPane content;
 
-    
     @FXML
     public void btn_quiz() throws IOException {
         //ouvre la fenêtre Interface_authentification
@@ -40,9 +39,10 @@ public class Menu_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-    
+
     @FXML
     public void btn_mdp() throws IOException {
         //ouvre la fenêtre Interface_authentification
@@ -51,10 +51,10 @@ public class Menu_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-    
-    
+
     @FXML
     public void btn_retour() throws IOException {
         //remise à zéro des variables d'identification (login + mdp)
@@ -65,10 +65,10 @@ public class Menu_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-    
-    
+
     @FXML
     public void btn_exit() throws IOException {
         //remise à zéro des variables d'identification (login + mdp)
@@ -79,11 +79,7 @@ public class Menu_animController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 }
-
-
-
-
-

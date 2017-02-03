@@ -6,14 +6,10 @@
 package opisiame.controller.gestion_quiz;
 
 import com.rapplogic.xbee.XBeePin;
-import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.RemoteAtRequest;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.XBeeResponse;
-import com.rapplogic.xbee.api.wpan.IoSample;
-import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,26 +21,18 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javax.imageio.ImageIO;
 import opisiame.controller.com.ListenToRemoteThread;
 import opisiame.controller.gestion_eleve.Link_eleve_teleController;
@@ -104,8 +92,8 @@ public class Lancer_questionController implements Initializable {
     private double ratio_height;
     private double ratio_width;
     String num_port;
-    
-     String led_yellow = "D7";
+
+    String led_yellow = "D7";
     String led_green = "D5";
     String led_red = "D4";
 
@@ -121,8 +109,8 @@ public class Lancer_questionController implements Initializable {
 
     public void setNum_port(String num_port) {
         this.num_port = num_port;
-        System.out.println("port : "+num_port);
-        
+        System.out.println("port : " + num_port);
+
         try {
             xbee.open(num_port, 9600);
             System.out.println("xbee connected");
@@ -169,12 +157,16 @@ public class Lancer_questionController implements Initializable {
                 btn_next_question.setDisable(true);
             } else {
                 btn_next_question.setDisable(false);
-                btn_next_question.setText(" >> ");
+                if (current_question_no >= questions.size() - 1) {
+                    btn_next_question.setText("Terminer");
+                } else {
+                    btn_next_question.setText(" >> ");
+                }
             }
         }
     }
-    
-    public void switch_off_remotes(String led_id){
+
+    public void switch_off_remotes(String led_id) {
         try {
             RemoteAtRequest request_led_off = new RemoteAtRequest(XBeeAddress64.BROADCAST, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_LOW.getValue()});
             xbee.sendAsynchronous(request_led_off);
@@ -188,7 +180,7 @@ public class Lancer_questionController implements Initializable {
         }
     }
 
-    public void switch_on_remotes(String led_id){
+    public void switch_on_remotes(String led_id) {
         try {
             RemoteAtRequest request_led_off = new RemoteAtRequest(XBeeAddress64.BROADCAST, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_HIGH.getValue()});
             xbee.sendAsynchronous(request_led_off);
@@ -201,15 +193,17 @@ public class Lancer_questionController implements Initializable {
             Logger.getLogger(Lancer_questionController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void listen_remote() {
         System.out.println("num port : " + num_port);
         switch_off_remotes(led_yellow);
         switch_on_remotes(led_green);
         if (num_port != null) {
-            System.out.println("Nouvelle question : "+ current_question.getId());
-            if (listenRemote != null)
+            System.out.println("Nouvelle question : " + current_question.getId());
+            if (listenRemote != null) {
                 listenRemote.interrupt();
-            listenRemote = new ListenToRemoteThread(xbee, num_port,eleves);
+            }
+            listenRemote = new ListenToRemoteThread(xbee, num_port, eleves);
             listenRemote.setRep_id_a(current_question.getReponses().get(0).getId());
             listenRemote.setRep_id_b(current_question.getReponses().get(1).getId());
             listenRemote.setRep_id_c(current_question.getReponses().get(2).getId());

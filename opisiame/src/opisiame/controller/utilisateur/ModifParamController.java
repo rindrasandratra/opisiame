@@ -142,6 +142,7 @@ public class ModifParamController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
 
             } else {
@@ -168,6 +169,7 @@ public class ModifParamController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
 
             } else {
@@ -196,6 +198,7 @@ public class ModifParamController implements Initializable {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
 
             } else {
@@ -217,6 +220,7 @@ public class ModifParamController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -230,6 +234,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("admin")) {
@@ -237,6 +242,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("ens")) {
@@ -244,6 +250,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         }
     }
@@ -258,6 +265,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("admin")) {
@@ -265,6 +273,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("ens")) {
@@ -272,6 +281,7 @@ public class ModifParamController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         }
     }

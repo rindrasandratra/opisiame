@@ -155,6 +155,7 @@ public class ResultatsQuizController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -169,7 +170,6 @@ public class ResultatsQuizController implements Initializable {
             String d = s.getDate_participation();
             edit_controller.setId(a);
             edit_controller.setDate(d);
-            
 
             URL url = fxmlLoader.getLocation();
             ResourceBundle rb = fxmlLoader.getResources();
@@ -183,6 +183,7 @@ public class ResultatsQuizController implements Initializable {
             stage.initOwner(Tableau.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -222,6 +223,7 @@ public class ResultatsQuizController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -240,7 +242,7 @@ public class ResultatsQuizController implements Initializable {
                 requette = connection.prepareStatement("SELECT DISTINCT quiz.Quiz_id , quiz.Quiz_nom, participant_quiz.Date_participation "
                         + "FROM quiz JOIN participant_quiz ON participant_quiz.Quiz_id = quiz.Quiz_id "
                         + "WHERE quiz.Ens_id = ?");
-                
+
                 requette.setInt(1, Session.getUser_id());
             }
             ResultSet res_requette = requette.executeQuery();
@@ -250,18 +252,16 @@ public class ResultatsQuizController implements Initializable {
                 curent_quiz.setNom(res_requette.getString(2));
                 curent_quiz.setDate_participation(res_requette.getString(3));
                 quiz.add(curent_quiz);
-                }
-                //System.out.print("quiz ajouter à la liste " + curent_quiz.getNom() + "\n");
-                //System.out.print("quiz dans la liste " + quiz.get(quiz.size() - 1).getNom() + "\n");
-            
-            //System.out.println("taille : "+quiz.size());
+            }
+            //System.out.print("quiz ajouter à la liste " + curent_quiz.getNom() + "\n");
+            //System.out.print("quiz dans la liste " + quiz.get(quiz.size() - 1).getNom() + "\n");
 
+            //System.out.println("taille : "+quiz.size());
             //System.out.println(etudiant.getId());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
     }
-    
-   
+
 }

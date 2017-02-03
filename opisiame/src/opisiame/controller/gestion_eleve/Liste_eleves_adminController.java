@@ -132,7 +132,7 @@ public class Liste_eleves_adminController implements Initializable {
                 return new CheckBoxCell();
             }
         });
-        
+
         Tableau.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -208,6 +208,7 @@ public class Liste_eleves_adminController implements Initializable {
             stage.initOwner(Tableau.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -219,6 +220,7 @@ public class Liste_eleves_adminController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(false);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,6 +243,7 @@ public class Liste_eleves_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -253,6 +256,7 @@ public class Liste_eleves_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
         session.Session.Logout();
     }
@@ -271,6 +275,7 @@ public class Liste_eleves_adminController implements Initializable {
         //stage.initOwner(Tableau.getScene().getWindow());
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
 
         stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -282,6 +287,7 @@ public class Liste_eleves_adminController implements Initializable {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.setResizable(false);
+                    stage.centerOnScreen();
                     stage.show();
                 } catch (IOException ex) {
                     Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -304,6 +310,7 @@ public class Liste_eleves_adminController implements Initializable {
         //stage.initOwner(Tableau.getScene().getWindow());
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
 
         stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -315,6 +322,7 @@ public class Liste_eleves_adminController implements Initializable {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.setResizable(false);
+                    stage.centerOnScreen();
                     stage.show();
                 } catch (IOException ex) {
                     Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);

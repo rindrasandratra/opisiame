@@ -34,6 +34,7 @@ public class Menu_ensController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -45,6 +46,7 @@ public class Menu_ensController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -60,6 +62,7 @@ public class Menu_ensController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.initOwner(content.getScene().getWindow());
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -71,6 +74,7 @@ public class Menu_ensController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -82,9 +86,10 @@ public class Menu_ensController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-    
+
     @FXML
     public void ClicBoutonCompetences() throws IOException {
         //ouvre la fenêtre liste_quiz (admin)
@@ -93,9 +98,9 @@ public class Menu_ensController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

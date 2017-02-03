@@ -44,7 +44,6 @@ public class Popup_no_questionController implements Initializable {
     public Popup_no_questionController() {
     }
 
-    
     /**
      * Initializes the controller class.
      */
@@ -67,6 +66,7 @@ public class Popup_no_questionController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
 
             Stage st = (Stage) content.getScene().getWindow();

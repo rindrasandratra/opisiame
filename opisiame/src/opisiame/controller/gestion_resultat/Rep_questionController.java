@@ -55,7 +55,7 @@ public class Rep_questionController implements Initializable {
 
     @FXML
     private TabPane onglets = new TabPane();
-    
+
     @FXML
     private Tab tab_res_eleves = new Tab();
 
@@ -160,13 +160,13 @@ public class Rep_questionController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/choix_export.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Choix_exportController choix_exportController = fxmlLoader.<Choix_exportController>getController();
-            
+
             if (tab_liste_questions.isSelected()) {
                 choix_exportController.setOngletActif("questions");
             } else if (tab_res_eleves.isSelected()) {
                 choix_exportController.setOngletActif("eleves");
             }
-            
+
             choix_exportController.setReponse_questions(liste_reponses_question);
             choix_exportController.setResultatsEleves(liste_resultats_eleves);
 
@@ -178,6 +178,7 @@ public class Rep_questionController implements Initializable {
             stage.initOwner(select_quiz.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);

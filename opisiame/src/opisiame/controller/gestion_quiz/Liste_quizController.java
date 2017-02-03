@@ -253,6 +253,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -274,6 +275,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -303,6 +305,7 @@ public class Liste_quizController implements Initializable {
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -368,6 +371,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -387,6 +391,7 @@ public class Liste_quizController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste_quiz.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -440,6 +445,7 @@ public class Liste_quizController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
         session.Session.Logout();
     }
@@ -456,6 +462,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("admin")) {
@@ -463,6 +470,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
         } else if (type.equals("ens")) {
@@ -470,6 +478,7 @@ public class Liste_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         }
     }
@@ -490,6 +499,7 @@ public class Liste_quizController implements Initializable {
             stage.initOwner(t_liste_quiz.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -501,6 +511,7 @@ public class Liste_quizController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);

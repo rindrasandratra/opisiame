@@ -148,6 +148,7 @@ public class Edit_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(Liste_quizController.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,6 +169,7 @@ public class Edit_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {

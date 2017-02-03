@@ -32,6 +32,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -43,6 +44,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -54,6 +56,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -65,9 +68,10 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
-    
+
     @FXML
     public void ClicBoutonEnseignants() throws IOException {
         //ouvre la fenêtre liste_profs_admin
@@ -76,6 +80,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -87,6 +92,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -98,6 +104,7 @@ public class menu_adminController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 

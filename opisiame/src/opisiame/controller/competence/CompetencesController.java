@@ -226,7 +226,7 @@ public class CompetencesController implements Initializable {
                 btn_edit.setGraphic(new ImageView(img_edit));
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
-               //btn_detail.setGraphic(new ImageView(img_detail));
+                //btn_detail.setGraphic(new ImageView(img_detail));
                 btn_detail.setText("Sous-compétences");
 
                 box.setPadding(new Insets(5, 0, 5, 0));
@@ -256,6 +256,7 @@ public class CompetencesController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initOwner(t_liste_competence.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -284,6 +285,7 @@ public class CompetencesController implements Initializable {
             stage.initOwner(t_liste_competence.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -317,6 +319,7 @@ public class CompetencesController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.initOwner(t_liste_competence.getScene().getWindow());
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -347,6 +350,7 @@ public class CompetencesController implements Initializable {
             stage.initOwner(t_liste_competence.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -358,6 +362,7 @@ public class CompetencesController implements Initializable {
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
                         stage.setResizable(true);
+                        stage.centerOnScreen();
                         stage.show();
                     } catch (IOException ex) {
                         Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -380,6 +385,7 @@ public class CompetencesController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.centerOnScreen();
         stage.show();
         session.Session.Logout();
     }
@@ -396,12 +402,14 @@ public class CompetencesController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
         }
 

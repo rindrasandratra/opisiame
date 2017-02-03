@@ -123,6 +123,7 @@ public class Affichage_quizController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
