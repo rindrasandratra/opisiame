@@ -109,8 +109,6 @@ public class Lancer_questionController implements Initializable {
 
     public void setNum_port(String num_port) {
         this.num_port = num_port;
-        System.out.println("port : " + num_port);
-
         try {
             xbee.open(num_port, 9600);
             System.out.println("xbee connected");
@@ -195,11 +193,9 @@ public class Lancer_questionController implements Initializable {
     }
 
     public void listen_remote() {
-        System.out.println("num port : " + num_port);
         switch_off_remotes(led_yellow);
         switch_on_remotes(led_green);
         if (num_port != null) {
-            System.out.println("Nouvelle question : " + current_question.getId());
             if (listenRemote != null) {
                 listenRemote.interrupt();
             }

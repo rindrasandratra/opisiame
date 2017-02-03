@@ -72,14 +72,11 @@ public class ListenToRemoteThread extends Thread {
         running = true;
         remotes_responded = new ArrayList<>();
         remotes_responded.clear();
-        System.out.println("taille liste après le clear : " + remotes_responded.size());
     }
 
     public Boolean test_if_is_in_list(String adr_mac) {
         for (int i = 0; i < remotes_responded.size(); i++) {
-            System.out.println("if " + remotes_responded.get(i).toString() + " == " + adr_mac);
             if (remotes_responded.get(i).toString().equals(adr_mac)) {
-                System.out.println("equal");
                 return true;
             }
         }
@@ -95,7 +92,7 @@ public class ListenToRemoteThread extends Thread {
                     XBeeResponse response = xbee.getResponse();
                     if (response.isError()) {
                         ErrorResponse errorResponse = (ErrorResponse) response;
-                        System.out.println(errorResponse.getException());
+                        System.err.println(errorResponse.getException());
                         continue;
                     }
                     ProcessResponse processResponse = new ProcessResponse(response);
@@ -122,7 +119,6 @@ public class ListenToRemoteThread extends Thread {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // xbee.clearResponseQueue();
     }
 
     public void switch_off_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
@@ -133,7 +129,6 @@ public class ListenToRemoteThread extends Thread {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // xbee.clearResponseQueue();
     }
 
     class ProcessResponse extends Thread {
@@ -175,21 +170,15 @@ public class ListenToRemoteThread extends Thread {
         public void run() {
             if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
                 RxResponseIoSample ioSample = (RxResponseIoSample) response;
-                System.err.println("iosample ::: " + ioSample.toString());
                 XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
                 Integer part_id = get_part_id(address_remote.toString());
                 if (part_id != null) {
                     this.adress_mac = address_remote;
-                    System.err.println("address64 : " + address_remote);
-                    System.out.println("Before if : " + part_id);
-                    System.out.println("Taille liste adr : " + remotes_responded.size());
                     if (!test_if_is_in_list(address_remote.toString())) {
-                        System.out.println("After if : " + part_id);
                         try {
                             for (IoSample sample : ioSample.getSamples()) {
                                 if (!ioSample.containsAnalog()) {
                                     if (!sample.isD2On()) { // bouton : rouge  => b
-                                        System.out.println("insert : " + rep_id_b + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_b, part_id);
                                         switch_off_led(led_green, address_remote);
                                         switch_on_led(led_yellow, address_remote);
@@ -197,21 +186,18 @@ public class ListenToRemoteThread extends Thread {
                                         
                                     }
                                     if (!sample.isD1On()) { // bouton gris  => c
-                                        System.out.println("insert : " + rep_id_c + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_c, part_id);
                                         switch_off_led(led_green, address_remote);
                                         switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
                                     }
                                     if (!sample.isD0On()) { // bouton vert => a
-                                        System.out.println("insert : " + rep_id_a + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_a, part_id);
                                         switch_off_led(led_green, address_remote);
                                         switch_on_led(led_yellow, address_remote);
                                         remotes_responded.add(address_remote);
                                     }
                                     if (!sample.isD3On()) { // bouton bleu  => d
-                                        System.out.println("insert : " + rep_id_d + " " + part_id);
                                         reponse_participation_dao.insert_rep_participation(rep_id_d, part_id);
                                         switch_off_led(led_green, address_remote);
                                         switch_on_led(led_yellow, address_remote);
@@ -220,7 +206,6 @@ public class ListenToRemoteThread extends Thread {
                                 }
                             }
                         } catch (XBeeException e) {
-                            System.out.println("bouh ya (cacha)");
                             e.printStackTrace();
                         }
                     }
