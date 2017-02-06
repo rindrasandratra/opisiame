@@ -29,6 +29,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -190,6 +191,23 @@ public class Edit_questionController implements Initializable {
         rep_text_change_d();
     }
 
+    public Boolean check_bonne_rep() {
+        for (CheckBox checkBox : chkb) {
+            if (checkBox.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void affich_error_bonne_rep() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur sur le choix de la bonne réponse");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez choisir au moins une bonne réponse");
+        alert.showAndWait();
+    }
+
     public void affiche_rep(Reponse rep, CheckBox b, TextArea t) {
         if (rep.getIs_bonne_reponse() == 1) {
             b.setSelected(true);
@@ -313,24 +331,28 @@ public class Edit_questionController implements Initializable {
 
     @FXML
     public void modif_question() {
-        if (check_form()) {
-            if (check_timer()) {
-                modif_quest_rep();
-                label_ajout_ok.setVisible(true);
-                PauseTransition pause = new PauseTransition(Duration.seconds(5));
-                pause.setOnFinished(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        label_ajout_ok.setVisible(false);
-                    }
-                });
-                pause.play();
-            } else {
-                error_label_timer.setVisible(true);
-            }
-
+        if (!check_bonne_rep()) {
+            affich_error_bonne_rep();
         } else {
-            label_error.setVisible(true);
+            if (check_form()) {
+                if (check_timer()) {
+                    modif_quest_rep();
+                    label_ajout_ok.setVisible(true);
+                    PauseTransition pause = new PauseTransition(Duration.seconds(5));
+                    pause.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            label_ajout_ok.setVisible(false);
+                        }
+                    });
+                    pause.play();
+                } else {
+                    error_label_timer.setVisible(true);
+                }
+
+            } else {
+                label_error.setVisible(true);
+            }
         }
     }
 

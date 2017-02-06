@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -155,6 +156,15 @@ public class Add_questionController implements Initializable {
         delete_image();
     }
 
+    public Boolean check_bonne_rep() {
+        for (CheckBox checkBox : chkb) {
+            if (checkBox.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Boolean check_form() {
         boolean b = false;
         libelle = enonce.getText();
@@ -204,9 +214,19 @@ public class Add_questionController implements Initializable {
         label_ajout_ok.setVisible(false);
     }
 
+    public void affich_error_bonne_rep() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur sur le choix de la bonne réponse");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez choisir au moins une bonne réponse");
+        alert.showAndWait();
+    }
+
     @FXML
     public void ajout_question() {
-        if (check_form()) {
+        if (!check_bonne_rep()) {
+            affich_error_bonne_rep();
+        } else if (check_form()) {
             if (check_timer()) {
                 ajout_quest_rep();
                 reset_null();
@@ -236,7 +256,10 @@ public class Add_questionController implements Initializable {
 
     @FXML
     public void terminer_quiz() {
-        if (check_form()) {
+        text_change();
+        if (!check_bonne_rep()) {
+            affich_error_bonne_rep();
+        } else if (check_form()) {
             if (check_timer()) {
                 ajout_quest_rep();
                 Stage stage = (Stage) combo_sous_comp.getScene().getWindow();
