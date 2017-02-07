@@ -25,7 +25,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="200.0" valignment="CENTER" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <Label text="Questions" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                  <Label text="Question" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Gill Sans MT" size="18.0" />
                      </font>
