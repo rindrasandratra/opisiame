@@ -388,9 +388,9 @@ public class Link_eleve_teleController implements Initializable {
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-                
+
                 stage.centerOnScreen();
-            stage.show();
+                stage.show();
 
                 Stage st = (Stage) content.getScene().getWindow();
                 st.close();
@@ -428,9 +428,16 @@ public class Link_eleve_teleController implements Initializable {
                         log.info("response contains errors", ((ErrorResponse) response).getException());
                         continue;
                     }
-                    ProcessResponse processResponse = new ProcessResponse(response);
-                    processResponse.start();
-                    break;
+
+                    if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
+                        RxResponseIoSample ioSample = (RxResponseIoSample) response;
+                        if (ioSample.getRssi() > -50) {
+                            ProcessResponse processResponse = new ProcessResponse(response);
+                            processResponse.start();
+                            break;
+                        }
+                    }
+
                 }
             } catch (Exception e) {
                 log.error(e);
@@ -505,30 +512,27 @@ public class Link_eleve_teleController implements Initializable {
 
         @Override
         public void run() {
-            if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
-                RxResponseIoSample ioSample = (RxResponseIoSample) response;
+            RxResponseIoSample ioSample = (RxResponseIoSample) response;
+            System.err.println("iosample ::: " + ioSample.toString());
 
-                System.err.println("iosample ::: " + ioSample.toString());
+            XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
 
-                XBeeAddress64 address_remote = (XBeeAddress64) ioSample.getSourceAddress();
+            tf_mac_telec.setText(address_remote.toString());
 
-                tf_mac_telec.setText(address_remote.toString());
+            btn_valider.setDisable(false);
 
-                btn_valider.setDisable(false);
+            this.adress_mac = address_remote;
 
-                this.adress_mac = address_remote;
+            System.err.println("address64 : " + address_remote);
 
-                System.err.println("address64 : " + address_remote);
-
-                try {
-                    for (IoSample sample : ioSample.getSamples()) {
-                        if (!ioSample.containsAnalog()) {
-                            switch_on_led(led_yellow, address_remote);
-                        }
+            try {
+                for (IoSample sample : ioSample.getSamples()) {
+                    if (!ioSample.containsAnalog()) {
+                        switch_on_led(led_yellow, address_remote);
                     }
-                } catch (XBeeException e) {
-                    e.printStackTrace();
                 }
+            } catch (XBeeException e) {
+                e.printStackTrace();
             }
         }
     }
