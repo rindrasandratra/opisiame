@@ -19,7 +19,7 @@
                     </font>
                 </Label>
                 <Separator prefWidth="200.0" />
-                <Label prefHeight="69.0" prefWidth="419.0" text="La taille de votre image dépasse la taille maximale autorisée (64ko au maximum)" wrapText="true">
+                <Label prefHeight="69.0" prefWidth="419.0" text="La taille de votre image dépasse la taille maximale autorisée (500ko au maximum)" wrapText="true">
                     <font>
                         <Font size="14.0" />
                     </font>

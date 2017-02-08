@@ -394,6 +394,7 @@ public class Edit_questionController implements Initializable {
     }
 
     private void set_data_combo_competence() {
+        combo_competence.getItems().clear();
         liste_Competence = competence_dao.get_all_competence();
         combo_competence.getItems().addAll(liste_Competence);
         combo_competence.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Competence>() {
@@ -431,7 +432,7 @@ public class Edit_questionController implements Initializable {
         );
         File selected_file = chooser.showOpenDialog(img_view.getScene().getWindow());
         if (selected_file != null) {
-            if (selected_file.length() > 65534) {
+            if (selected_file.length() > 500000) {
                 file_problem();
             } else {
                 url_img = selected_file.getAbsolutePath();

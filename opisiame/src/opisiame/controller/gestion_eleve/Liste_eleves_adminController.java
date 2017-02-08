@@ -207,24 +207,14 @@ public class Liste_eleves_adminController implements Initializable {
             stage.setScene(scene);
             stage.initOwner(Tableau.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            stage.setResizable(false);
+            stage.setResizable(true);
             stage.centerOnScreen();
             stage.show();
 
             stage.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    try {
-                        Stage stage = (Stage) content.getScene().getWindow();
-                        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.centerOnScreen();
-                        stage.show();
-                    } catch (IOException ex) {
-                        Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    update_tableau();
                 }
             });
 
@@ -281,17 +271,7 @@ public class Liste_eleves_adminController implements Initializable {
         stage.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                try {
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.centerOnScreen();
-                    stage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                update_tableau();
             }
         });
     }
@@ -316,17 +296,7 @@ public class Liste_eleves_adminController implements Initializable {
         stage.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                try {
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_eleve/liste_eleves_admin.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.centerOnScreen();
-                    stage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(Liste_eleves_adminController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    update_tableau();
             }
 
         });
