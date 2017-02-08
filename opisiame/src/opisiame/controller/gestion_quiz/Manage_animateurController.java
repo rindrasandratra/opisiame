@@ -240,14 +240,14 @@ public class Manage_animateurController implements Initializable {
 
     @FXML
     public void search_anim() {
-        String str = txt_search.getText();
+        String str = txt_search.getText().toLowerCase();
         ObservableList<Animateur> animateurs = FXCollections.observableArrayList();
         for (Animateur animateur : liste_animateurs) {
             Boolean contain = false;
-            if (animateur.getId().toString().contains(str)) {
+            if (animateur.getId().toString().toLowerCase().contains(str)) {
                 contain = true;
             }
-            if (animateur.getNom().contains(str)) {
+            if (animateur.getNom().toLowerCase().contains(str)) {
                 contain = true;
             }
             if (contain == true) {

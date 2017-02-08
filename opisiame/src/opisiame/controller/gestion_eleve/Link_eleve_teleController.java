@@ -49,8 +49,8 @@ import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.logging.Level;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -61,6 +61,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableRow;
 import javafx.scene.image.ImageView;
@@ -132,7 +133,6 @@ public class Link_eleve_teleController implements Initializable {
     String led_red = "D4";
 
     Thread_wait_for_cmd thread_wait_for_cmd;
-
 
     /*
     DIO0 boutton vert
@@ -236,6 +236,7 @@ public class Link_eleve_teleController implements Initializable {
             }
 
         });
+        Tableau.setDisable(true);
     }
 
     //Define the button cell
@@ -250,8 +251,6 @@ public class Link_eleve_teleController implements Initializable {
             btn_edit.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    tf_choix_eleve.setText(Tableau.getSelectionModel().getSelectedItem().getId().toString());
-                    tf_mac_telec.setText("Attente appui télécommande");
                     select_etudiant();
                 }
             });
@@ -306,9 +305,38 @@ public class Link_eleve_teleController implements Initializable {
         Tableau.refresh();
     }
 
+    @FXML
+    public void search_etud() {
+        String str = Champ_recherche.getText().toLowerCase();
+        ObservableList<Eleve> liste_eleve = FXCollections.observableArrayList();
+        for (Eleve eleve : eleves) {
+            Boolean contain = false;
+            if (eleve.getId().toString().toLowerCase().contains(str)) {
+                contain = true;
+            }
+            if (eleve.getNom().toLowerCase().contains(str)) {
+                contain = true;
+            }
+            if (eleve.getPrenom().toLowerCase().contains(str)) {
+                contain = true;
+            }
+            if (eleve.getFiliere().toLowerCase().contains(str)) {
+                contain = true;
+            }
+            if (eleve.getAnnee().toString().toLowerCase().contains(str)) {
+                contain = true;
+            }
+            if (contain == true) {
+                liste_eleve.add(eleve);
+            }
+        }
+        Tableau.setItems(liste_eleve);
+        Tableau.refresh();
+    }
+
     public void Rechercher() {
-        Cont_recherche = Champ_recherche.getText();
-        update_tableau();
+//        Cont_recherche = Champ_recherche.getText();
+//        update_tableau();
     }
 
     @FXML
@@ -317,6 +345,7 @@ public class Link_eleve_teleController implements Initializable {
         System.out.println("choix port : " + num_port);
         try {
             xbee.open(num_port, 9600);
+            Tableau.setDisable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -455,11 +484,27 @@ public class Link_eleve_teleController implements Initializable {
             thread_wait_for_cmd.interrupt();
         }
         if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {
+            tf_choix_eleve.setText(Tableau.getSelectionModel().getSelectedItem().getId().toString());
+            tf_mac_telec.setText("Attente appui télécommande");
 //            try {
             System.out.println("wait");
             if ((!"".equals(num_port)) && (num_port != null)) {
                 thread_wait_for_cmd = new Thread_wait_for_cmd();
                 thread_wait_for_cmd.start();
+            }
+        } else {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText("Une télécommande est déjà enregistrée pour cet élève");
+            alert.setContentText("Voulez-vous supprimer cette télécommande?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                participation_quiz_dao.delete_participation(Tableau.getSelectionModel().getSelectedItem().getId(),  date_participation);
+                Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(null);
+                Tableau.refresh();
+            } else {
+                System.out.println("pas ok");
             }
         }
     }

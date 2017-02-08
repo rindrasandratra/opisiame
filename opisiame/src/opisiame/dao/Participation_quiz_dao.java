@@ -133,6 +133,20 @@ public class Participation_quiz_dao {
         return liste_participants;
     }
 
+    public void delete_participation(int eleve_id, Timestamp t) {
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM participant_quiz WHERE Date_participation = ? AND Part_id = ?");
+            ps.setTimestamp(1, t);
+            ps.setInt(2, eleve_id);
+            int succes = ps.executeUpdate();
+            if (succes == 0) {
+                System.err.println("Erreur lors de la suppression du quiz");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     public Integer insert_participation(int eleve_id, int quiz_id, Timestamp t) {
         Integer insert_id = null;
         try {

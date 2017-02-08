@@ -419,20 +419,20 @@ public class Liste_quizController implements Initializable {
 
     @FXML
     public void search_quiz() {
-        String str = txt_search.getText();
+        String str = txt_search.getText().toLowerCase();
         ObservableList<Quiz> quizs_temp = FXCollections.observableArrayList();
         for (Quiz quiz : liste_quizs) {
             Boolean contain = false;
-            if (quiz.getId().toString().contains(str)) {
+            if (quiz.getId().toString().toLowerCase().contains(str)) {
                 contain = true;
             }
-            if (quiz.getDate_creation().contains(str)) {
+            if (quiz.getDate_creation().toLowerCase().contains(str)) {
                 contain = true;
             }
-            if (quiz.getNom().contains(str)) {
+            if (quiz.getNom().toLowerCase().contains(str)) {
                 contain = true;
             }
-            if (quiz.getTimer().toString().contains(str)) {
+            if (quiz.getTimer().toString().toLowerCase().contains(str)) {
                 contain = true;
             }
             if (contain == true) {

@@ -248,9 +248,10 @@ public class Edit_questionController implements Initializable {
     private Competence get_competence_by_sous_comp(Integer sous_competence_id) {
         Competence competence = null;
         for (Competence c : liste_Competence) {
-            if (Objects.equals(sous_competence_id, c.getId())) {
-                competence = c;
-                break;
+            for (Sous_competence sc : c.getList_sous_comp()) {
+                if (Objects.equals(sous_competence_id, sc.getId())) {
+                    return c;
+                }
             }
         }
         return competence;
@@ -333,26 +334,24 @@ public class Edit_questionController implements Initializable {
     public void modif_question() {
         if (!check_bonne_rep()) {
             affich_error_bonne_rep();
-        } else {
-            if (check_form()) {
-                if (check_timer()) {
-                    modif_quest_rep();
-                    label_ajout_ok.setVisible(true);
-                    PauseTransition pause = new PauseTransition(Duration.seconds(5));
-                    pause.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            label_ajout_ok.setVisible(false);
-                        }
-                    });
-                    pause.play();
-                } else {
-                    error_label_timer.setVisible(true);
-                }
-
+        } else if (check_form()) {
+            if (check_timer()) {
+                modif_quest_rep();
+                label_ajout_ok.setVisible(true);
+                PauseTransition pause = new PauseTransition(Duration.seconds(5));
+                pause.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        label_ajout_ok.setVisible(false);
+                    }
+                });
+                pause.play();
             } else {
-                label_error.setVisible(true);
+                error_label_timer.setVisible(true);
             }
+
+        } else {
+            label_error.setVisible(true);
         }
     }
 
@@ -381,11 +380,15 @@ public class Edit_questionController implements Initializable {
 
     private void set_selected_comp_et_sous_comp(Question q) {
         if (q.getSous_comp_id() != null) {
-            combo_competence.getSelectionModel().select(get_competence_by_sous_comp(q.getSous_comp_id()));
+            Competence select_comp = get_competence_by_sous_comp(q.getSous_comp_id());
+            // met la compétence qui correspond
+            combo_competence.getSelectionModel().select(select_comp);
+            // mettre les données dans la sous compétence
             if (liste_Competence.size() > 0) {
                 set_data_combo_sous_comp((Competence) combo_competence.getSelectionModel().getSelectedItem());
             }
         }
+        // selectionne la bonne sous compétence
         if (list_sous_comp != null) {
             if (list_sous_comp.size() > 0) {
                 combo_sous_comp.getSelectionModel().select(get_sous_comp_by_id(q.getSous_comp_id()));
