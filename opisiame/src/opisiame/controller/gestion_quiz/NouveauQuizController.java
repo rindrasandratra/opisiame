@@ -98,6 +98,14 @@ public class NouveauQuizController implements Initializable {
             label_number_timer_error.setVisible(true);
             champ_ok = false;
         }
+        if (nom.length() > 60){
+            champ_ok = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nom du quiz trop long");
+            alert.showAndWait();
+        }
         if (champ_ok == true) {
             label_error_login.setVisible(false);
             label_error_timer.setVisible(false);
@@ -112,9 +120,11 @@ public class NouveauQuizController implements Initializable {
 
     public void insert_new_quiz(String value_nom, String value_timer) {
         Integer id = quiz_dao.insert_new_quiz(value_nom, value_timer);
-        Stage stage = (Stage) nom_quiz.getScene().getWindow();
-        add_quiz_question(id);
-        stage.close();
+        if (id != null) {
+            Stage stage = (Stage) nom_quiz.getScene().getWindow();
+            add_quiz_question(id);
+            stage.close();
+        }
     }
 
     public void add_quiz_question(Integer id) {
