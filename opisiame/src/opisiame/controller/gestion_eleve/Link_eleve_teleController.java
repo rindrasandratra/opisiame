@@ -348,6 +348,12 @@ public class Link_eleve_teleController implements Initializable {
             xbee.open(num_port, 9600);
             Tableau.setDisable(false);
         } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error lors de l'ouverture du port");
+            alert.setHeaderText(null);
+            alert.setContentText("Assurez-vous que le port n'est pas utilisé par une autre application"
+                    + "ou que le module soit bien configuré");
+            alert.showAndWait();
             e.printStackTrace();
         }
     }
@@ -508,7 +514,7 @@ public class Link_eleve_teleController implements Initializable {
         for (int i = 0; i < address.length; i++) {
             String byteStr = st.nextToken();
             byteStr = byteStr.replace("0x", "");
-            address[i] = Integer.parseInt(byteStr,16);
+            address[i] = Integer.parseInt(byteStr, 16);
         }
         XBeeAddress64 xBeeAddress64 = new XBeeAddress64(address);
         return xBeeAddress64;
