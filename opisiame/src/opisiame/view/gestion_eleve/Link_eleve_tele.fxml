@@ -37,14 +37,6 @@
                         <Font name="Gill Sans MT" size="24.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="Home" fitHeight="35.0" fitWidth="37.0" onMouseClicked="#ClicBoutonHome" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../../image/on_off.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets right="20.0" />
-                     </GridPane.margin>
-                  </ImageView>
                </children>
             </GridPane>
             <GridPane GridPane.rowIndex="2">

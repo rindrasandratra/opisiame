@@ -50,6 +50,7 @@ import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -430,20 +431,6 @@ public class Link_eleve_teleController implements Initializable {
         }
     }
 
-    //boutton log out
-    @FXML
-    public void ClicBoutonHome() throws IOException {
-        //Retour sur la fenetre d'identification
-        Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/interface_authentification.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.show();
-        session.Session.Logout();
-    }
-
     class Thread_wait_for_cmd extends Thread {
 
         @Override
@@ -500,13 +487,31 @@ public class Link_eleve_teleController implements Initializable {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                participation_quiz_dao.delete_participation(Tableau.getSelectionModel().getSelectedItem().getId(),  date_participation);
-                Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(null);
-                Tableau.refresh();
+                try {
+                    XBeeAddress64 address64 = parse_str_to_xbeeadr(Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel());
+                    switch_off_led(led_yellow, address64);
+                    participation_quiz_dao.delete_participation(Tableau.getSelectionModel().getSelectedItem().getPart_id());
+                    Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(null);
+                    Tableau.refresh();
+                } catch (XBeeException ex) {
+                    java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 System.out.println("pas ok");
             }
         }
+    }
+
+    public XBeeAddress64 parse_str_to_xbeeadr(String addressStr) {
+        StringTokenizer st = new StringTokenizer(addressStr, ", ");
+        int[] address = new int[8];
+        for (int i = 0; i < address.length; i++) {
+            String byteStr = st.nextToken();
+            byteStr = byteStr.replace("0x", "");
+            address[i] = Integer.parseInt(byteStr,16);
+        }
+        XBeeAddress64 xBeeAddress64 = new XBeeAddress64(address);
+        return xBeeAddress64;
     }
 
     public void switch_on_led(String led_id, XBeeAddress64 address_remote) throws XBeeException {
@@ -527,7 +532,7 @@ public class Link_eleve_teleController implements Initializable {
         RemoteAtRequest request_led_off = new RemoteAtRequest(address_remote, led_id, new int[]{XBeePin.Capability.DIGITAL_OUTPUT_LOW.getValue()});
         xbee.sendAsynchronous(request_led_off);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
 
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Link_eleve_teleController.class
