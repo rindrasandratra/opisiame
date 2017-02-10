@@ -351,7 +351,7 @@ public class Link_eleve_teleController implements Initializable {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error lors de l'ouverture du port");
             alert.setHeaderText(null);
-            alert.setContentText("Assurez-vous que le port n'est pas utilisé par une autre application"
+            alert.setContentText("Assurez-vous que le port n'est pas utilisé par une autre application "
                     + "ou que le module soit bien configuré");
             alert.showAndWait();
             e.printStackTrace();
