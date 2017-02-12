@@ -13,13 +13,13 @@
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="469.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label prefHeight="65.0" prefWidth="432.0" text="Compétence et sous-compétence" textFill="#f80606">
+                <Label prefHeight="65.0" prefWidth="432.0" text="Catégorie et compétence" textFill="#f80606">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
                 <Separator prefWidth="200.0" />
-                <Label prefHeight="69.0" prefWidth="419.0" text="Veuillez vous assurer que les champs &quot;compétence&quot; et &quot;sous-compétence&quot; sont bien renseignés" wrapText="true">
+                <Label prefHeight="69.0" prefWidth="419.0" text="Veuillez vous assurer que les champs &quot;catégorie&quot; et &quot;compétence&quot; sont bien renseignés" wrapText="true">
                     <font>
                         <Font size="14.0" />
                     </font>

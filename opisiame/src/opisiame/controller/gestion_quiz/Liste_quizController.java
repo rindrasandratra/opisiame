@@ -135,6 +135,9 @@ public class Liste_quizController implements Initializable {
             btn_suppr_selected.setVisible(false);
             btn_ajout_quiz.setVisible(false);
         }
+        if (Session.getType().equals("admin")) {
+            btn_ajout_quiz.setVisible(false);
+        }
 
     }
 

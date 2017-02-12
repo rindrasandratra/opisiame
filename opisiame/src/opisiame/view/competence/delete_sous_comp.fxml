@@ -13,7 +13,7 @@
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="469.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label prefHeight="65.0" prefWidth="432.0" text="Ces sous-compétences seront supprimées" textFill="#f80606">
+                <Label prefHeight="65.0" prefWidth="432.0" text="Ces compétences seront supprimées" textFill="#f80606">
                     <font>
                         <Font size="18.0" />
                     </font>

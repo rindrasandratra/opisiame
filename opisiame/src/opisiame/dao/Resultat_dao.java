@@ -68,5 +68,19 @@ public class Resultat_dao {
         }
         return s;
     }
+    
+    public void delete_resultat(Integer part_id){
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM reponse_participant_quiz WHERE Participation_id = ?");
+            ps.setInt(1, part_id);
+            int succes = ps.executeUpdate();
+            if (succes == 0) {
+                System.err.println("Erreur lors de la suppression du resultat");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 }

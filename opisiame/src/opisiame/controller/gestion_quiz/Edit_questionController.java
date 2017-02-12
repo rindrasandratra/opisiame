@@ -574,7 +574,7 @@ public class Edit_questionController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Sous compétences");
+            stage.setTitle("Compétences");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);

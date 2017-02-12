@@ -23,12 +23,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Ajouter une sous-compétence" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label text="Ajouter une compétence" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
                         <Font name="Gill Sans MT" size="24.0" />
                     </font>
                 </Label>
-                <Label text="Sous-compétence" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                <Label text="Compétence" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                     <font>
                         <Font name="Gill Sans MT" size="18.0" />
                     </font>
@@ -54,7 +54,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-            <Label text="Compétence" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label text="Catégorie" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Gill Sans MT" size="18.0" />
                </font>

@@ -67,7 +67,7 @@
                   <TableColumn prefWidth="75.0" text="Réponse B" />
                   <TableColumn prefWidth="75.0" text="Réponse C" />
                   <TableColumn prefWidth="75.0" text="Réponse D" />
-                  <TableColumn prefWidth="75.0" text="Sous-compétence associée" />
+                  <TableColumn prefWidth="75.0" text="Compétence associée" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -89,7 +89,7 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" />
                      </GridPane.margin></Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: #c688fc;" text="Voire la validation des compétences" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" style="-fx-background-color: #c688fc;" text="Voir la validation des catégories" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" />
                      </GridPane.margin></Button>

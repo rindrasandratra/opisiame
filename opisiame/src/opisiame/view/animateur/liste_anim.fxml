@@ -17,7 +17,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn fx:id="c_selec" editable="false" minWidth="-Infinity" prefWidth="62.0" text="..." />
+            <TableColumn fx:id="c_selec" editable="false" minWidth="-Infinity" prefWidth="62.0" text="Sélection" />
             <TableColumn fx:id="c_id" editable="false" minWidth="-Infinity" prefWidth="62.0" text="ID" />
             <TableColumn fx:id="c_nom" prefWidth="163.0" text="Nom" />
             <TableColumn fx:id="c_login" editable="false" text="Login" />

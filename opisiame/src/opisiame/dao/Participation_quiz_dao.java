@@ -115,6 +115,24 @@ public class Participation_quiz_dao {
         return participants_quiz;
     }
 
+        public List<Integer> get_participation_id(int quiz_id, String t) {
+        List<Integer> liste_participants = new ArrayList<>();
+        String SQL = "SELECT Participation_id FROM participant_quiz WHERE Date_participation = ? AND Quiz_id = ?";
+        try {
+            Connection connection = Connection_db.getDatabase();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setString(1, t);
+            ps.setInt(2, quiz_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                liste_participants.add(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return liste_participants;
+    }
+    
     public List<Integer> get_participants_quizs(Participation_quiz participation_quiz) {
         List<Integer> liste_participants = new ArrayList<>();
         String SQL = "SELECT Part_id FROM participant_quiz WHERE Date_participation = ? AND Quiz_id = ?";

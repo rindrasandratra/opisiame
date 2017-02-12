@@ -82,13 +82,13 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="onglet_c" text="Par compétences">
+          <Tab fx:id="onglet_c" text="Par catégories">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="tab_comp" layoutX="14.0" layoutY="10.0" prefHeight="289.0" prefWidth="625.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                           <columns>
-                            <TableColumn fx:id="c_comp" prefWidth="93.0" text="Compétence" />
+                            <TableColumn fx:id="c_comp" prefWidth="93.0" text="Catégorie" />
                             <TableColumn fx:id="c_pourcent" prefWidth="162.0" text="Pourcentage de validation" />
                           </columns>
                         </TableView>

@@ -227,7 +227,7 @@ public class CompetencesController implements Initializable {
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
                 //btn_detail.setGraphic(new ImageView(img_detail));
-                btn_detail.setText("Sous-compétences");
+                btn_detail.setText("Compétences");
 
                 box.setPadding(new Insets(5, 0, 5, 0));
                 // box.setPrefColumns(1);
@@ -251,7 +251,7 @@ public class CompetencesController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Sous compétences");
+            stage.setTitle("Compétences");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -313,7 +313,7 @@ public class CompetencesController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/ajout_comp.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajout compétence");
+            stage.setTitle("Ajout catégorie");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);

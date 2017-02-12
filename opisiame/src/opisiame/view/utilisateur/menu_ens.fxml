@@ -48,7 +48,7 @@
                   <Image url="@../../image/param.png" />
                </image>
             </ImageView>
-            <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ffec75;" text="Compétences" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button cancelButton="false" defaultButton="false" font="$x1" mnemonicParsing="false" onMouseClicked="#ClicBoutonCompetences" prefHeight="72.0" prefWidth="149.0" style="-fx-background-radius: 202020; -fx-background-color: ffec75;" text="Catégories" textAlignment="CENTER" underline="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

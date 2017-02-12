@@ -30,7 +30,7 @@ public class opisiameFXMain extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        //stage.setResizable(false);
+        stage.setResizable(false);
         stage.show();
     }
 

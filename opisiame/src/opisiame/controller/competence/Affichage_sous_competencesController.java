@@ -311,7 +311,7 @@ public class Affichage_sous_competencesController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajout sous-compétence");
+            stage.setTitle("Ajout compétence");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
