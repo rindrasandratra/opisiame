@@ -48,7 +48,7 @@
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Timer" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Label text="Chrono (s) :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
@@ -213,7 +213,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label fx:id="error_label_timer" prefHeight="17.0" prefWidth="195.0" text="Valeur de timer erronée" textFill="#f20101" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+            <Label fx:id="error_label_timer" prefHeight="17.0" prefWidth="195.0" text="Valeur de timer erronée ou &gt;5400s" textFill="#f20101" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="8" />
             <Label fx:id="label_ajout_ok" prefHeight="27.0" prefWidth="188.0" text="Modification réussie" textFill="#29d07a" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="8">
                <font>
                   <Font name="System Bold" size="18.0" />

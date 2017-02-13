@@ -114,6 +114,8 @@ public class Link_eleve_teleController implements Initializable {
     private ComboBox choix_port;
     @FXML
     private TextField tf_choix_eleve;
+    
+    Eleve selected_eleve = new Eleve();
 
     Participation_quiz_dao participation_quiz_dao = new Participation_quiz_dao();
 
@@ -202,7 +204,7 @@ public class Link_eleve_teleController implements Initializable {
         Prenom.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Prenom"));
         Filiere.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Filiere"));
         Annee.setCellValueFactory(new PropertyValueFactory<Eleve, Integer>("Annee"));
-        tel.setCellValueFactory(new PropertyValueFactory<Eleve, String>("Adresse_mac_tel"));
+        tel.setCellValueFactory(new PropertyValueFactory<Eleve, String>("str_Adresse_mac_tel"));
 
         getAllEleve(/*eleves*/);
         Tableau.setItems(eleves);
@@ -370,7 +372,9 @@ public class Link_eleve_teleController implements Initializable {
         if (!"".equals(tf_mac_telec.getText())) {
             String adr = tf_mac_telec.getText();
             if (!test_if_tel_exists(adr)) {
+                Tableau.getSelectionModel().select(selected_eleve);
                 Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(adr);
+                Tableau.getSelectionModel().getSelectedItem().setStr_Adresse_mac_tel("enregistréee");
                 int part_id = insert_new_participation();
                 Tableau.getSelectionModel().getSelectedItem().setPart_id(part_id);
                 Tableau.refresh();
@@ -472,11 +476,13 @@ public class Link_eleve_teleController implements Initializable {
         init_liste_port();
     }
 
+    
     public void select_etudiant() {
         if ((thread_wait_for_cmd != null) && (thread_wait_for_cmd.isAlive())) {
             thread_wait_for_cmd.interrupt();
         }
         if (Tableau.getSelectionModel().getSelectedItem().getAdresse_mac_tel() == null) {
+            selected_eleve = Tableau.getSelectionModel().getSelectedItem();
             tf_choix_eleve.setText(Tableau.getSelectionModel().getSelectedItem().getId().toString());
             tf_mac_telec.setText("Attente appui télécommande");
 //            try {
@@ -498,6 +504,7 @@ public class Link_eleve_teleController implements Initializable {
                     switch_off_led(led_yellow, address64);
                     participation_quiz_dao.delete_participation(Tableau.getSelectionModel().getSelectedItem().getPart_id());
                     Tableau.getSelectionModel().getSelectedItem().setAdresse_mac_tel(null);
+                    Tableau.getSelectionModel().getSelectedItem().setStr_Adresse_mac_tel(null);
                     Tableau.refresh();
                 } catch (XBeeException ex) {
                     java.util.logging.Logger.getLogger(Link_eleve_teleController.class.getName()).log(Level.SEVERE, null, ex);
@@ -507,6 +514,19 @@ public class Link_eleve_teleController implements Initializable {
             }
         }
     }
+    
+//    public String parse(String addressStr) {
+//        StringTokenizer st = new StringTokenizer(addressStr, ", ");
+//        int[] address = new int[8];
+//        String str = "";
+//        for (int i = 0; i < address.length; i++) {
+//            String byteStr = st.nextToken();
+//            byteStr = byteStr.replace("0x", "");
+//            address[i] = Integer.parseInt(byteStr, 16);
+//            str+=address[i];
+//        }
+//        return str;
+//    }
 
     public XBeeAddress64 parse_str_to_xbeeadr(String addressStr) {
         StringTokenizer st = new StringTokenizer(addressStr, ", ");

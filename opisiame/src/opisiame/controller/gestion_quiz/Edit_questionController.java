@@ -311,11 +311,13 @@ public class Edit_questionController implements Initializable {
 
     private Boolean check_timer() {
         timer_value = null;
-        Boolean b = true;
+        Boolean b = false;
         if (timer.getText().compareTo("") != 0) {
             if (validate_number(timer.getText())) {
                 timer_value = Integer.valueOf(timer.getText());
-                b = true;
+                if (timer_value < 5400) {
+                    b = true;
+                }
             } else {
                 b = false;
             }

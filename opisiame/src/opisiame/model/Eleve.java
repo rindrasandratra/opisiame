@@ -18,7 +18,8 @@ public class Eleve {
     private StringProperty nom = new SimpleStringProperty();
     private StringProperty filiere = new SimpleStringProperty();
     private IntegerProperty annee = new SimpleIntegerProperty();
-    private StringProperty Adresse_mac_tel = new SimpleStringProperty();
+    private StringProperty Adresse_mac_tel = new SimpleStringProperty();    
+    private StringProperty str_Adresse_mac_tel = new SimpleStringProperty();
     private Integer part_id;
 
     public Integer getPart_id() {
@@ -48,6 +49,15 @@ public class Eleve {
     public void setAdresse_mac_tel(String Adresse_mac_tel) {
         this.Adresse_mac_tel.set(Adresse_mac_tel);
     }
+
+    public String getStr_Adresse_mac_tel() {
+        return str_Adresse_mac_tel.get();
+    }
+
+    public void setStr_Adresse_mac_tel(String str_Adresse_mac_tel) {
+        this.str_Adresse_mac_tel.set(str_Adresse_mac_tel);
+    }
+    
 
     // Pour retourner les attributs
     public Integer getId() {
