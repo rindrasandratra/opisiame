@@ -536,6 +536,8 @@ public class Edit_questionController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/competences.fxml"));
             Parent root = (Parent) fxmlLoader.load();
+            CompetencesController comp_controller = fxmlLoader.<CompetencesController>getController();
+            comp_controller.setAfficheRetour(3);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -550,7 +552,8 @@ public class Edit_questionController implements Initializable {
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    set_data_combo_competence();
+                    set_selected_comp_et_sous_comp(current_question);
+                    // set_data_combo_competence();
                 }
             });
 
@@ -585,7 +588,7 @@ public class Edit_questionController implements Initializable {
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    set_data_combo_sous_comp((Competence) combo_competence.getSelectionModel().getSelectedItem());
+                    set_selected_comp_et_sous_comp(current_question);
                 }
             });
 

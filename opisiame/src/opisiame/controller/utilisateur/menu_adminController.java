@@ -12,6 +12,7 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
+import opisiame.controller.competence.CompetencesController;
 
 /**
  *
@@ -98,9 +99,12 @@ public class menu_adminController implements Initializable {
 
     @FXML
     public void ClicBoutonCompetences() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/competences.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        CompetencesController comp_controller = fxmlLoader.<CompetencesController>getController();
+        comp_controller.setAfficheRetour(1);
         //ouvre la fenêtre liste_quiz (admin)
         Stage stage = (Stage) content.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/competence/competences.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(true);

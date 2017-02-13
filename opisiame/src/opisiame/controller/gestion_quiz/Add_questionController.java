@@ -443,6 +443,8 @@ public class Add_questionController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/competence/competences.fxml"));
             Parent root = (Parent) fxmlLoader.load();
+            CompetencesController comp_controller = fxmlLoader.<CompetencesController>getController();
+            comp_controller.setAfficheRetour(2);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

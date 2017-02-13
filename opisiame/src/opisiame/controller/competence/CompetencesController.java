@@ -58,6 +58,12 @@ public class CompetencesController implements Initializable {
     private List<Integer> liste_supr = new ArrayList<>();
     private String Cont_recherche = null;
 
+    private Integer affiche_retour; //pour savoir vers quelle page on retourne
+
+    public void setAfficheRetour(Integer b) {
+        affiche_retour = b;
+    }
+
     //récupération de la liste des competences dans la BDD, et affichage
     public ObservableList<Competence> getAllComp() {
 
@@ -395,24 +401,32 @@ public class CompetencesController implements Initializable {
     public void ClicBoutonRetour() throws IOException {
 
         Stage stage = (Stage) content.getScene().getWindow();
+        if (affiche_retour != null) {
 
-        String type = Session.getType();
-        if (type.equals("ens")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            stage.show();
-        } else {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            stage.show();
+            if (affiche_retour == 1) {
+                String type = Session.getType();
+                if (type.equals("ens")) {
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_ens.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.centerOnScreen();
+                    stage.show();
+                } else {
+                    Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/utilisateur/menu_admin.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.centerOnScreen();
+                    stage.show();
+                }
+
+            } else if (affiche_retour == 2) {
+                stage.close();
+            } else if (affiche_retour == 3) {
+                stage.close();
+            }
+
         }
-
     }
-
 }
