@@ -57,7 +57,10 @@ public class Rep_questionController implements Initializable {
     private TabPane onglets = new TabPane();
 
     @FXML
-    private Tab tab_res_eleves = new Tab();
+    private Tab tab_res_eleves_num = new Tab();
+
+    @FXML
+    private Tab tab_res_eleves_pas_num = new Tab();
 
     @FXML
     private Tab tab_liste_questions = new Tab();
@@ -84,7 +87,19 @@ public class Rep_questionController implements Initializable {
     private TableView<Rep_eleves_quiz> t_liste_res_eleves;
 
     @FXML
-    private TableColumn<Rep_eleves_quiz, String> c_eleve;
+    private TableColumn<Rep_eleves_quiz, String> c_nom1;
+
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_nom2;
+
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_prenom1;
+
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_prenom2;
+
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Integer> c_num;
 
     @FXML
     private TableColumn<Rep_eleves_quiz, Double> c_note;
@@ -95,15 +110,13 @@ public class Rep_questionController implements Initializable {
     @FXML
     private TableView<Reponse_question> t_liste_rep;
 
-    @FXML
-    private ComboBox select_quiz;
-
+//    @FXML
+//    private ComboBox select_quiz;
     @FXML
     private Button btn_export;
 
-    @FXML
-    private ComboBox date_select_quiz;
-
+//    @FXML
+//    private ComboBox date_select_quiz;
     private ObservableList<Quiz> liste_quiz;
     private ObservableList<Participation_quiz> participation_quizs;
     private ObservableList<Reponse_question> liste_reponses_question;
@@ -115,9 +128,35 @@ public class Rep_questionController implements Initializable {
     private ArrayList<Reponse> liste_reponses_eleve = new ArrayList<>();
     private ObservableList<Rep_eleves_quiz> a_afficher_1 = FXCollections.observableArrayList();
 
-    Quiz quiz_selected;
+    Integer quiz_selected_id;
+
+    public Integer getQuiz_selected_id() {
+        return quiz_selected_id;
+    }
+
+    public void setQuiz_selected_id(Integer quiz_selected_id) {
+        this.quiz_selected_id = quiz_selected_id;
+    }
+       
 
     Participation_quiz participation_quiz;
+    Timestamp date_participation;
+
+    public Timestamp getDate_participation() {
+        return date_participation;
+    }
+    
+    public void setDate_participation_str(String date_participation) {
+        Timestamp t = Timestamp.valueOf(date_participation);
+        setDate_participation(t);
+    }
+
+    public void setDate_participation(Timestamp date_participation) {
+        this.date_participation = date_participation;
+        Participation_quiz pq = participation_quiz_dao.get_part_quiz(date_participation, quiz_selected_id, participation_quizs);
+        setParticipation_quiz(pq);
+        btn_export.setDisable(false);
+    }
 
     //dao utilisés
     Quiz_dao quiz_dao = new Quiz_dao();
@@ -127,9 +166,6 @@ public class Rep_questionController implements Initializable {
     Reponse_dao reponse_dao = new Reponse_dao();
     Sous_comp_dao sous_comp_dao = new Sous_comp_dao();
 
-    public void setQuiz_selected(Quiz quiz_selected) {
-        this.quiz_selected = quiz_selected;
-    }
 
     public void setParticipation_quiz(Participation_quiz participation_quiz) {
         this.participation_quiz = participation_quiz;
@@ -139,7 +175,7 @@ public class Rep_questionController implements Initializable {
     public void show_result() {
         liste_reponses_question = FXCollections.observableArrayList();
         liste_reponses_question.clear();
-        List<Question> questions = question_dao.get_questions_by_quiz(quiz_selected.getId());
+        List<Question> questions = question_dao.get_questions_by_quiz(quiz_selected_id);
         for (Question quest : questions) {
             Reponse_question rq = reponse_question_dao.get_res_by_quest(quest.getId(), participation_quiz);
             rq.setQuestion(quest.getLibelle());
@@ -163,7 +199,7 @@ public class Rep_questionController implements Initializable {
 
             if (tab_liste_questions.isSelected()) {
                 choix_exportController.setOngletActif("questions");
-            } else if (tab_res_eleves.isSelected()) {
+            } else if (tab_res_eleves_num.isSelected()) {
                 choix_exportController.setOngletActif("eleves");
             }
 
@@ -175,7 +211,7 @@ public class Rep_questionController implements Initializable {
             stage.setTitle("Selection du format du fichier d'export des résultats");
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.initOwner(select_quiz.getScene().getWindow());
+        //    stage.initOwner(select_quiz.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.centerOnScreen();
@@ -190,7 +226,7 @@ public class Rep_questionController implements Initializable {
         // TODO
         participation_quizs = participation_quiz_dao.get_participation_quizs(session.Session.getUser_id());
         liste_quiz = participation_quiz_dao.get_quizs(participation_quizs);
-        select_quiz.setItems(liste_quiz);
+        //select_quiz.setItems(liste_quiz);
 
         question.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("question"));
         rep_a.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("str_pourcentage_rep_a"));
@@ -199,46 +235,52 @@ public class Rep_questionController implements Initializable {
         rep_d.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("str_pourcentage_rep_d"));
         pourcentage.setCellValueFactory(new PropertyValueFactory<Reponse_question, Integer>("str_pourcentage"));
 
-        c_eleve.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("num_eleve"));
+        c_num.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Integer>("num_eleve"));
         c_note.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("note_eleve"));
         c_pourcent.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("Pourcent_eleve"));
 
-        select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Quiz>() {
-            @Override
-            public void changed(ObservableValue<? extends Quiz> ov, Quiz t, Quiz t1) {
-                if (t1 != null) {
-                    date_select_quiz.setItems(participation_quiz_dao.get_dates_participations(t1.getId(), participation_quizs));
-                    //setQuiz_selected(t1);
-                    date_select_quiz.setDisable(false);
-                    setQuiz_selected(t1);
-                    btn_export.setDisable(true);
-                    t_liste_rep.getItems().clear();
-                }
-            }
-        });
-
-        date_select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Timestamp>() {
-            @Override
-            public void changed(ObservableValue<? extends Timestamp> ov, Timestamp t, Timestamp t1) {
-                if (t1 != null) {
-                    Participation_quiz pq = participation_quiz_dao.get_part_quiz(t1, quiz_selected.getId(), participation_quizs);
-                    setParticipation_quiz(pq);
-                    btn_export.setDisable(false);
-                }
-            }
-        });
+//        select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Quiz>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Quiz> ov, Quiz t, Quiz t1) {
+//                if (t1 != null) {
+//                    date_select_quiz.setItems(participation_quiz_dao.get_dates_participations(t1.getId(), participation_quizs));
+//                    //setQuiz_selected(t1);
+//                    date_select_quiz.setDisable(false);
+//                    setQuiz_selected(t1);
+//                    btn_export.setDisable(true);
+//                    t_liste_rep.getItems().clear();
+//                }
+//            }
+//        });
+//
+//        date_select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Timestamp>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Timestamp> ov, Timestamp t, Timestamp t1) {
+//                if (t1 != null) {
+//                    Participation_quiz pq = participation_quiz_dao.get_part_quiz(t1, quiz_selected.getId(), participation_quizs);
+//                    setParticipation_quiz(pq);
+//                    btn_export.setDisable(false);
+//                }
+//            }
+//        });
+    }
+    
+    @FXML
+    public void ClicBoutonRetour() throws IOException {
+        Stage stage = (Stage) btn_export.getScene().getWindow();
+        stage.close();
     }
 
     //remplissage 2eme onglet
     @FXML
     public ObservableList<Rep_eleves_quiz> remplissage_2e_tab() {
         liste_participants.clear();
-        liste_participants.setAll(participation_quiz_dao.get_participants(quiz_selected.getId(), participation_quiz.getDate_participation()));
+        liste_participants.setAll(participation_quiz_dao.get_participants(quiz_selected_id, participation_quiz.getDate_participation()));
         a_afficher_1.clear();
 
         //infos sur le quiz
         int nbre_questions = 0;
-        liste_questions = question_dao.get_questions_by_quiz(quiz_selected.getId());
+        liste_questions = question_dao.get_questions_by_quiz(quiz_selected_id);
         nbre_questions = liste_questions.size();
 
         //pour chaque etudiant ayant participe au quiz
@@ -257,7 +299,7 @@ public class Rep_questionController implements Initializable {
             a_afficher.setNum_eleve(liste_participants.get(i).getPart_id()); //récup du numero d'etudiant
 
             //recup des réponses de l'etudiant au quiz
-            liste_reponses_eleve = reponse_dao.get_reponses_eleve(participation_quiz_dao.get_part_id(liste_participants.get(i).getPart_id(), quiz_selected.getId(), participation_quiz.getDate_participation()));
+            liste_reponses_eleve = reponse_dao.get_reponses_eleve(participation_quiz_dao.get_part_id(liste_participants.get(i).getPart_id(), quiz_selected_id, participation_quiz.getDate_participation()));
             nbre_rep_eleve = liste_reponses_eleve.size();
 
             //récup de la bonne réponse et de la réponse de l'élève à la question (dans afficher)

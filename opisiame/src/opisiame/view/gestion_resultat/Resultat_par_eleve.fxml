@@ -28,15 +28,7 @@
     <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="60.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Résultats d'un élève sur le quiz " GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-         <font>
-            <Font name="Gill Sans MT" size="22.0" />
-         </font>
-         <GridPane.margin>
-            <Insets top="10.0" />
-         </GridPane.margin>
-      </Label>
-      <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+      <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#ClicBoutonRetour" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <image>
             <Image url="@../../image/retour.png" />
          </image>
@@ -44,14 +36,6 @@
             <Insets bottom="10.0" left="10.0" />
          </GridPane.margin>
       </ImageView>
-      <Label fx:id="label_quiz" text="Label" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <font>
-            <Font name="Gill Sans MT" size="20.0" />
-         </font>
-      </Label>
       <ComboBox fx:id="CB_eleves" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="266.0" promptText="Choisir l'élève" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
@@ -106,5 +90,12 @@
             <Font name="Gill Sans MT" size="14.0" />
          </font>
       </Label>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Affichage des résultats du quiz" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+         <font>
+            <Font name="Gill Sans MT" size="24.0" />
+         </font>
+      </Text>
+      <RadioButton fx:id="rb_un_eleve" mnemonicParsing="false" text="Pour un élève" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <RadioButton fx:id="rb_tous_eleves" mnemonicParsing="false" text="Pour tous les élèves" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

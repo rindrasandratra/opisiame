@@ -114,7 +114,7 @@ public class ResultatsQuizController implements Initializable {
         ButtonCell() {
             btn_info.setStyle("-fx-background-color: gray");
             btn_info.setCursor(Cursor.HAND);
-            
+
             btn_suppr.setStyle("-fx-background-color: red");
             btn_suppr.setCursor(Cursor.HAND);
 
@@ -126,47 +126,47 @@ public class ResultatsQuizController implements Initializable {
                 }
 
             });
-            
+
             btn_suppr.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     delete_result();
                 }
             });
-            
+
         }
-        
-            public void delete_result() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/delete_result.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Delete_resultController delete_controller = fxmlLoader.<Delete_resultController>getController();
-            Quiz s = (Quiz) Tableau.getFocusModel().getFocusedItem();
-            delete_controller.setQuiz_id(s.getId());
-            delete_controller.setDatePart(s.getDate_participation());
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmation de suppression");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initOwner(Tableau.getScene().getWindow());
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            stage.show();
+        public void delete_result() {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/delete_result.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Delete_resultController delete_controller = fxmlLoader.<Delete_resultController>getController();
+                Quiz s = (Quiz) Tableau.getFocusModel().getFocusedItem();
+                delete_controller.setQuiz_id(s.getId());
+                delete_controller.setDatePart(s.getDate_participation());
 
-            stage.setOnHidden(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent t) {
-                    update_tableau();
-                }
-            });
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Confirmation de suppression");
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.initOwner(Tableau.getScene().getWindow());
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+                stage.setResizable(false);
+                stage.centerOnScreen();
+                stage.show();
 
-        } catch (IOException ex) {
-            Logger.getLogger(ResultatsQuizController.class.getName()).log(Level.SEVERE, null, ex);
+                stage.setOnHidden(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent t) {
+                        update_tableau();
+                    }
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(ResultatsQuizController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
 
         //Display button if the row is not empty
         @Override
@@ -180,7 +180,7 @@ public class ResultatsQuizController implements Initializable {
 
                 Image img_detail = new Image(getClass().getResourceAsStream("/opisiame/image/detail.png"), 20, 20, true, true);
                 btn_info.setGraphic(new ImageView(img_detail));
-                
+
                 Image img_suppr = new Image(getClass().getResourceAsStream("/opisiame/image/delete.png"), 20, 20, true, true);
                 btn_suppr.setGraphic(new ImageView(img_suppr));
 
