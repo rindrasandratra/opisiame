@@ -58,7 +58,7 @@ public class Choix_resultatController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Résultat par élève");
+            stage.setTitle("Résultats");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             //stage.initOwner(content.getParent().getScene().getWindow());

@@ -7,16 +7,15 @@ package opisiame.controller.gestion_resultat;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,7 +33,6 @@ import opisiame.dao.Quiz_dao;
 import opisiame.dao.Reponse_dao;
 import opisiame.dao.Reponse_question_dao;
 import opisiame.dao.Sous_comp_dao;
-import opisiame.model.Eleve;
 import opisiame.model.Participant;
 import opisiame.model.Participation_quiz;
 import opisiame.model.Question;
@@ -43,8 +41,6 @@ import opisiame.model.Rep_eleves_quiz;
 import opisiame.model.Reponse;
 import opisiame.model.Reponse_eleve_quiz;
 import opisiame.model.Reponse_question;
-import opisiame.model.Resultat_eleve_comp;
-import session.Session;
 
 /**
  * FXML Controller class
@@ -103,6 +99,11 @@ public class Rep_questionController implements Initializable {
 
     @FXML
     private TableView<Reponse_question> t_liste_rep;
+        
+    @FXML
+    private RadioButton rb_un_eleve;
+    @FXML
+    private RadioButton rb_tous_eleves;
 
 //    @FXML
 //    private ComboBox select_quiz;
@@ -130,6 +131,7 @@ public class Rep_questionController implements Initializable {
 
     public void setQuiz_selected_id(Integer quiz_selected_id) {
         this.quiz_selected_id = quiz_selected_id;
+        rb_tous_eleves.setSelected(true);
     }
 
     Participation_quiz participation_quiz;
@@ -235,6 +237,44 @@ public class Rep_questionController implements Initializable {
         c_prenom2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("prenom_eleve"));
         c_nom2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("nom_eleve"));
 
+        rb_un_eleve.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                rb_tous_eleves.setSelected(false);
+                res_par_eleve();
+            }
+        });
+    }
+    
+    public void res_par_eleve() {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Resultat_par_eleve.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Resultat_par_eleveController resultat_par_eleveController = fxmlLoader.<Resultat_par_eleveController>getController();
+            resultat_par_eleveController.setId(this.quiz_selected_id);
+            resultat_par_eleveController.setDate(this.date_participation);
+            
+            URL url = fxmlLoader.getLocation();
+            ResourceBundle rb = fxmlLoader.getResources();
+            resultat_par_eleveController.initialize(url, rb);
+            
+            Stage stage = new Stage();
+            stage.setTitle("Résultats");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.show();
+            
+            Stage st = (Stage) rb_tous_eleves.getScene().getWindow();
+            st.close();
+
+
+        } catch (IOException ex) {
+            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

@@ -9,11 +9,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import opisiame.dao.*;
@@ -39,17 +46,9 @@ public class Resultat_par_eleveController implements Initializable {
     @FXML
     private GridPane content;
     @FXML
-    private Label label_quiz;
-    @FXML
     private Label label_note;
     @FXML
     private ComboBox CB_eleves;
-    @FXML
-    private TabPane onglets;
-    @FXML
-    private Tab onglet_c;
-    @FXML
-    private Tab onglet_q;
     @FXML
     private TableView<Resultat_eleve_comp> tab_comp;
     @FXML
@@ -64,6 +63,10 @@ public class Resultat_par_eleveController implements Initializable {
     private TableColumn<Resultat_eleve_comp, String> c_comp;
     @FXML
     private TableColumn<Resultat_eleve_comp, Integer> c_pourcent;
+    @FXML
+    private RadioButton rb_un_eleve;
+    @FXML
+    private RadioButton rb_tous_eleves;
 
     int quiz_id;
     int participation_id;
@@ -82,6 +85,7 @@ public class Resultat_par_eleveController implements Initializable {
 
     public void setId(int id) {
         quiz_id = id;
+        rb_un_eleve.selectedProperty().set(true);
     }
 
     public void setDate(String d) {
@@ -116,8 +120,6 @@ public class Resultat_par_eleveController implements Initializable {
             ex.printStackTrace();
         }
 
-        label_quiz.setText(nom_quiz);
-
         liste_eleves = resultat_dao.get_participants_quiz(quiz_id, date_quiz);
 
         //remplissage de la combobox avec le nom des élèves
@@ -128,6 +130,40 @@ public class Resultat_par_eleveController implements Initializable {
             CB_eleves.getItems().add(NomPrenom);
         }
         CB_eleves.getSelectionModel().selectFirst();
+        
+        rb_tous_eleves.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                rb_un_eleve.setSelected(false);
+                res_par_question();
+            }
+        });
+    }
+    
+    public void res_par_question() {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/resultat_questions.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Rep_questionController rep_questionController = fxmlLoader.<Rep_questionController>getController();
+            rep_questionController.setQuiz_selected_id(this.quiz_id);
+            rep_questionController.setDate_participation_str(this.date_quiz);
+            Stage stage = new Stage();
+            stage.setTitle("Résultats");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.show();
+            
+            Stage st = (Stage) rb_tous_eleves.getScene().getWindow();
+            st.close();
+
+
+        } catch (IOException ex) {
+            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -163,7 +199,7 @@ public class Resultat_par_eleveController implements Initializable {
                     + "FROM participant_quiz \n"
                     + "WHERE Date_participation LIKE ? AND Part_id LIKE ?\n");
             //+ "WHERE Part_id LIKE ?\n");
-            ps.setString(1, date_quiz.substring(0,date_quiz.length()-2));
+            ps.setString(1, date_quiz.substring(0, date_quiz.length() - 2));
             ps.setInt(2, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
             ResultSet rs = ps.executeQuery();
             rs.next();

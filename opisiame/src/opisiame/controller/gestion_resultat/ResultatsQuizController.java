@@ -210,18 +210,18 @@ public class ResultatsQuizController implements Initializable {
     public void info_evaluation() {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Choix_resultat.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/Resultat_par_eleve.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            Choix_resultatController edit_controller = fxmlLoader.<Choix_resultatController>getController();
+            Resultat_par_eleveController RPE_controller = fxmlLoader.<Resultat_par_eleveController>getController();
             Quiz s = (Quiz) Tableau.getFocusModel().getFocusedItem();
             int a = s.getId();
             String d = s.getDate_participation();
-            edit_controller.setId(a);
-            edit_controller.setDate(d);
+            RPE_controller.setId(a);
+            RPE_controller.setDate(d);
 
             URL url = fxmlLoader.getLocation();
             ResourceBundle rb = fxmlLoader.getResources();
-            edit_controller.initialize(url, rb);
+            RPE_controller.initialize(url, rb);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
