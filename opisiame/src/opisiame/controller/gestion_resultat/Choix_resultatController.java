@@ -118,7 +118,11 @@ public class Choix_resultatController implements Initializable {
     @FXML
     public void evaluation_par_question() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/opisiame/view/gestion_resultat/resultat_questions.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/opisiame/view/gestion_resultat/resultat_questions.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Rep_questionController rep_question_controller = fxmlLoader.<Rep_questionController>getController();
+            rep_question_controller.setQuiz_selected_id(quiz_id);
+            rep_question_controller.setDate_participation_str(date_part);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Résultat quiz");

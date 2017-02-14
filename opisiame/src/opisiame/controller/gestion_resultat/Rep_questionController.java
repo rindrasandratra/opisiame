@@ -58,54 +58,48 @@ public class Rep_questionController implements Initializable {
 
     @FXML
     private Tab tab_res_eleves_num = new Tab();
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_nom1;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_prenom1;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Integer> c_num1;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Double> c_note1;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Double> c_pourcent1;
 
     @FXML
     private Tab tab_res_eleves_pas_num = new Tab();
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_nom2;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, String> c_prenom2;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Double> c_note2;
+    @FXML
+    private TableColumn<Rep_eleves_quiz, Double> c_pourcent2;
 
     @FXML
     private Tab tab_liste_questions = new Tab();
-
     @FXML
     private TableColumn<Reponse_question, Integer> pourcentage;
-
     @FXML
     private TableColumn<Reponse_question, String> rep_a;
-
     @FXML
     private TableColumn<Reponse_question, String> rep_b;
-
     @FXML
     private TableColumn<Reponse_question, String> rep_c;
-
     @FXML
     private TableColumn<Reponse_question, String> rep_d;
-
     @FXML
     private TableColumn<Reponse_question, String> question;
 
     @FXML
-    private TableView<Rep_eleves_quiz> t_liste_res_eleves;
+    private TableView<Rep_eleves_quiz> t_liste_res_eleves_num;
 
     @FXML
-    private TableColumn<Rep_eleves_quiz, String> c_nom1;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, String> c_nom2;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, String> c_prenom1;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, String> c_prenom2;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, Integer> c_num;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, Double> c_note;
-
-    @FXML
-    private TableColumn<Rep_eleves_quiz, Double> c_pourcent;
+    private TableView<Rep_eleves_quiz> t_liste_res_eleves_pas_num;
 
     @FXML
     private TableView<Reponse_question> t_liste_rep;
@@ -137,21 +131,15 @@ public class Rep_questionController implements Initializable {
     public void setQuiz_selected_id(Integer quiz_selected_id) {
         this.quiz_selected_id = quiz_selected_id;
     }
-       
 
     Participation_quiz participation_quiz;
-    Timestamp date_participation;
+    String date_participation;
 
-    public Timestamp getDate_participation() {
+    public String getDate_participation() {
         return date_participation;
     }
-    
-    public void setDate_participation_str(String date_participation) {
-        Timestamp t = Timestamp.valueOf(date_participation);
-        setDate_participation(t);
-    }
 
-    public void setDate_participation(Timestamp date_participation) {
+    public void setDate_participation_str(String date_participation) {
         this.date_participation = date_participation;
         Participation_quiz pq = participation_quiz_dao.get_part_quiz(date_participation, quiz_selected_id, participation_quizs);
         setParticipation_quiz(pq);
@@ -165,7 +153,6 @@ public class Rep_questionController implements Initializable {
     Reponse_question_dao reponse_question_dao = new Reponse_question_dao();
     Reponse_dao reponse_dao = new Reponse_dao();
     Sous_comp_dao sous_comp_dao = new Sous_comp_dao();
-
 
     public void setParticipation_quiz(Participation_quiz participation_quiz) {
         this.participation_quiz = participation_quiz;
@@ -186,7 +173,8 @@ public class Rep_questionController implements Initializable {
         liste_resultats_eleves = FXCollections.observableArrayList();
         liste_resultats_eleves.clear();
         liste_resultats_eleves = remplissage_2e_tab();
-        t_liste_res_eleves.setItems(liste_resultats_eleves);
+        t_liste_res_eleves_num.setItems(liste_resultats_eleves);
+        t_liste_res_eleves_pas_num.setItems(liste_resultats_eleves);
     }
 
     @FXML
@@ -201,6 +189,8 @@ public class Rep_questionController implements Initializable {
                 choix_exportController.setOngletActif("questions");
             } else if (tab_res_eleves_num.isSelected()) {
                 choix_exportController.setOngletActif("eleves");
+            }else if (tab_res_eleves_pas_num.isSelected()) {
+                choix_exportController.setOngletActif("eleves_pas_num");
             }
 
             choix_exportController.setReponse_questions(liste_reponses_question);
@@ -211,7 +201,7 @@ public class Rep_questionController implements Initializable {
             stage.setTitle("Selection du format du fichier d'export des résultats");
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        //    stage.initOwner(select_quiz.getScene().getWindow());
+            //    stage.initOwner(select_quiz.getScene().getWindow());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/opisiame/image/icone.png")));
             stage.setResizable(false);
             stage.centerOnScreen();
@@ -226,7 +216,6 @@ public class Rep_questionController implements Initializable {
         // TODO
         participation_quizs = participation_quiz_dao.get_participation_quizs(session.Session.getUser_id());
         liste_quiz = participation_quiz_dao.get_quizs(participation_quizs);
-        //select_quiz.setItems(liste_quiz);
 
         question.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("question"));
         rep_a.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("str_pourcentage_rep_a"));
@@ -235,36 +224,19 @@ public class Rep_questionController implements Initializable {
         rep_d.setCellValueFactory(new PropertyValueFactory<Reponse_question, String>("str_pourcentage_rep_d"));
         pourcentage.setCellValueFactory(new PropertyValueFactory<Reponse_question, Integer>("str_pourcentage"));
 
-        c_num.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Integer>("num_eleve"));
-        c_note.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("note_eleve"));
-        c_pourcent.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("Pourcent_eleve"));
+        c_num1.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Integer>("num_eleve"));
+        c_note1.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("note_eleve"));
+        c_pourcent1.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("Pourcent_eleve"));
+        c_prenom1.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("prenom_eleve"));
+        c_nom1.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("nom_eleve"));
 
-//        select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Quiz>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Quiz> ov, Quiz t, Quiz t1) {
-//                if (t1 != null) {
-//                    date_select_quiz.setItems(participation_quiz_dao.get_dates_participations(t1.getId(), participation_quizs));
-//                    //setQuiz_selected(t1);
-//                    date_select_quiz.setDisable(false);
-//                    setQuiz_selected(t1);
-//                    btn_export.setDisable(true);
-//                    t_liste_rep.getItems().clear();
-//                }
-//            }
-//        });
-//
-//        date_select_quiz.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Timestamp>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Timestamp> ov, Timestamp t, Timestamp t1) {
-//                if (t1 != null) {
-//                    Participation_quiz pq = participation_quiz_dao.get_part_quiz(t1, quiz_selected.getId(), participation_quizs);
-//                    setParticipation_quiz(pq);
-//                    btn_export.setDisable(false);
-//                }
-//            }
-//        });
+        c_note2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("note_eleve"));
+        c_pourcent2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, Double>("Pourcent_eleve"));
+        c_prenom2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("prenom_eleve"));
+        c_nom2.setCellValueFactory(new PropertyValueFactory<Rep_eleves_quiz, String>("nom_eleve"));
+
     }
-    
+
     @FXML
     public void ClicBoutonRetour() throws IOException {
         Stage stage = (Stage) btn_export.getScene().getWindow();
@@ -297,6 +269,8 @@ public class Rep_questionController implements Initializable {
             //creation de la ligne a afficher correspondant a un etudiant
             Rep_eleves_quiz a_afficher = new Rep_eleves_quiz();
             a_afficher.setNum_eleve(liste_participants.get(i).getPart_id()); //récup du numero d'etudiant
+            a_afficher.setNom_eleve(liste_participants.get(i).getPart_nom());
+            a_afficher.setPrenom_eleve(liste_participants.get(i).getPart_prenom());
 
             //recup des réponses de l'etudiant au quiz
             liste_reponses_eleve = reponse_dao.get_reponses_eleve(participation_quiz_dao.get_part_id(liste_participants.get(i).getPart_id(), quiz_selected_id, participation_quiz.getDate_participation()));

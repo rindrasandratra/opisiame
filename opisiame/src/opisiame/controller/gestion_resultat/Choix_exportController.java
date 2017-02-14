@@ -88,8 +88,8 @@ public class Choix_exportController implements Initializable {
             if (excel_file != null) {
                 HSSFWorkbook wb = new HSSFWorkbook();
                 HSSFSheet sheet = wb.createSheet("Resultat des étudiants");
-                sheet.autoSizeColumn(3);
-                create_data2(sheet, 0, "Etudiant", "Note", "Pourcentage");
+                sheet.autoSizeColumn(5);
+                create_data2(sheet, 0, "Nom", "Prénom", "N° étudiant", "Note", "Pourcentage");
 
                 Row row = sheet.getRow(0);
                 HSSFCellStyle cellStyle = null;
@@ -101,7 +101,38 @@ public class Choix_exportController implements Initializable {
 
                 for (int i = 0; i < resultats_eleves.size(); i++) {
                     Rep_eleves_quiz re = resultats_eleves.get(i);
-                    create_data2(sheet, i + 1, re.getNum_eleve().toString(), re.getNote_eleve().toString(), re.getPourcent_eleve().toString());
+                    create_data2(sheet, i + 1, re.getNom_eleve(), re.getPrenom_eleve(), re.getNum_eleve().toString(), re.getNote_eleve().toString(), re.getPourcent_eleve().toString());
+                }
+
+                FileOutputStream fileOut;
+                try {
+                    fileOut = new FileOutputStream(excel_file);
+                    wb.write(fileOut);
+                    fileOut.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (onglet_actif.equals("eleves_pas_num")) {
+            if (excel_file != null) {
+                HSSFWorkbook wb = new HSSFWorkbook();
+                HSSFSheet sheet = wb.createSheet("Resultat des étudiants");
+                sheet.autoSizeColumn(4);
+                create_data3(sheet, 0, "Nom", "Prénom", "Note", "Pourcentage");
+
+                Row row = sheet.getRow(0);
+                HSSFCellStyle cellStyle = null;
+                HSSFFont font = wb.createFont();
+                font.setBold(true);
+                cellStyle = wb.createCellStyle();
+                cellStyle.setFont(font);
+                row.setRowStyle(cellStyle);
+
+                for (int i = 0; i < resultats_eleves.size(); i++) {
+                    Rep_eleves_quiz re = resultats_eleves.get(i);
+                    create_data3(sheet, i + 1, re.getNom_eleve(), re.getPrenom_eleve(), re.getNote_eleve().toString(), re.getPourcent_eleve().toString());
                 }
 
                 FileOutputStream fileOut;
@@ -141,16 +172,38 @@ public class Choix_exportController implements Initializable {
         cell_pourcentage.setCellValue(pourcentage);
     }
 
-    public void create_data2(HSSFSheet sheet, Integer i, String etudiant, String note, String pourcentage) {
+    public void create_data2(HSSFSheet sheet, int i, String nom, String prenom, String n_etudiant, String note, String pourcentage) {
         HSSFRow row = sheet.createRow(i); // ligne i
 
-        HSSFCell cell_question = row.createCell((short) 0); // colonne 0
-        cell_question.setCellValue(etudiant);
+        HSSFCell cell_n = row.createCell((short) 0); // colonne 0
+        cell_n.setCellValue(nom);
 
-        HSSFCell cell_rep_a = row.createCell((short) 1); // colonne 1
+        HSSFCell cell_p = row.createCell((short) 1); // colonne 1
+        cell_p.setCellValue(prenom);
+
+        HSSFCell cell_num = row.createCell((short) 2); // colonne 2
+        cell_num.setCellValue(n_etudiant);
+
+        HSSFCell cell_rep_a = row.createCell((short) 3); // colonne 3
         cell_rep_a.setCellValue(note);
 
-        HSSFCell cell_pourcentage = row.createCell((short) 2); // colonne 2
+        HSSFCell cell_pourcentage = row.createCell((short) 4); // colonne 4
+        cell_pourcentage.setCellValue(pourcentage);
+    }
+
+    private void create_data3(HSSFSheet sheet, int i, String nom, String prenom, String note, String pourcentage) {
+        HSSFRow row = sheet.createRow(i); // ligne i
+
+        HSSFCell cell_n = row.createCell((short) 0); // colonne 0
+        cell_n.setCellValue(nom);
+
+        HSSFCell cell_p = row.createCell((short) 1); // colonne 1
+        cell_p.setCellValue(prenom);
+
+        HSSFCell cell_rep_a = row.createCell((short) 2); // colonne 2
+        cell_rep_a.setCellValue(note);
+
+        HSSFCell cell_pourcentage = row.createCell((short) 3); // colonne 3
         cell_pourcentage.setCellValue(pourcentage);
     }
 
@@ -225,11 +278,57 @@ public class Choix_exportController implements Initializable {
                     document.open();
                     document.add(new Paragraph("Résultats des étudiants"));
 
-                    Table tableau = new Table(3, resultats_eleves.size());
+                    Table tableau = new Table(5, resultats_eleves.size());
                     tableau.setAutoFillEmptyCells(true);
                     tableau.setPadding(2);
 
-                    Cell cell = new Cell("Etudiant");
+                    Cell cell = new Cell("Nom");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+                    
+                    cell = new Cell("Prénom");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+                    
+                    cell = new Cell("N° étudiant");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    cell = new Cell("Note");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    cell = new Cell("Pourcentage");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+
+                    tableau.endHeaders();
+                    tableau.setWidth(100);
+                    fill_data_pdf(tableau);
+                    document.add(tableau);
+                } catch (DocumentException | IOException de) {
+                    de.printStackTrace();
+                }
+                document.close();
+            }
+        }else if (onglet_actif.equals("eleves_pas_num")) {
+
+            if (pdf_file != null) {
+                Document document = new Document(PageSize.A4);
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream(pdf_file));
+                    document.open();
+                    document.add(new Paragraph("Résultats des étudiants"));
+
+                    Table tableau = new Table(4, resultats_eleves.size());
+                    tableau.setAutoFillEmptyCells(true);
+                    tableau.setPadding(2);
+
+                    Cell cell = new Cell("Nom");
+                    cell.setHeader(true);
+                    tableau.addCell(cell);
+                    
+                    cell = new Cell("Prénom");
                     cell.setHeader(true);
                     tableau.addCell(cell);
 
@@ -267,9 +366,18 @@ public class Choix_exportController implements Initializable {
             }
         } else if (onglet_actif.equals("eleves")) {
             for (int i = 0; i < resultats_eleves.size(); i++) {
-                table.addCell(resultats_eleves.get(i).getNum_eleve().toString(), new Point(i + 1, 0));
-                table.addCell(resultats_eleves.get(i).getNote_eleve().toString(), new Point(i + 1, 1));
-                table.addCell(resultats_eleves.get(i).getPourcent_eleve().toString(), new Point(i + 1, 2));
+                table.addCell(resultats_eleves.get(i).getNom_eleve(), new Point(i + 1, 0));
+                table.addCell(resultats_eleves.get(i).getPrenom_eleve(), new Point(i + 1, 1));
+                table.addCell(resultats_eleves.get(i).getNum_eleve().toString(), new Point(i + 1, 2));
+                table.addCell(resultats_eleves.get(i).getNote_eleve().toString(), new Point(i + 1, 3));
+                table.addCell(resultats_eleves.get(i).getPourcent_eleve().toString(), new Point(i + 1, 4));
+            }
+        }else if (onglet_actif.equals("eleves_pas_num")) {
+            for (int i = 0; i < resultats_eleves.size(); i++) {
+                table.addCell(resultats_eleves.get(i).getNom_eleve(), new Point(i + 1, 0));
+                table.addCell(resultats_eleves.get(i).getPrenom_eleve(), new Point(i + 1, 1));
+                table.addCell(resultats_eleves.get(i).getNote_eleve().toString(), new Point(i + 1, 2));
+                table.addCell(resultats_eleves.get(i).getPourcent_eleve().toString(), new Point(i + 1, 3));
             }
         }
 

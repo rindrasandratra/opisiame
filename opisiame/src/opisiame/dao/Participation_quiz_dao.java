@@ -57,9 +57,10 @@ public class Participation_quiz_dao {
         return dates;
     }
 
-    public Participation_quiz get_part_quiz(Timestamp d, Integer i, ObservableList<Participation_quiz> participation_quizs) {
+    public Participation_quiz get_part_quiz(String d, Integer i, ObservableList<Participation_quiz> participation_quizs) {
         for (Participation_quiz participation_quiz : participation_quizs) {
-            if ((participation_quiz.getDate_participation() == d) && Objects.equals(participation_quiz.getQuiz_id(), i)) {
+            System.out.println(participation_quiz.getDate_participation().toString()+ " == " +d);
+            if ((participation_quiz.getDate_participation().toString().equals(d)) && Objects.equals(participation_quiz.getQuiz_id(), i)) {
                 return participation_quiz;
             }
         }
@@ -95,8 +96,9 @@ public class Participation_quiz_dao {
 
     public ObservableList<Participant> get_participants(int quiz_id, Timestamp t) {
         ObservableList<Participant> participants_quiz = FXCollections.observableArrayList();
-        String SQL = "SELECT DISTINCT Part_id "
-                + "FROM participant_quiz "
+        String SQL = "SELECT DISTINCT participant_quiz.Part_id, participant.Part_nom, participant.Part_prenom "
+                + "FROM participant_quiz JOIN participant "
+                + "ON participant_quiz.Part_id = participant.Part_id "
                 + "WHERE Quiz_id = ? AND Date_participation = ?";
         try {
             Connection connection = Connection_db.getDatabase();
@@ -107,6 +109,8 @@ public class Participation_quiz_dao {
             while (rs.next()) {
                 Participant parti = new Participant();
                 parti.setPart_id(rs.getInt(1));
+                parti.setPart_nom(rs.getString(2));
+                parti.setPart_prenom(rs.getString(3));
                 participants_quiz.add(parti);
             }
         } catch (SQLException ex) {
