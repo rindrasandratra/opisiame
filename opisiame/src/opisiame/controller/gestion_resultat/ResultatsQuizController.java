@@ -242,7 +242,7 @@ public class ResultatsQuizController implements Initializable {
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

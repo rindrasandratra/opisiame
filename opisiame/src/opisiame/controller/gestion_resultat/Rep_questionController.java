@@ -273,7 +273,7 @@ public class Rep_questionController implements Initializable {
 
 
         } catch (IOException ex) {
-            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

@@ -59,7 +59,6 @@ public class Participation_quiz_dao {
 
     public Participation_quiz get_part_quiz(String d, Integer i, ObservableList<Participation_quiz> participation_quizs) {
         for (Participation_quiz participation_quiz : participation_quizs) {
-            System.out.println(participation_quiz.getDate_participation().toString()+ " == " +d);
             if ((participation_quiz.getDate_participation().toString().equals(d)) && Objects.equals(participation_quiz.getQuiz_id(), i)) {
                 return participation_quiz;
             }

@@ -162,7 +162,7 @@ public class Resultat_par_eleveController implements Initializable {
 
 
         } catch (IOException ex) {
-            Logger.getLogger(Choix_resultatController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
