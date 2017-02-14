@@ -213,7 +213,14 @@ public class Lancer_questionController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if ("0".equals(newValue)) {
-                    next_question();
+                    if (current_question_no >= questions.size() - 1) {
+                        switch_off_remotes(led_green);
+                        switch_off_remotes(led_yellow);
+                        xbee.close();
+                        close_window();
+                    } else {
+                        next_question();
+                    }
                 }
             }
         });
