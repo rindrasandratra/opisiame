@@ -100,4 +100,9 @@ public class Eleve {
     public void setAnnee (Integer ANNEE){
         this.annee.set(ANNEE);
     }
+    
+    @Override
+    public String toString() {
+        return getNom()+" "+getPrenom()+" "+getId();
+    }
 }

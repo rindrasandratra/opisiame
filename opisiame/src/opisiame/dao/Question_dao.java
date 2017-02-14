@@ -43,7 +43,9 @@ public class Question_dao {
                 Question quest = new Question();
                 quest.setId(rs.getInt(1));
                 quest.setLibelle(rs.getString(2));
-                quest.setTimer(rs.getInt(3));
+                if (rs.getString(3) != null) {
+                    quest.setTimer(rs.getInt(3));
+                }
                 quest.setQuiz_id(rs.getInt(4));
                 quest.setSous_comp_id(rs.getInt(5));
                 quest.setImg_blob(rs.getBinaryStream(6)); //resultSet.getBlob(yourBlobColumnIndex);
@@ -59,19 +61,23 @@ public class Question_dao {
 
     public void update_question(Integer id, String libelle, Integer timer, Integer sous_comp_id, String url_img) {
         String SQL;
-        System.out.println("url : "+ url_img);
+        System.out.println("url : " + url_img);
         if (url_img == null) {
             SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ? WHERE Quest_id = ?";
         } else {
             SQL = "UPDATE question SET Quest_libelle = ?, Quest_timer = ? , SousComp_id = ?, Quest_img = ? WHERE Quest_id = ?";
         }
 
-        System.out.println("sql : "+ SQL);
+        System.out.println("sql : " + SQL);
         try {
             Connection connection = Connection_db.getDatabase();
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setString(1, libelle);
-            ps.setInt(2, timer);
+            if (timer == null) {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(2, timer);
+            }
             ps.setInt(3, sous_comp_id);
             if (url_img != null) {
                 if (url_img.compareTo("") == 0) {
@@ -87,9 +93,9 @@ public class Question_dao {
                     }
                 }
                 ps.setInt(5, id);
-            }
-            else
+            } else {
                 ps.setInt(4, id);
+            }
             int succes = ps.executeUpdate();
             if (succes == 0) {
                 System.err.println("Échec de la modification de la question, aucune ligne modifiée dans la table.");

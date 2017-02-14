@@ -172,7 +172,9 @@ public class Edit_questionController implements Initializable {
             Question q = questions.get(index);
             current_question = q;
             set_selected_comp_et_sous_comp(q);
-            timer.setText((q.getTimer()).toString());
+            if (q.getTimer() != null) {
+                timer.setText((q.getTimer()).toString());
+            }
             enonce.setText(q.getLibelle());
             //sous_comp.setText(q.getSous_comp());
             print_image(q.getImg_blob());
@@ -321,6 +323,8 @@ public class Edit_questionController implements Initializable {
             } else {
                 b = false;
             }
+        } else {
+            b = true;
         }
         return b;
     }
@@ -339,6 +343,7 @@ public class Edit_questionController implements Initializable {
         } else if (check_form()) {
             if (check_timer()) {
                 modif_quest_rep();
+                get_all_questions();
                 label_ajout_ok.setVisible(true);
                 PauseTransition pause = new PauseTransition(Duration.seconds(5));
                 pause.setOnFinished(new EventHandler<ActionEvent>() {

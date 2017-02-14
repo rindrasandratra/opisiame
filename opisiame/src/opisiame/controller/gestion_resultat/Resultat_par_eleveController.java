@@ -127,7 +127,8 @@ public class Resultat_par_eleveController implements Initializable {
         String NomPrenom = "";
         for (int i = 0; i < taille; i++) {
             NomPrenom = liste_eleves.get(i).getId().toString();
-            CB_eleves.getItems().add(NomPrenom);
+            //CB_eleves.getItems().add(NomPrenom);
+            CB_eleves.getItems().add(liste_eleves.get(i));
         }
         CB_eleves.getSelectionModel().selectFirst();
         
@@ -200,7 +201,9 @@ public class Resultat_par_eleveController implements Initializable {
                     + "WHERE Date_participation LIKE ? AND Part_id LIKE ?\n");
             //+ "WHERE Part_id LIKE ?\n");
             ps.setString(1, date_quiz.substring(0, date_quiz.length() - 2));
-            ps.setInt(2, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
+            //ps.setInt(2, Integer.parseInt(CB_eleves.getSelectionModel().getSelectedItem().toString()));
+            Eleve eleve_selected = (Eleve) CB_eleves.getSelectionModel().getSelectedItem();
+            ps.setInt(2, eleve_selected.getId());
             ResultSet rs = ps.executeQuery();
             rs.next();
             participation_id = rs.getInt(1);

@@ -293,13 +293,14 @@ public class Lancer_questionController implements Initializable {
     }
 
     public int get_quest_timer() {
-        if (current_question.getTimer() > 0) {
-            return current_question.getTimer();
-        } else if (quiz_timer > 0) {
-            return quiz_timer;
-        } else {
-            return 0;
+        if (current_question.getTimer() != null) {
+            if (current_question.getTimer() > 0) {
+                return current_question.getTimer();
+            } else if (quiz_timer > 0) {
+                return quiz_timer;
+            }
         }
+        return 0;
     }
 
     public void end_quiz() {
