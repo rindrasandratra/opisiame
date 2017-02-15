@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -601,6 +604,34 @@ public class Edit_questionController implements Initializable {
 
         } catch (IOException ex) {
             Logger.getLogger(CompetencesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    public void delete_question() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment supprimer cette question?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            question_dao.delete_question(current_question.getId());
+            get_all_questions();
+            if (questions.size() > 0) {
+                print_question(0);
+                pagination_quest.setPageCount(questions.size());
+                pagination_quest.setCurrentPageIndex(0);
+            } else {
+                Stage st = (Stage) pagination_quest.getScene().getWindow();
+                st.close();
+                
+                Alert alert2 = new Alert(AlertType.INFORMATION);
+                alert2.setTitle("Information");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Ce quiz ne comporte plus de question.");
+                alert2.showAndWait();
+            }
         }
     }
 
