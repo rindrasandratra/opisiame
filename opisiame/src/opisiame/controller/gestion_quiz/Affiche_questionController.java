@@ -96,7 +96,11 @@ public class Affiche_questionController implements Initializable {
     public void print_question(Integer index) {
         if (questions.size() > 0) {
             Question q = questions.get(index);
-            label_timer.setText((q.getTimer()).toString());
+            if (q.getTimer() != null) {
+                label_timer.setText((q.getTimer()).toString());
+            } else {
+                label_timer.setText("-");
+            }
             label_question.setText(q.getLibelle());
             sous_comp.setText(q.getSous_comp());
             print_image(q.getImg_blob());
