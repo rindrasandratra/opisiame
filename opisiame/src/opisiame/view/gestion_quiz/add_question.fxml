@@ -52,7 +52,7 @@
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="timer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" onKeyPressed="#text_change" prefHeight="25.0" prefWidth="190.0" promptText="t &lt; 5400 secondes" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <TextField fx:id="timer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" onKeyPressed="#text_change" prefHeight="25.0" prefWidth="190.0" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
 <!--               <opaqueInsets>
                   <Insets bottom="10.0" />
                </opaqueInsets>-->

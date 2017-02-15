@@ -187,14 +187,14 @@ public class Add_questionController implements Initializable {
 
     private Boolean check_timer() {
         timer_value = null;
-        Boolean b = false;
+        Boolean b = true;
         if (timer.getText().compareTo("") != 0) {
-            if (timer.getText().compareTo("t < 5400 secondes") == 0) {
-                timer_value = null;
-            } else if (validate_number(timer.getText())) {
+            if (validate_number(timer.getText())) {
                 timer_value = Integer.valueOf(timer.getText());
                 if (timer_value < 5400) {
                     b = true;
+                } else {
+                    b = false;
                 }
             } else {
                 b = false;
